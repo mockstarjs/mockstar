@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/mockstarjs/mockstar/issues"
   },
-  "homepage": "https://github.com/mockstarjs/mockstar#readme"
+  "homepage": "https://github.com/mockstarjs/mockstar#readme",
+  "devDependencies": {
+    "lerna": "^2.11.0"
+  }
 }
