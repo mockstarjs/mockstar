@@ -1,10 +1,9 @@
 {
   "name": "mockstar",
-  "version": "0.0.1",
-  "description": "Easy to build mock service",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "git pull && lerna publish --cd-version patch",
+    "force-publish": "lerna publish --cd-version patch --force-publish=*"
   },
   "repository": {
     "type": "git",
