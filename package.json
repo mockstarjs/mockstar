@@ -1,24 +1,23 @@
 {
   "name": "mockstar",
   "version": "0.0.1",
-  "description": "Mock Service ",
+  "description": "Easy to build mock service",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/helinjiang/mockstar.git"
+    "url": "git+https://github.com/mockstarjs/mockstar.git"
   },
   "keywords": [
-    "mock",
     "mock",
     "service"
   ],
   "author": "helinjiang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/helinjiang/mockstar/issues"
+    "url": "https://github.com/mockstarjs/mockstar/issues"
   },
-  "homepage": "https://github.com/helinjiang/mockstar#readme"
+  "homepage": "https://github.com/mockstarjs/mockstar#readme"
 }
