@@ -7,7 +7,8 @@
     "prepublishOnly": "npm run build",
     "build": "babel --presets env,stage-0 src/ --out-dir lib/ --source-maps",
     "watch-compile": "npm run build -- --watch",
-    "watch": "npm run watch-compile"
+    "watch": "npm run watch-compile",
+    "eslint": "eslint src"
   },
   "keywords": [
     "mock",
@@ -33,7 +34,9 @@
     "url-handle": "^0.2.1"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-0": "^6.24.1"
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^5.7.0"
   }
 }
