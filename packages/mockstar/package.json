@@ -8,9 +8,9 @@
     "build": "babel --presets env,stage-0 src/ --out-dir lib/ --source-maps",
     "watch-compile": "npm run build -- --watch",
     "watch": "npm run watch-compile",
-    "test": "npm run eslint && mocha",
+    "test": "npm run eslint && npm run test-cov",
     "eslint": "eslint src/",
-    "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha -- -t 50000 --recursive  -R spec test/"
+    "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha"
   },
   "keywords": [
     "mock",
