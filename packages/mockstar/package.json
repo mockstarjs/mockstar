@@ -1,0 +1,39 @@
+{
+  "name": "matman-mock",
+  "version": "3.0.14",
+  "description": "Easy to build mock server",
+  "main": "lib/index.js",
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "babel --presets env,stage-0 src/ --out-dir lib/ --source-maps",
+    "watch-compile": "npm run build -- --watch",
+    "watch": "npm run watch-compile"
+  },
+  "keywords": [
+    "mock",
+    "server"
+  ],
+  "author": "helinjiang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mockstarjs/mockstar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mockstarjs/mockstar/issues"
+  },
+  "homepage": "https://github.com/mockstarjs/mockstar#readme",
+  "dependencies": {
+    "fs-extra": "^6.0.1",
+    "fs-handler": "^0.1.2",
+    "glob": "^7.1.2",
+    "lodash": "^4.17.10",
+    "lowdb": "^1.0.0",
+    "marked": "^0.4.0",
+    "url-handle": "^0.2.1"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1"
+  }
+}
