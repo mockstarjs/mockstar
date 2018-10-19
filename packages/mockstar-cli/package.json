@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "CLI tool for MockStar",
   "bin": {
-    "matman": "./bin/matman"
+    "mockstar": "./bin/mockstar"
   },
   "scripts": {
     "test": "npm run eslint && npm run test-cov",
