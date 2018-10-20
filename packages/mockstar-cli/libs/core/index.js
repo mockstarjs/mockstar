@@ -46,13 +46,17 @@ class MockStar {
     /**
      * Read config and load internal and external plugins.
      */
-    init() {
+    init(pluginList = []) {
         const self = this;
 
         this.log.debug('MockStar version: %s', chalk.magenta(this.version));
 
         // Load internal plugins
-        require('../internal/console')(this);
+        if (Array.isArray(pluginList)) {
+            pluginList.forEach((plugin) => {
+                plugin(this);
+            });
+        }
 
         // Init client and load external plugins
         return Promise.each([
