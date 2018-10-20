@@ -5,7 +5,7 @@ const fs = require('fs');
 const Promise = require('bluebird');
 const fse = require('fs-extra');
 
-// const localServer = require('../../../business/local-server');
+const localServer = require('../../../biz/local-server');
 
 /**
  *
@@ -37,8 +37,8 @@ module.exports = function (args) {
     }
 
     // 启动本地服务
-    // localServer.startServer(isDev, configAbsolutePath, cwd);
     console.log('Ready to start local server!');
+    localServer.startServer(isDev, configAbsolutePath, cwd);
 
     return Promise.resolve();
 };

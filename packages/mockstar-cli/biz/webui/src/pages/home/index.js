@@ -11,7 +11,7 @@ export default class Home extends Component {
     return (
       <div className="page-home">
         <h2>HOME</h2>
-        <p>欢迎使用 <a href="https://github.com/matmanjs/matman" target="_blank">matman</a>，欢迎给我们提 <a href="https://github.com/matmanjs/matman/issues" target="_blank">Issues</a>！</p>
+        <p>欢迎使用 <a href="https://github.com/mockstarjs/mockstar" target="_blank">mockstar</a>，欢迎给我们提 <a href="https://github.com/mockstarjs/mockstar/issues" target="_blank">Issues</a>！</p>
       </div>
     );
   }

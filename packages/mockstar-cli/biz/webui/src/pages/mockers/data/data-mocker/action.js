@@ -16,7 +16,7 @@ function fetchMocker(mockerName) {
   return {
     [CALL_API]: {
       types: [MOCKER_REQUEST, MOCKER_REQUEST_SUCCESS, MOCKER_REQUEST_FAIL],
-      url: `/matman-cgi/mocker/${mockerName}`
+      url: `/mockstar-cgi/mocker/${mockerName}`
     }
   };
 }
@@ -31,7 +31,7 @@ function fetchMockerReadme(mockerName) {
   return {
     [CALL_API]: {
       types: [MOCKER_README_REQUEST, MOCKER_README_REQUEST_SUCCESS, MOCKER_README_REQUEST_FAIL],
-      url: `/matman-cgi/mocker/${mockerName}/readme`
+      url: `/mockstar-cgi/mocker/${mockerName}/readme`
     }
   };
 }
@@ -46,7 +46,7 @@ function requestUpdateMocker(mockerName, newMockerState) {
   return {
     [CALL_API]: {
       types: [SET_ACTIVE_MODULE_REQUEST, SET_ACTIVE_MODULE_REQUEST_SUCCESS, SET_ACTIVE_MODULE_REQUEST_FAIL],
-      url: `/matman-cgi/mocker/${mockerName}`,
+      url: `/mockstar-cgi/mocker/${mockerName}`,
       type: 'POST',
       data: newMockerState
     }

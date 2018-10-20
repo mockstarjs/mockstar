@@ -13,14 +13,14 @@ import './App.less';
 const App = () => (
   <Router>
 
-    <Layout className="matman-container">
+    <Layout className="mockstar-container">
 
       <LayoutHeader />
 
       <Layout.Content>
         <Route exact path="/" component={Home} />
-        <Route path="/matman-admin/dashboard" component={Home} />
-        <Route path="/matman-admin/mockers" component={Mockers} />
+        <Route path="/mockstar-admin/dashboard" component={Home} />
+        <Route path="/mockstar-admin/mockers" component={Mockers} />
       </Layout.Content>
     </Layout>
 
