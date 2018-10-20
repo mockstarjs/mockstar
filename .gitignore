@@ -64,3 +64,4 @@ typings/
 *-lock.json
 
 lib/
+tmp
