@@ -38,7 +38,7 @@ module.exports = function (args) {
 
     // 启动本地服务
     // localServer.startServer(isDev, configAbsolutePath, cwd);
-    console.log('Ready to start local server:', isDev, configAbsolutePath, cwd);
+    console.log('Ready to start local server!');
 
     return Promise.resolve();
 };
