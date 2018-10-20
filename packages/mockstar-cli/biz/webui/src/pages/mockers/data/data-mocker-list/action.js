@@ -8,7 +8,7 @@ function fetchMockerList() {
     return {
         [CALL_API]: {
             types: [MOCKER_LIST_REQUEST, MOCKER_LIST_REQUEST_SUCCESS, MOCKER_LIST_REQUEST_FAIL],
-            url: '/matman-cgi/mocker'
+            url: '/mockstar-cgi/mocker'
         }
     };
 }

@@ -1,5 +1,5 @@
 import superagent from 'superagent';
-// import matmanMockAsync from 'matman-mock-async';
+// import mockstarMockAsync from 'mockstar-mock-async';
 
 export function ajax(opts = {}) {
   if (opts.method === 'post') {
@@ -41,7 +41,7 @@ export function getDataByGet(url, queryOpts) {
 }
 
 export function requestStub(url, route, params = {}) {
-  // let asyncClient = new matmanMockAsync.AsyncClient(url);
+  // let asyncClient = new mockstarMockAsync.AsyncClient(url);
   //
   // // TODO 这里需要考虑下超时的情形
   // return asyncClient.request(route, params);
