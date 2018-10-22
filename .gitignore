@@ -65,3 +65,4 @@ typings/
 
 lib/
 tmp
+db.json
