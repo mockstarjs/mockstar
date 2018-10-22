@@ -1,13 +1,37 @@
+const path = require('path');
 const request = require('superagent');
 const { expect } = require('chai');
+const testServer = require('../data/test-sever');
 
 describe('local-server', () => {
+    let port;
+    let pid;
+    let cgiBase;
+
+    before(function () {
+        return testServer.start(path.join(__dirname, '../../bin/mockstar'), [
+            `--config=${path.join(__dirname, '../data/demo_01/mockstar.config.js')}`
+        ])
+            .then((data) => {
+                // console.log('----', data);
+                pid = data.pid;
+                port = data.port;
+                cgiBase = `http://localhost:${port}`;
+
+                return data;
+            });
+    });
+
+    // after(function () {
+    //     testServer.stop(pid);
+    // });
+
     describe('check /mockstar-cgi/mocker', () => {
         let data;
 
         before(function () {
             return request
-                .get('http://localhost:9527/mockstar-cgi/mocker')
+                .get(cgiBase + '/mockstar-cgi/mocker')
                 .then((response) => {
                     data = JSON.parse(response.res.text);
                     // console.log(data);
@@ -45,7 +69,7 @@ describe('local-server', () => {
 
         before(function () {
             return request
-                .get('http://localhost:9527/mockstar-cgi/mocker/demo_03')
+                .get(cgiBase + '/mockstar-cgi/mocker/demo_03')
                 .then((response) => {
                     data = JSON.parse(response.res.text);
                     // console.log(data);
@@ -82,7 +106,7 @@ describe('local-server', () => {
 
         before(function () {
             return request
-                .get('http://localhost:9527/cgi-bin/a/b/demo_03')
+                .get(cgiBase + '/cgi-bin/a/b/demo_03')
                 .then((response) => {
                     data = JSON.parse(response.res.text);
                     // console.log(data);
@@ -105,7 +129,7 @@ describe('local-server', () => {
 
         before(function () {
             return request
-                .get('http://localhost:9527/cgi-bin/a/b/demo_03?_m_target=success_2')
+                .get(cgiBase + '/cgi-bin/a/b/demo_03?_m_target=success_2')
                 .then((response) => {
                     data = JSON.parse(response.res.text);
                     // console.log(data);
@@ -126,7 +150,7 @@ describe('local-server', () => {
     describe('return readme content', () => {
         it('should exist content', () => {
             return request
-                .get('http://localhost:9527/mockstar-cgi/mocker/demo_03/readme')
+                .get(cgiBase + '/mockstar-cgi/mocker/demo_03/readme')
                 .then((response) => {
                     let data = JSON.parse(response.res.text);
                     expect(data.html).to.have.lengthOf.at.least(100);
@@ -135,7 +159,7 @@ describe('local-server', () => {
 
         it('should be empty', () => {
             return request
-                .get('http://localhost:9527/mockstar-cgi/mocker/demo_01/readme')
+                .get(cgiBase + '/mockstar-cgi/mocker/demo_01/readme')
                 .then((response) => {
                     let data = JSON.parse(response.res.text);
                     expect(data.html).to.be.empty;
@@ -147,7 +171,7 @@ describe('local-server', () => {
 
         it('should support jpg ', () => {
             return request
-                .get('http://localhost:9527/mockstar-admin/mockers/demo_03/static/logo.jpg')
+                .get(cgiBase + '/mockstar-admin/mockers/demo_03/static/logo.jpg')
                 .then((response) => {
 
                     expect(response.status).to.equal(200);
@@ -158,7 +182,7 @@ describe('local-server', () => {
 
         it('should support subdir and png', () => {
             return request
-                .get('http://localhost:9527/mockstar-admin/mockers/demo_03/static/sub/workflow.png')
+                .get(cgiBase + '/mockstar-admin/mockers/demo_03/static/sub/workflow.png')
                 .then((response) => {
 
                     expect(response.status).to.equal(200);
