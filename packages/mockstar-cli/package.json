@@ -6,7 +6,8 @@
     "mockstar": "./bin/mockstar"
   },
   "scripts": {
-    "test": "npm run eslint && npm run test-cov",
+    "test": "mocha",
+    "test2": "npm run eslint && npm run test-cov",
     "eslint": "eslint src/",
     "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha"
   },
