@@ -64,5 +64,5 @@ typings/
 *-lock.json
 
 lib/
-tmp
+tmp/
 db.json
