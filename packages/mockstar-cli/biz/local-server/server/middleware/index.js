@@ -14,7 +14,7 @@ module.exports = function (opts) {
   //   ? userDir
   //   : defaultDir;
 
-  const staticDir = path.join(__dirname, '../../webui/build');
+  const staticDir = path.join(__dirname, '../../../webui/build');
 
   opts = objectAssign({ logger: true, static: staticDir }, opts);
 
