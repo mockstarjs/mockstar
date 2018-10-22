@@ -64,7 +64,7 @@ describe('local server for mockstar', () => {
         });
     });
 
-    describe('check /mockstar-cgi/mocker/:mockerName ', () => {
+    describe('check /mockstar-cgi/mocker/:mockerName', () => {
         let data;
 
         before(function () {
@@ -101,7 +101,7 @@ describe('local server for mockstar', () => {
         });
     });
 
-    describe('return readme content', () => {
+    describe('check /mockstar-cgi/mocker/:mockerName/readme', () => {
         it('should exist content', () => {
             return request
                 .get(cgiBase + '/mockstar-cgi/mocker/demo_03/readme')
@@ -121,8 +121,7 @@ describe('local server for mockstar', () => {
         });
     });
 
-    describe('check static resource', () => {
-
+    describe('check /mockstar-admin/mockers/:name/static/*', () => {
         it('should support jpg ', () => {
             return request
                 .get(cgiBase + '/mockstar-admin/mockers/demo_03/static/logo.jpg')

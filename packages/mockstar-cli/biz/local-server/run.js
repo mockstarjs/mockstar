@@ -63,11 +63,11 @@ module.exports = (configOpts) => {
   // TODO 此处还需要支持 reporter 等场景
   // GET /mockstar-admin/mockers/:name/static/* 静态资源
   // http://localhost:9527/mockstar-admin/mockers/demo_03/static/sub/workflow.png
-  app.get('/mockstar-admin/mockers/:name/static/*', (req, res) => {
+  app.get('/mockstar-admin/mockers/:mockerName/static/*', (req, res) => {
     // req.params[0] = 'sub/workflow.png'
     // req.params.name = 'demo_03'
 
-    let mockerName = req.params.name;
+    let mockerName = req.params.mockerName;
     let mockerItem = routerMocker._mockerParser.getMockerByName(mockerName);
     let staticRelativePath = path.join('static', req.params[0]);
 
