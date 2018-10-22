@@ -3,7 +3,6 @@
 const path = require('path');
 const fs = require('fs');
 const Promise = require('bluebird');
-const fse = require('fs-extra');
 
 const localServer = require('../../../biz/local-server');
 
