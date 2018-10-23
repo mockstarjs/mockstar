@@ -32,7 +32,7 @@ export default function MockerMockModuleList(props) {
                 <Button
                     type="primary"
                     disabled={mockerItem.config.disable ? 'disable' : ''}
-                    onClick={previewResult.bind(this, record.config.query)}
+                    onClick={previewResult.bind(this, record.config.match)}
                 >
                     预览结果
                 </Button>
