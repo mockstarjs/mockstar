@@ -58,7 +58,7 @@ describe('plugin of xhr', () => {
 
         before(function () {
             return request
-                .get(cgiBase + '/cgi-bin/a/b/demo_03?_m_target=success_2')
+                .get(cgiBase + '/cgi-bin/a/b/demo_03?_ms_target=success_2')
                 .then((response) => {
                     data = JSON.parse(response.res.text);
                     // console.log(data);

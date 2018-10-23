@@ -12,7 +12,7 @@ let mockstarConfig = require(configAbsolutePath);
 
 // 如果不定义 rootPath，则默认取 process.cwd()
 if (!mockstarConfig.rootPath) {
-  mockstarConfig.rootPath = cwd || process.cwd();
+    mockstarConfig.rootPath = cwd || process.cwd();
 }
 
 // 获取一些默认值
@@ -20,7 +20,7 @@ let configOpts = runConfig.getConfigOpts(mockstarConfig);
 
 // 如果没法获取配置项，则将无法启动成功
 if (!configOpts) {
-  throw new Error('Invalid param!');
+    throw new Error('Invalid param!');
 }
 
 run(configOpts);

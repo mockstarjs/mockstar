@@ -1,6 +1,6 @@
-const gConfig = require('../config');
+import { MS_TARGET } from '../config';
 
-class MatmanQueryItem {
+export default class MockStarQueryItem {
   /**
    * 构造函数
    *
@@ -11,14 +11,14 @@ class MatmanQueryItem {
   constructor(mockerName, mockModuleName, shouldDisableMatman) {
     if (mockerName && (typeof mockerName === 'object')) {
       // 如果传入的是对象，则假设这个对象是符合 MatmanQueryItem 字段定义的对象
-      this._m_name = mockerName._m_name;
-      this[gConfig.TARGET_FIELD] = mockerName[gConfig.TARGET_FIELD];
-      this._m_disable = mockerName._m_disable;
+      this._ms_name = mockerName._ms_name;
+      this[MS_TARGET] = mockerName[MS_TARGET];
+      this._ms_disable = mockerName._ms_disable;
     } else {
       // 如果传递的是普通的参数，则依次设置
-      this._m_name = mockerName;
-      this[gConfig.TARGET_FIELD] = mockModuleName;
-      this._m_disable = shouldDisableMatman ? 1 : 0;
+      this._ms_name = mockerName;
+      this[MS_TARGET] = mockModuleName;
+      this._ms_disable = shouldDisableMatman ? 1 : 0;
     }
   }
 
@@ -28,7 +28,7 @@ class MatmanQueryItem {
    * @returns {Boolean}
    */
   isDisabled() {
-    return !!this._m_disable;
+    return !!this._ms_disable;
   }
 
   /**
@@ -38,8 +38,6 @@ class MatmanQueryItem {
    * @returns {Boolean}
    */
   isMe(name) {
-    return this._m_name === name;
+    return this._ms_name === name;
   }
 }
-
-module.exports = MatmanQueryItem;
