@@ -1,6 +1,6 @@
-const _ = require('lodash');
+import _ from 'lodash'
 
-class MockerConfig {
+export default class MockerConfig {
   /**
    * 构造函数
    *
@@ -83,5 +83,3 @@ class MockerConfig {
     // this.lastModified = Date.now();
   }
 }
-
-module.exports = MockerConfig;
