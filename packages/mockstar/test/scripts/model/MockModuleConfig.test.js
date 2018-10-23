@@ -3,7 +3,7 @@ const expect = chai.expect;
 
 const MockModuleConfig = require('../../../lib/model/MockModuleConfig').default;
 
-describe.only('./mocker/MockModuleConfig.js', () => {
+describe('./mocker/MockModuleConfig.js', () => {
     describe('check exist-config', () => {
         let mockModuleConfig;
 
