@@ -1,6 +1,6 @@
-const MockModuleConfig = require('./MockModuleConfig');
+import MockModuleConfig from './MockModuleConfig';
 
-class MockModule {
+export default class MockModule {
     /**
      * 构造函数
      *
@@ -40,5 +40,3 @@ function getTargetResult(saveTarget, ...props) {
         return Promise.reject(e);
     }
 }
-
-module.exports = MockModule;
