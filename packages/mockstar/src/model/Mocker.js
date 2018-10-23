@@ -1,14 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-const _ = require('lodash');
-const fsHandler = require('fs-handler');
+import fs from 'fs';
+import path from 'path';
+import _ from 'lodash';
+import fsHandler from 'fs-handler';
 
-const MockerConfig = require('./MockerConfig');
-const MockModule = require('./MockModule');
+import MockerConfig from './MockerConfig';
+import MockModule from './MockModule';
+import { MOCK_MODULES } from '../config';
+import { getRequireResult } from '../file';
 
-const { MOCK_MODULES } = require('../config');
-
-class Mocker {
+export default class Mocker {
     /**
      * 构造函数
      *
@@ -30,6 +30,10 @@ class Mocker {
         this.config = new MockerConfig(this.name, config, this.mockModuleList);
     }
 
+    /**
+     * 更新配置
+     * @param {Object} opts
+     */
     updateConfig(opts) {
         this.config = _.merge({}, this.config, opts);
     }
@@ -37,7 +41,7 @@ class Mocker {
     _getMockModuleList() {
         let mockModuleList = [];
 
-        // 1. 获取所有的 mocker，约定：this.basePath 的每个子目录都是一个独立的 mocker
+        // 1. 获取所有的 mock module，约定：this.basePath/MOCK_MODULES 的每个直接子文件或者直接子目录，都是一个 mock module
         fsHandler.search.getAll(this.basePath, { globs: [MOCK_MODULES + '/*'] }).forEach((item) => {
             // 模块名字，默认取文件夹或文件名
             let name = path.basename(item.relativePath, '.js');
@@ -49,12 +53,14 @@ class Mocker {
 
             let requireModulePath = path.join(this.basePath, MOCK_MODULES, name);
 
-            let module = require(requireModulePath);
+            // TODO 直接引入这个模块可能会有安全风险，需要考虑是否放入沙箱中引入
+            let module = getRequireResult(requireModulePath);
 
             // 是否存在配置文件
             let config;
-            if (item.isDirectory() && (fs.existsSync(path.join(requireModulePath, 'config.json')) || fs.existsSync(path.join(requireModulePath, 'config.js')))) {
-                config = require(path.join(requireModulePath, 'config'));
+            if (item.isDirectory()
+                && (fs.existsSync(path.join(requireModulePath, 'config.json')) || fs.existsSync(path.join(requireModulePath, 'config.js')))) {
+                config = getRequireResult(path.join(requireModulePath, 'config'));
             }
 
             mockModuleList.push(new MockModule(name, module, config));
@@ -63,5 +69,3 @@ class Mocker {
         return mockModuleList;
     }
 }
-
-module.exports = Mocker;
