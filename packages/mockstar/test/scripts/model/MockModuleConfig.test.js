@@ -3,7 +3,7 @@ const expect = chai.expect;
 
 const MockModuleConfig = require('../../../lib/model/MockModuleConfig').default;
 
-describe('./mocker/MockModuleConfig.js', () => {
+describe.only('./mocker/MockModuleConfig.js', () => {
     describe('check exist-config', () => {
         let mockModuleConfig;
 
@@ -17,13 +17,14 @@ describe('./mocker/MockModuleConfig.js', () => {
         });
 
         it('should contain some fields', () => {
-            expect(mockModuleConfig).to.have.all.keys('name', 'description', 'delay', 'match');
+            expect(mockModuleConfig).to.have.all.keys('name', 'description', 'delay', 'priority', 'match');
         });
 
         it('should equal correct value', () => {
             expect(mockModuleConfig).to.eql({
                 name: 'exist-config',
                 description: 'exist-config description',
+                priority: 88,
                 delay: 10086,
                 match: {
                     _ms_target_: 'exist-config',
@@ -38,6 +39,7 @@ describe('./mocker/MockModuleConfig.js', () => {
             expect(new MockModuleConfig('no-config')).to.eql({
                 name: 'no-config',
                 description: 'no-config',
+                priority: 0,
                 delay: 0,
                 match: {
                     _ms_target_: 'no-config'
