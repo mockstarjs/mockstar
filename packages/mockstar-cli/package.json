@@ -54,6 +54,7 @@
     "method-override": "^2.3.10",
     "minimist": "^1.2.0",
     "mockstar": "^0.1.0",
+    "mockstar-plugin-xhr": "^0.1.0",
     "morgan": "^1.9.0",
     "ora": "^1.4.0",
     "os": "^0.1.1",
