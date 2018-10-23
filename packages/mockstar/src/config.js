@@ -3,14 +3,7 @@
  *
  * @type {String}
  */
-export const MS_TARGET = '_ms_target_';
-
-/**
- * 在 url 中携带的 query 值，例如 /path/to/url?_ms_=xxx
- *
- * @type {String}
- */
-export const XHR_QUERY_KEY = '_ms_';
+export const MS_TARGET = '_ms_target';
 
 /**
  * mock_modules 的字段名字

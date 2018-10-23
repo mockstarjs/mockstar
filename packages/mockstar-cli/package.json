@@ -6,8 +6,8 @@
     "mockstar": "./bin/mockstar"
   },
   "scripts": {
-    "test": "mocha",
-    "test2": "npm run eslint && npm run test-cov",
+    "test-mocha": "node ./node_modules/mocha/bin/_mocha",
+    "test": "npm run eslint && npm run test-cov",
     "eslint": "eslint src/",
     "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha"
   },
@@ -54,7 +54,6 @@
     "method-override": "^2.3.10",
     "minimist": "^1.2.0",
     "mockstar": "^0.1.0",
-    "mockstar-plugin-xhr": "^0.1.0",
     "morgan": "^1.9.0",
     "ora": "^1.4.0",
     "os": "^0.1.1",

@@ -68,20 +68,20 @@ module.exports = (router, mockerList, mockerParser) => {
             let isDisabled;
 
             // 判断该路由的名字是否在referer中
-            let mockstarQueryItem = mockstar.util.getMatmanQueryItem(req.headers.referer, mockerItem.name);
+            let mockstarQueryItem = mockstar.getQueryItem(req.headers.referer, mockerItem.name);
 
             if (mockstarQueryItem) {
                 // referer 里面的请求参数拥有最高优先级，因为这种场景比较特殊，主要用于自动化测试之用
                 isDisabled = mockstarQueryItem.isDisabled();
             } else {
                 // 从请求 req 或者 config.json 文件中检查当前请求是否需要禁用 mock 服务
-                const QUERY_KEY = mockstar.config.MATMAN_QUERY_KEY;
+                const QUERY_KEY = '_ms_disable';
                 isDisabled = req.query[QUERY_KEY] || req.body[QUERY_KEY];
                 if (!isDisabled) {
-                    // 此处要重新获取新的数据，以便取到缓存的。
-                    // TODO 此处还可以优化，比如及时更新缓存中的数据，而不需要每次都去获取
-                    let curMockerItem = mockerParser.getMockerByName(mockerItem.name, true);
-                    isDisabled = curMockerItem.config.disable;
+                // 此处要重新获取新的数据，以便取到缓存的。
+                // TODO 此处还可以优化，比如及时更新缓存中的数据，而不需要每次都去获取
+                let curMockerItem = mockerParser.getMockerByName(mockerItem.name, true);
+                isDisabled = curMockerItem.config.disable;
                 }
             }
 

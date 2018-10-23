@@ -2,13 +2,13 @@ const path = require('path');
 const fse = require('fs-extra');
 const spawn = require('cross-spawn');
 
-const mockstar = require('mockstar');
+const utilMockstar = require('../utils/mockstar');
 
 module.exports = (configOpts) => {
     // console.log('run-by-pm2', configOpts);
 
     // pm2 的方式下，则需要先生成 pm2.json 文件，然后再使用 pm2 启动
-    const buildPath = mockstar.util.getMockServerBuildPath(configOpts.rootPath, configOpts.buildPath);
+    const buildPath = utilMockstar.getBuildPath(configOpts.rootPath, configOpts.buildPath);
     const pm2ConfigFilePath = path.join(buildPath, 'pm2.json');
 
     // 获取配置信息
@@ -94,8 +94,8 @@ function deleteTask(callback) {
  * @returns {{apps: *[]}}
  */
 function getPm2Config(configOpts) {
-    const mockServerPath = mockstar.util.getMockServerBasePath(configOpts.rootPath, configOpts.mockServerPath);
-    const buildPath = mockstar.util.getMockServerBuildPath(configOpts.rootPath, configOpts.buildPath);
+    const mockServerPath = utilMockstar.getMockServerPath(configOpts.rootPath, configOpts.mockServerPath);
+    const buildPath = utilMockstar.getBuildPath(configOpts.rootPath, configOpts.buildPath);
     const mockstarConfigPath = path.join(configOpts.rootPath, 'mockstar.config.js');
 
     // http://pm2.keymetrics.io/docs/usage/application-declaration/
