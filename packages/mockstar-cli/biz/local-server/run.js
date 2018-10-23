@@ -110,8 +110,8 @@ module.exports = (configOpts) => {
 
     // TODO 触发 onBeforeServerListen 事件
     // 如果启动了 plugin=async 则开启 websocket
-    if (configOpts.supportAsync) {
-        server = require('./plugins/mocker/websocket')(configOpts, server, routerMocker._mockerParser);
+    if (routerMocker._mockerParser.isSupportAsync()) {
+        require('./plugins/mocker/websocket')(configOpts, server, routerMocker._mockerParser);
     }
 
     server.listen(configOpts.port || 9527, () => {
