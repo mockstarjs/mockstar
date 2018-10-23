@@ -26,7 +26,7 @@ describe('local server for mockstar', () => {
         testServer.stop(pid);
     });
 
-    describe('check /mockstar-cgi/mocker', () => {
+    describe('get /mockstar-cgi/mocker', () => {
         let data;
 
         before(function () {
@@ -64,7 +64,7 @@ describe('local server for mockstar', () => {
         });
     });
 
-    describe('check /mockstar-cgi/mocker/:mockerName', () => {
+    describe('get /mockstar-cgi/mocker/:mockerName', () => {
         let data;
 
         before(function () {
@@ -101,7 +101,7 @@ describe('local server for mockstar', () => {
         });
     });
 
-    describe('check /mockstar-cgi/mocker/:mockerName/readme', () => {
+    describe('get /mockstar-cgi/mocker/:mockerName/readme', () => {
         it('should exist content', () => {
             return request
                 .get(cgiBase + '/mockstar-cgi/mocker/demo_03/readme')
@@ -121,7 +121,7 @@ describe('local server for mockstar', () => {
         });
     });
 
-    describe('check /mockstar-admin/mockers/:name/static/*', () => {
+    describe('get /mockstar-admin/mockers/:name/static/*', () => {
         it('should support jpg ', () => {
             return request
                 .get(cgiBase + '/mockstar-admin/mockers/demo_03/static/logo.jpg')
@@ -143,6 +143,81 @@ describe('local server for mockstar', () => {
                     expect(response.body.length).to.equal(21869);
                 });
         });
+    });
 
+    describe('post /mockstar-cgi/mocker/:mockerName', () => {
+        it('change config.activeModule', () => {
+            return request
+                .post(cgiBase + '/mockstar-cgi/mocker/demo_03', {
+                    config: {
+                        activeModule: 'success_2'
+                    }
+                })
+                .then((response) => {
+                    let data = JSON.parse(response.res.text);
+
+                    // 1. 修改 activeModule 为 success_2
+                    expect(data.config.activeModule).to.equal('success_2');
+
+                    return request
+                        .get(cgiBase + '/mockstar-cgi/mocker/demo_03')
+                        .then((response) => {
+                            let data = JSON.parse(response.res.text);
+
+                            // 2. 查询下 activeModule 为 success_2
+                            expect(data.config.activeModule).to.equal('success_2');
+
+                            return request
+                                .post(cgiBase + '/mockstar-cgi/mocker/demo_03', {
+                                    config: {
+                                        activeModule: 'success_1'
+                                    }
+                                })
+                                .then((response) => {
+                                    let data = JSON.parse(response.res.text);
+
+                                    // 3. 修改 activeModule 为 success_1
+                                    expect(data.config.activeModule).to.equal('success_1');
+                                });
+                        });
+                });
+        });
+
+        it('change config.disable', () => {
+            return request
+                .post(cgiBase + '/mockstar-cgi/mocker/demo_01', {
+                    config: {
+                        disable: false
+                    }
+                })
+                .then((response) => {
+                    let data = JSON.parse(response.res.text);
+
+                    // 1. 修改 disable 为 false
+                    expect(data.config.disable).to.be.false;
+
+                    return request
+                        .get(cgiBase + '/mockstar-cgi/mocker/demo_01')
+                        .then((response) => {
+                            let data = JSON.parse(response.res.text);
+
+                            // 2. 查询下 disable 为 false
+                            expect(data.config.disable).to.be.false;
+
+                            return request
+                                .post(cgiBase + '/mockstar-cgi/mocker/demo_01', {
+                                    config: {
+                                        disable: true
+                                    }
+                                })
+                                .then((response) => {
+                                    let data = JSON.parse(response.res.text);
+
+                                    // 3. 修改 disable 为 true
+                                    expect(data.config.disable).to.be.true;
+                                });
+                        });
+                });
+        });
     });
 });
