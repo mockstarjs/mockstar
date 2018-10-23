@@ -8,6 +8,7 @@
     "build": "babel --presets env,stage-0 src/ --out-dir lib/ --source-maps",
     "watch-compile": "npm run build -- --watch",
     "watch": "npm run watch-compile",
+    "test-mocha": "node ./node_modules/mocha/bin/_mocha",
     "test": "npm run eslint && npm run test-cov",
     "eslint": "eslint src/",
     "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha"
