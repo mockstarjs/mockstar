@@ -247,6 +247,24 @@ export default class Parser {
     }
 
     /**
+     * 是否支持异步数据模拟方式
+     * @return {Boolean}
+     */
+    isSupportAsync() {
+        let mockerList = this.getAllMocker();
+        let supportAsync = false;
+
+        for (let i = 0; i < mockerList.length; i++) {
+            // 只要找到一个 plugin=async 的，则设置该值为 true
+            if (mockerList[i].config.plugin === 'async') {
+                supportAsync = true;
+                break;
+            }
+        }
+        return supportAsync;
+    }
+
+    /**
      * 更新 mocker 的 信息
      *
      * @param {String} mockerName handler 名字
