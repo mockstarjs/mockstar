@@ -1,26 +1,25 @@
-const fs = require('fs');
-const fse = require('fs-extra');
-const path = require('path');
-const fsHandler = require('fs-handler');
-const _ = require('lodash');
-const marked = require('marked');
-const store = require('../store');
+import fs from 'fs';
+import fse from 'fs-extra';
+import path from 'path';
+import _ from 'lodash';
+import marked from 'marked';
+import fsHandler from 'fs-handler';
 
-const { MOCK_MODULES } = require('../config');
-const { XHR_TARGET } = require('mockstar-plugin-xhr');
+import { getDB } from '../store';
+import { LOCAL_STORE_FILE, MOCK_MODULES, MS_TARGET } from '../config';
 
-class MockerParser {
+export default class Parser {
     /**
      * 构造函数
      *
      * @param {Object} opts 参数
      * @param {String} opts.basePath mocker的根目录，绝对路径
      * @param {String} [opts.buildPath] 构建之后的目录，也是数据存储的根目录，绝对路径
-     * @param {Array} [opts.matmanMockers] MatmanMocker 列表
+     * @param {Array} [opts.definedMockers] 预定义的 Mocker 列表
      */
     constructor(opts) {
         this.basePath = opts.basePath;
-        this.matmanMockers = Array.isArray(opts.matmanMockers) ? [...opts.matmanMockers] : [];
+        this.definedMockers = Array.isArray(opts.definedMockers) ? [...opts.definedMockers] : [];
 
         // 只有传递了 opts.buildPath，才处理 db
         if (opts.buildPath) {
@@ -30,7 +29,7 @@ class MockerParser {
             // 注意此处一定要保证存储数据的地址是可存在的，否则会保存失败。
             fse.ensureDirSync(this.buildPath);
 
-            this.db = store.getDB(path.join(this.buildPath, 'db.json'));
+            this.db = getDB(path.join(this.buildPath, LOCAL_STORE_FILE));
         }
     }
 
@@ -60,6 +59,7 @@ class MockerParser {
             let requirePath = getRequirePath(path.join(this.basePath, item.relativePath));
             // console.log('requirePath ：', requirePath);
 
+            // 引入这个模块
             let mockerItem = require(requirePath);
 
             // 更新用户操作历史记录
@@ -78,9 +78,6 @@ class MockerParser {
 
             mockerList.push(mockerItem);
         });
-
-        // TODO 2018/6/2 helinjiang: 如果isReset=true，则还需要及时更新到 this.matmanMockers
-        // TODO 2018/6/2 helinjiang: 还要返回 this.matmanMockers 中数据
 
         if (this.db) {
             // 存储到本地缓存数据文件内，以便下次启动时能够记录上一次的操作
@@ -185,7 +182,7 @@ class MockerParser {
      * @param {String} mockerName mocker 名字
      * @param {String} mockModuleName mock module 名字
      * @param {Boolean} [isReset] 是否为重置，如果为 true，则将忽略缓存数据
-     * @return {Object} MatmanMockModule 对象
+     * @return {Object} MockModule 对象
      */
     getMockModuleByName(mockerName, mockModuleName, isReset) {
         let mocker = this.getMockerByName(mockerName, isReset);
@@ -223,7 +220,7 @@ class MockerParser {
 
         // 2. 获得当前最适合的 mock module
         // 优先获取 param 中请求的指定 mock_module，其次是 mocker.config.activeModule
-        let mockModuleName = params[XHR_TARGET] || mockerItem.config.activeModule;
+        let mockModuleName = params[MS_TARGET] || mockerItem.config.activeModule;
 
         let mockModuleItem = this.getMockModuleByName(mockerItem.name, mockModuleName);
 
@@ -339,5 +336,3 @@ function getRequirePath(absolutePath) {
     // 需要将“\”替换为“/”，因为 require 语法中模块的路径是以 "/" 来分目录层级的
     return relativePath.replace(/\\/gi, '/');
 }
-
-module.exports = MockerParser;

@@ -6,7 +6,7 @@ const Mocker = require('../../../lib/model/Mocker').default;
 const MockModule = require('../../../lib/model/MockModule').default;
 const MockerConfig = require('../../../lib/model/MockerConfig').default;
 
-describe.only('./mocker/Mocker.js', () => {
+describe('./mocker/Mocker.js', () => {
     describe('check demo_01', () => {
         let mocker;
 
