@@ -1,5 +1,5 @@
 const SocketClient = require('./SocketClient');
-const util = require('../util');
+const util = require('../util-async');
 
 class AsyncClient extends SocketClient {
   /**
