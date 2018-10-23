@@ -34,7 +34,6 @@
     "lodash": "^4.17.10",
     "lowdb": "^1.0.0",
     "marked": "^0.4.0",
-    "mockstar-plugin-xhr": "^0.1.0",
     "url-handle": "^0.2.1"
   },
   "devDependencies": {
