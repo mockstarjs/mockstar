@@ -1,0 +1,4 @@
+{
+  "route": "/async/a/b/async_01",
+  "plugin": "async"
+}
