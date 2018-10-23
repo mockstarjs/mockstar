@@ -6,7 +6,6 @@ import fsHandler from 'fs-handler';
 import MockerConfig from './MockerConfig';
 import MockModule from './MockModule';
 import { MOCK_MODULES } from '../config';
-import { getRequireResult } from '../file';
 
 export default class Mocker {
     /**
@@ -54,13 +53,13 @@ export default class Mocker {
             let requireModulePath = path.join(this.basePath, MOCK_MODULES, name);
 
             // TODO 直接引入这个模块可能会有安全风险，需要考虑是否放入沙箱中引入
-            let module = getRequireResult(requireModulePath);
+            let module = require(requireModulePath);
 
             // 是否存在配置文件
             let config;
             if (item.isDirectory()
                 && (fs.existsSync(path.join(requireModulePath, 'config.json')) || fs.existsSync(path.join(requireModulePath, 'config.js')))) {
-                config = getRequireResult(path.join(requireModulePath, 'config'));
+                config = require(path.join(requireModulePath, 'config'));
             }
 
             mockModuleList.push(new MockModule(name, module, config));
