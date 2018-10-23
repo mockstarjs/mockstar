@@ -1,9 +1,8 @@
 {
     "name": "exist-config-renamed",
     "description": "exist-config description",
-    "priority": 88,
     "delay": 10086,
-    "query": {
+    "match": {
         "type": 1
     }
 }
