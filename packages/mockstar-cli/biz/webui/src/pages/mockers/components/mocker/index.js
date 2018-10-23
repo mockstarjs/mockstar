@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 
 import { AsyncClient } from 'mockstar-client';
 
-import { ajax, requestStub } from '../../../../business/db';
+import { ajax } from '../../../../business/db';
 
 import { loadMocker, loadMockerReadme, setMockerActiveModule, setMockerDisable } from '../../data/data-mocker';
 import { loadMockerList } from '../../data/data-mocker-list';
@@ -76,7 +76,9 @@ class Mocker extends Component {
                     console.error(err);
                 });
         } else {
-            requestStub(`http://${host}`, actualURL, query)
+            let asyncClient = new AsyncClient(`http://${host}`);
+
+            asyncClient.request(actualURL, query)
                 .then((data) => {
                     if (process.env.NODE_ENV !== 'production') {
                         console.log(`url=${actualURL}`, query, data);

@@ -1,5 +1,4 @@
 import superagent from 'superagent';
-import { AsyncClient } from 'mockstar-client';
 
 export function ajax(opts = {}) {
     if (opts.method === 'post') {
@@ -38,11 +37,4 @@ export function getDataByGet(url, queryOpts) {
                 resolve(res.body);
             });
     });
-}
-
-export function requestStub(url, route, params = {}) {
-    let asyncClient = new AsyncClient(url);
-
-    // TODO 这里需要考虑下超时的情形
-    return asyncClient.request(route, params);
 }
