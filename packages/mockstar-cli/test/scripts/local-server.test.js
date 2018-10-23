@@ -1,5 +1,6 @@
 const path = require('path');
 const request = require('superagent');
+const fse = require('fs-extra');
 const { expect } = require('chai');
 const testServer = require('../data/test-sever');
 
@@ -9,8 +10,10 @@ describe('local server for mockstar', () => {
     let cgiBase;
 
     before(function () {
+        fse.removeSync(path.join(__dirname, '../data/local-server-test/build'));
+
         return testServer.start(path.join(__dirname, '../../bin/mockstar'), [
-            `--config=${path.join(__dirname, '../data/demo_01/mockstar.config.js')}`
+            `--config=${path.join(__dirname, '../data/local-server-test/mockstar.config.js')}`
         ])
             .then((data) => {
                 // console.log('----', data);
@@ -23,6 +26,7 @@ describe('local server for mockstar', () => {
     });
 
     after(function () {
+        fse.removeSync(path.join(__dirname, '../data/local-server-test/build'));
         testServer.stop(pid);
     });
 
