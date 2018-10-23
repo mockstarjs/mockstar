@@ -10,6 +10,7 @@ export default class MockModuleConfig {
      * @param {Object} [config] config.json 中的值，注意 config.json 不一定存在
      * @param {String} [config.name] 名字
      * @param {String} [config.description] 简要描述
+     * @param {Number} [config.priority] 权重值，一般用于管理后台列表中排序的权重，值越大则越排在前面
      * @param {Number} [config.delay] 延时返回的时间，单位 ms
      * @param {Object} [config.match] 匹配规则
      */
@@ -30,5 +31,8 @@ export default class MockModuleConfig {
         this.match = _.merge({}, config.match, {
             [MS_TARGET]: mockModuleName
         });
+
+        // 权重值，一般用于管理后台列表中排序的权重，值越大则越排在前面
+        this.priority = config.priority || 0;
     }
 }
