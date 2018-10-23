@@ -8,7 +8,7 @@ const MatmanQueryItem = require('./model/MatmanQueryItem');
  * 获得 req.headers.referer 中携带的额外参数列表
  *
  * @param {String} referer req.headers.referer
- * @returns {{_m_name:String,_m_target:String,_m_disable:Number}[]} 结果
+ * @returns {{_ms_name:String,_ms_target:String,_ms_disable:Number}[]} 结果
  */
 function getMatmanQueryItemsFromReferer(referer) {
   let paramsFromReferer;

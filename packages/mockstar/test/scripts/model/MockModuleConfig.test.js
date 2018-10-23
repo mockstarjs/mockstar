@@ -27,7 +27,7 @@ describe('./mocker/MockModuleConfig.js', () => {
         priority: 88,
         delay: 10086,
         query: {
-          _m_target: 'exist-config',
+          _ms_target_: 'exist-config',
           type: 1
         }
       });
@@ -42,7 +42,7 @@ describe('./mocker/MockModuleConfig.js', () => {
         priority: 0,
         delay: 0,
         query: {
-          _m_target: 'no-config'
+          _ms_target_: 'no-config'
         }
       });
     });
