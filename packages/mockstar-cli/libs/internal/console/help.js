@@ -14,6 +14,8 @@ module.exports = function (args) {
     arr.push('\n');
     arr.push('    Commands:');
     arr.push('        start                                    Start local server.');
+    arr.push('        stop                                     Stop local server.');
+    arr.push('        pm2                                      Commands pass to pm2.');
     arr.push('\n');
     arr.push('    Options:');
     arr.push('        --version, -[v]           Print version and exit successfully.');
