@@ -6,6 +6,7 @@ const mkdirp = require('mkdirp');
 const Generator = require('yeoman-generator');
 const shell = require('shelljs');
 const Utils = require('./utils');
+const utilsMockstar = require('./utils-mockstar');
 const logger = require('./logger');
 const fse = require('fs-extra');
 
@@ -35,6 +36,8 @@ module.exports = class extends Generator {
      */
     prompting() {
         let isDev = this.options.isDev;
+        let cwd = this.options.env.cwd;
+
         return this.prompt([{
             type: 'list',
             name: 'initType',
@@ -68,6 +71,37 @@ module.exports = class extends Generator {
 
                 return true;
             }
+        }, {
+            type: 'list',
+            name: 'mockerParentPath',
+            message: '请选择mocker放置的根目录 ',
+            choices: function (answers) {
+                // 获取可选择的路径
+                return utilsMockstar.getMockServerPathList(cwd);
+            },
+            when: function (answers) {
+                return answers.initType === 'mocker';
+            }
+        }, {
+            type: 'input',
+            name: 'mockerName',
+            message: '请输入mocker名称，只能够输入英文、数字和、- 及 _ ',
+            when: function (answers) {
+                return answers.initType === 'mocker';
+            },
+            validate: function (mockerName) {
+                if (!mockerName) {
+                    return 'mocker名称不能为空';
+                }
+
+                // 默认情况下是在当前路径下新建以 projectName 为名字的文件夹，然后再进入其中生成代码。
+                // 但如果当前路径下已经存在了，则需要进行提示，避免覆盖
+                if (!isDev && fse.pathExistsSync(mockerName)) {
+                    return `当前目录下已经存在名字为 ${mockerName} 的文件夹了`;
+                }
+
+                return true;
+            }
         }]).then((answers) => {
             this.answers = answers;
         });
@@ -77,12 +111,12 @@ module.exports = class extends Generator {
      * Generator project files.
      */
     writing() {
-        const { initType, projectName = 'mockstar-app' } = this.answers;
-        console.log('--', initType, projectName);
+        const { initType, projectName, mockerParentPath, mockerName } = this.answers;
+        console.log('--', this.answers);
 
-        const folderPath = path.resolve(projectName);
+        const _copyProjectTemplates = () => {
+            const folderPath = path.resolve(projectName);
 
-        const _copyTemplates = () => {
             // 默认情况下是在当前路径下新建以 projectName 为名字的文件夹，然后再进入其中生成代码。
             // 但如果当前路径下已经存在了，则需要进行提示。
             mkdirp(folderPath);
@@ -131,10 +165,35 @@ module.exports = class extends Generator {
                     this.destinationPath('./mock_server/' + filePath)
                 );
             });
+        };
+
+        const _copyMockerTemplates = () => {
+            const mockerFilePaths = Utils.read(path.join(this.templatePath(), './mock_server/mockers/demo_cgi'));
+
+            // console.log(this.templatePath())
+            // console.log(path.join(this.templatePath(), './mock_server/mockers/demo_cgi'));
+            // console.log(this.destinationPath())
+            // console.log(path.join(mockerParentPath, mockerName));
+            mockerFilePaths.map((filePath) => {
+                this.fs.copy(
+                    this.templatePath('./mock_server/mockers/demo_cgi/' + filePath),
+                    path.join(mockerParentPath, mockerName, filePath)
+                );
+            });
 
         };
 
-        _copyTemplates();
+        switch (initType) {
+            case 'project':
+                _copyProjectTemplates();
+                break;
+            case 'mocker':
+                _copyMockerTemplates();
+                break;
+            default:
+                console.error('unknown initType', this.answers);
+                break;
+        }
     }
 
     install() {
