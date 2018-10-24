@@ -36,10 +36,18 @@ function startServer(isDev, configAbsolutePath, cwd, opts) {
     if (isDev) {
         run(configOpts);
     } else {
-        runByPm2(configOpts);
+        runByPm2.start(configOpts);
     }
 }
 
+/**
+ * 停止服务
+ */
+function stopServer() {
+    runByPm2.stop();
+}
+
 module.exports = {
-    startServer: startServer
+    startServer: startServer,
+    stopServer: stopServer
 };

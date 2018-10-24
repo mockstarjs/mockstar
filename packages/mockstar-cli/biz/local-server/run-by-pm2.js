@@ -4,7 +4,7 @@ const spawn = require('cross-spawn');
 
 const utilMockstar = require('../utils/mockstar');
 
-module.exports = (configOpts) => {
+function startPm2(configOpts) {
     // console.log('run-by-pm2', configOpts);
 
     // pm2 的方式下，则需要先生成 pm2.json 文件，然后再使用 pm2 启动
@@ -27,7 +27,15 @@ module.exports = (configOpts) => {
         .catch((err) => {
             throw err;
         });
-};
+}
+
+function stopPm2() {
+    // console.log('stopPm2');
+
+    deleteTask(() => {
+
+    });
+}
 
 /**
  * 启动 pm2
@@ -88,9 +96,11 @@ function deleteTask(callback) {
     deletePm2.on('close', (code) => {
         // console.log({ code: code, data: output });
 
-        setTimeout(() => {
-            callback();
-        }, 200);
+        if(typeof callback === 'function'){
+            setTimeout(() => {
+                callback();
+            }, 200);
+        }
 
     });
 }
@@ -129,3 +139,8 @@ function getPm2Config(configOpts) {
 
     return result;
 }
+
+module.exports = {
+    start: startPm2,
+    stop: stopPm2
+};
