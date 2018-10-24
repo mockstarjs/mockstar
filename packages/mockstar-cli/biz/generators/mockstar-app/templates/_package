@@ -1,5 +1,5 @@
 {
-  "name": "<%= name %>",
+  "name": "<%= projectName %>",
   "scripts": {
     "start": "mockstar start",
     "stop": "mockstar stop",
