@@ -6,6 +6,8 @@
 
 ## 启动
 
+> 需要全局安装 `mockstar-cli` 组件
+
 在 mockstar-app 中执行以下命令即可。
 
 ```
