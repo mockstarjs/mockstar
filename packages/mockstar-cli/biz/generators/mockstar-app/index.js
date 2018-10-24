@@ -160,27 +160,42 @@ module.exports = class extends Generator {
             const mockServerFilePaths = Utils.read(path.join(this.templatePath(), './mock_server/'));
 
             mockServerFilePaths.map((filePath) => {
-                this.fs.copy(
-                    this.templatePath('./mock_server/' + filePath),
-                    this.destinationPath('./mock_server/' + filePath)
-                );
+                if (/_config/.test(filePath)) {
+                    this.fs.copyTpl(
+                        this.templatePath('./mock_server/' + filePath),
+                        this.destinationPath('./mock_server/' + filePath.replace(/_config/,'config.json')),
+                        {
+                            mockerName: 'demo_cgi'
+                        }
+                    );
+                } else {
+                    this.fs.copy(
+                        this.templatePath('./mock_server/' + filePath),
+                        this.destinationPath('./mock_server/' + filePath)
+                    );
+                }
             });
         };
 
         const _copyMockerTemplates = () => {
             const mockerFilePaths = Utils.read(path.join(this.templatePath(), './mock_server/mockers/demo_cgi'));
 
-            // console.log(this.templatePath())
-            // console.log(path.join(this.templatePath(), './mock_server/mockers/demo_cgi'));
-            // console.log(this.destinationPath())
-            // console.log(path.join(mockerParentPath, mockerName));
             mockerFilePaths.map((filePath) => {
-                this.fs.copy(
-                    this.templatePath('./mock_server/mockers/demo_cgi/' + filePath),
-                    path.join(mockerParentPath, mockerName, filePath)
-                );
+                if (/_config/.test(filePath)) {
+                    this.fs.copyTpl(
+                        this.templatePath('./mock_server/mockers/demo_cgi/' + filePath),
+                        path.join(mockerParentPath, mockerName, filePath.replace(/_config/,'config.json')),
+                        {
+                            mockerName: mockerName
+                        }
+                    );
+                } else {
+                    this.fs.copy(
+                        this.templatePath('./mock_server/mockers/demo_cgi/' + filePath),
+                        path.join(mockerParentPath, mockerName, filePath)
+                    );
+                }
             });
-
         };
 
         switch (initType) {

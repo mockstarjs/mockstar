@@ -1,0 +1,9 @@
+{
+  "description": "description for <%= mockerName %>",
+  "route": "/cgi-bin/a/b/<%= mockerName %>",
+  "defaultModule": "success_type_1",
+  "tags": [
+    "tag1",
+    "tag2"
+  ]
+}
