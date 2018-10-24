@@ -1,7 +1,7 @@
-const { getSuccess } = require('../../base');
+const { getSuccessData } = require('../../base');
 
 module.exports = function () {
-    return getSuccess({
+    return getSuccessData({
         uid: 22222,
         type: 2,
         description: '老师'
