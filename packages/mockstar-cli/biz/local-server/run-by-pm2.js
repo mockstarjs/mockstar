@@ -19,7 +19,7 @@ module.exports = (configOpts) => {
         .then(() => {
             console.log('Generate pm2.json success!', pm2ConfigFilePath);
 
-            // 注意这里一定要先删除之后再启动，否则可能造成 watch 失效  #119
+            // 注意这里一定要先删除之后再启动，否则可能造成 watch 失效
             deleteTask(() => {
                 startTask(pm2ConfigFilePath);
             });
@@ -34,7 +34,12 @@ module.exports = (configOpts) => {
  * @param {String} pm2ConfigFilePath pm2.json 配置文件绝对路径
  */
 function startTask(pm2ConfigFilePath) {
-    const runPm2 = spawn('pm2', ['start', pm2ConfigFilePath]);
+    // const runPm2 = spawn('pm2', ['start', pm2ConfigFilePath]);
+    const runPm2 = spawn('node', [
+        path.join(__dirname, '../../node_modules/.bin/pm2'),
+        'start',
+        pm2ConfigFilePath
+    ]);
 
     // 打印输出
     let output = '';
@@ -59,7 +64,12 @@ function startTask(pm2ConfigFilePath) {
  * 停止 pm2
  */
 function deleteTask(callback) {
-    const deletePm2 = spawn('pm2', ['delete', 'mockstar_app']);
+    // const deletePm2 = spawn('pm2', ['delete', 'mockstar_app']);
+    const deletePm2 = spawn('node', [
+        path.join(__dirname, '../../node_modules/.bin/pm2'),
+        'delete',
+        'mockstar_app'
+    ]);
 
     // 打印输出
     let output = '';
