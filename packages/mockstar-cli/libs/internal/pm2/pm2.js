@@ -14,7 +14,7 @@ module.exports = function (args) {
     // console.log(process.argv.slice(3));
 
     const runPm2 = spawn('node', [
-        path.join(__dirname, '../../../node_modules/.bin/pm2')
+        path.join(__dirname, '../../../node_modules/pm2/bin/pm2')
     ].concat(process.argv.slice(3)));
 
     // 打印输出

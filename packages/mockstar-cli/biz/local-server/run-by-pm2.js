@@ -44,7 +44,7 @@ function stopPm2() {
 function startTask(pm2ConfigFilePath) {
     // const runPm2 = spawn('pm2', ['start', pm2ConfigFilePath]);
     const runPm2 = spawn('node', [
-        path.join(__dirname, '../../node_modules/.bin/pm2'),
+        path.join(__dirname, '../../node_modules/pm2/bin/pm2'),
         'start',
         pm2ConfigFilePath
     ]);
@@ -74,7 +74,7 @@ function startTask(pm2ConfigFilePath) {
 function deleteTask(callback) {
     // const deletePm2 = spawn('pm2', ['delete', 'mockstar_app']);
     const deletePm2 = spawn('node', [
-        path.join(__dirname, '../../node_modules/.bin/pm2'),
+        path.join(__dirname, '../../node_modules/pm2/bin/pm2'),
         'delete',
         'mockstar_app'
     ]);
