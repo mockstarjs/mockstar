@@ -1,0 +1,11 @@
+{
+  "name": "<%= projectName %>",
+  "scripts": {
+    "start": "mockstar start",
+    "stop": "mockstar stop",
+    "logs": "mockstar pm2 logs"
+  },
+  "dependencies": {
+    "mockstar": "^<%= pkgVersion['mockstar'] %>"
+  }
+}
