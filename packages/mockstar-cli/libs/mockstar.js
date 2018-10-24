@@ -8,6 +8,7 @@ const semver = require('semver');
 const internalPluginConsole = require('./internal/console');
 const internalPluginStart = require('./internal/start');
 const internalPluginStop = require('./internal/stop');
+const internalPluginPm2 = require('./internal/pm2');
 
 /**
  * Entrance file, parse user input and call a command.
@@ -33,7 +34,8 @@ function entry(args) {
     return mockstar.init([
         internalPluginConsole,
         internalPluginStart,
-        internalPluginStop
+        internalPluginStop,
+        internalPluginPm2
     ])
         .then(function () {
             let cmd = args._.shift();
