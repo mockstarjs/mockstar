@@ -1,6 +1,6 @@
 {
   "name": "mockstar-cli",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "CLI tool for MockStar",
   "bin": {
     "mockstar": "./bin/mockstar"
