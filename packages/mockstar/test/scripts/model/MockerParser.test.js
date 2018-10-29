@@ -39,7 +39,7 @@ describe('./mocker/Parser.js', () => {
         });
 
         it('should contain correct mocker', () => {
-            expect(allMocker.map(item => item.name)).to.have.members(['demo_01', 'demo_02_renamed', 'demo_03', 'stub_01']);
+            expect(allMocker.map(item => item.name)).to.have.members(['demo_01', 'demo_02_renamed', 'demo_03', 'async_01']);
         });
     });
 
