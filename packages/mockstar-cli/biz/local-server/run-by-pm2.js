@@ -129,7 +129,6 @@ function deleteTask() {
 function getPm2Config(configOpts) {
     const mockServerPath = utilMockstar.getMockServerPath(configOpts.rootPath, configOpts.mockServerPath);
     const buildPath = utilMockstar.getBuildPath(configOpts.rootPath, configOpts.buildPath);
-    const mockstarConfigPath = path.join(configOpts.rootPath, 'mockstar.config.js');
 
     // http://pm2.keymetrics.io/docs/usage/application-declaration/
     let result = {
@@ -139,7 +138,7 @@ function getPm2Config(configOpts) {
                 script: path.join(__dirname, './start-app.js'),
                 watch: [mockServerPath],
                 ignore_watch: ['node_modules', buildPath],
-                args: [mockstarConfigPath, configOpts.rootPath],
+                args: [JSON.stringify(configOpts)],
                 env: {
                     COMMON_VARIABLE: 'true'
                 },
