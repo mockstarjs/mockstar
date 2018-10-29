@@ -28,12 +28,23 @@ function startPm2(configOpts) {
         });
 }
 
+/**
+ * 停止 pm2
+ *
+ * @param {String} name pm2 的应用名字
+ */
 function stopPm2(name) {
-    deleteTask(name || PM2_NAME);
+    if (!name) {
+        throw new Error('stop pm2 but no app_name or app_id!');
+    }
+
+    deleteTask(name);
 }
 
 /**
  * 启动 pm2
+ *
+ * @param {String} name pm2 的应用名字
  * @param {String} pm2ConfigFilePath pm2.json 配置文件绝对路径
  */
 function startTask(name, pm2ConfigFilePath) {
