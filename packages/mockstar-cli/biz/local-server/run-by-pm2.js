@@ -21,7 +21,7 @@ function startPm2(configOpts) {
         .then(() => {
             console.log('Generate pm2.json success!', pm2ConfigFilePath);
 
-            startTask(pm2ConfigFilePath);
+            startTask(pm2Config.apps[0].name, pm2ConfigFilePath);
         })
         .catch((err) => {
             throw err;
@@ -36,7 +36,7 @@ function stopPm2() {
  * 启动 pm2
  * @param {String} pm2ConfigFilePath pm2.json 配置文件绝对路径
  */
-function startTask(pm2ConfigFilePath) {
+function startTask(name, pm2ConfigFilePath) {
     pm2.connect(function (err) {
         if (err) {
             console.error(err);
@@ -44,16 +44,16 @@ function startTask(pm2ConfigFilePath) {
         }
 
         // 注意这里一定要先删除之后再启动，否则可能造成 watch 失效
-        pm2.describe(PM2_NAME, function (err, apps) {
+        pm2.describe(name, function (err, apps) {
             if (err) {
                 pm2.disconnect();   // Disconnects from PM2
                 throw err;
             }
 
             // 如果已存在，则先删除再启动
-            if (apps.length && apps[0].name === PM2_NAME) {
+            if (apps.length && apps[0].name === name) {
                 // 删除
-                pm2.delete(PM2_NAME, function (err, apps) {
+                pm2.delete(name, function (err, apps) {
                     if (err) {
                         pm2.disconnect();   // Disconnects from PM2
                         throw err;
@@ -130,11 +130,13 @@ function getPm2Config(configOpts) {
     const mockServerPath = utilMockstar.getMockServerPath(configOpts.rootPath, configOpts.mockServerPath);
     const buildPath = utilMockstar.getBuildPath(configOpts.rootPath, configOpts.buildPath);
 
+    let name = configOpts.name || PM2_NAME;
+
     // http://pm2.keymetrics.io/docs/usage/application-declaration/
     let result = {
         apps: [
             {
-                name: PM2_NAME,
+                name: name,
                 script: path.join(__dirname, './start-app.js'),
                 watch: [mockServerPath],
                 ignore_watch: ['node_modules', buildPath],
