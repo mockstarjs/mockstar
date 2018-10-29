@@ -13,6 +13,7 @@ const localServer = require('../../../biz/local-server');
  * @param {String} [args.config] 自定义配置文件，使用方式: --config=mockstar.config.js
  * @param {Number} [args.port] 自定义服务启动端口，使用方式: --port=9527
  * @param {Number} [args.p] 自定义服务启动端口，使用方式: -p 9527
+ * @param {Number} [args.name] 自定义的pm2服务名称，使用方式: --name=mockstar-app
  */
 module.exports = function (args) {
     // console.log(args);
@@ -27,6 +28,10 @@ module.exports = function (args) {
     // mockstar start --port=9527
     // mockstar start -p 9527
     const port = args.port || args.p;
+
+    // 自定义的pm2服务名称
+    // mockstar start --name=mockstar-app
+    const name = args.name;
 
     // 传递进来的文件，或者默认的 mockstar.config.js 文件
     // mockstar start --config=mockstar.config.js
@@ -45,7 +50,7 @@ module.exports = function (args) {
 
     // 启动本地服务
     console.log('Ready to start local server!');
-    localServer.startServer(isDev, configAbsolutePath, cwd, { port: port });
+    localServer.startServer(isDev, configAbsolutePath, cwd, { port: port, name: name });
 
     return Promise.resolve();
 };
