@@ -48,7 +48,6 @@
     "fs-extra": "^5.0.0",
     "fs-handler": "^0.1.2",
     "hexo-fs": "^0.2.3",
-    "js-yaml": "^3.11.0",
     "log4js": "^2.8.0",
     "meow": "^3.7.0",
     "method-override": "^2.3.10",
