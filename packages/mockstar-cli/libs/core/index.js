@@ -33,7 +33,8 @@ class MockStar {
         this.pluginDir = path.join(base, 'node_modules') + sep;
         this.logDir = path.join(base, 'logs');
 
-        this.config = utils.parseYaml(rcPath);            // Read mockstar local config.
+        // this.config = utils.parseYaml(rcPath);            // Read mockstar local config.
+        this.config = {};
 
         this.log = logger({
             debug: Boolean(args.debug),
