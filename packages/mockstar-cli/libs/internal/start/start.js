@@ -5,6 +5,7 @@ const fs = require('fs');
 const Promise = require('bluebird');
 
 const localServer = require('../../../biz/local-server');
+const runConfig = require('../../../biz/local-server/config');
 
 /**
  *
@@ -48,9 +49,20 @@ module.exports = function (args) {
         return Promise.reject();
     }
 
+    // 获取 mockstar.config.js 配置文件中的内容
+    let mockstarConfig = require(configAbsolutePath);
+
+    // 获取一些默认值
+    let configOpts = runConfig.getConfigOpts(mockstarConfig, {
+        port: port,
+        name: name,
+        cwd: cwd,
+        isDev: isDev
+    });
+
     // 启动本地服务
-    console.log('Ready to start local server!');
-    localServer.startServer(isDev, configAbsolutePath, cwd, { port: port, name: name });
+    console.log('Ready to start local server!', configOpts);
+    localServer.startServer(configOpts);
 
     return Promise.resolve();
 };

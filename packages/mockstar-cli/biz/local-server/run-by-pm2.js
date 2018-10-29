@@ -21,7 +21,7 @@ function startPm2(configOpts) {
         .then(() => {
             console.log('Generate pm2.json success!', pm2ConfigFilePath);
 
-            startTask(pm2Config.apps[0].name, pm2ConfigFilePath);
+            startTask(configOpts.name, pm2ConfigFilePath);
         })
         .catch((err) => {
             throw err;
@@ -130,13 +130,11 @@ function getPm2Config(configOpts) {
     const mockServerPath = utilMockstar.getMockServerPath(configOpts.rootPath, configOpts.mockServerPath);
     const buildPath = utilMockstar.getBuildPath(configOpts.rootPath, configOpts.buildPath);
 
-    let name = configOpts.name || PM2_NAME;
-
     // http://pm2.keymetrics.io/docs/usage/application-declaration/
     let result = {
         apps: [
             {
-                name: name,
+                name: configOpts.name,
                 script: path.join(__dirname, './start-app.js'),
                 watch: [mockServerPath],
                 ignore_watch: ['node_modules', buildPath],
