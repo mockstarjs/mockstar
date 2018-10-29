@@ -4,7 +4,7 @@ const pm2 = require('pm2');
 
 const utilMockstar = require('../utils/mockstar');
 
-const PM2_NAME = 'mockstar_app';
+const PM2_NAME = 'mockstar_9527';
 
 function startPm2(configOpts) {
     // console.log('run-by-pm2', configOpts);
@@ -28,8 +28,8 @@ function startPm2(configOpts) {
         });
 }
 
-function stopPm2() {
-    deleteTask();
+function stopPm2(name) {
+    deleteTask(name || PM2_NAME);
 }
 
 /**
@@ -87,22 +87,22 @@ function startTask(name, pm2ConfigFilePath) {
 /**
  * 停止 pm2
  */
-function deleteTask() {
+function deleteTask(name) {
     pm2.connect(function (err) {
         if (err) {
             console.error(err);
             process.exit(2);
         }
 
-        pm2.describe(PM2_NAME, function (err, apps) {
+        pm2.describe(name, function (err, apps) {
             if (err) {
                 pm2.disconnect();   // Disconnects from PM2
                 throw err;
             }
 
             // 已存在的场景才需要删除
-            if (apps.length && apps[0].name === PM2_NAME) {
-                pm2.delete(PM2_NAME, function (err, apps) {
+            if (apps.length && apps[0].name === name) {
+                pm2.delete(name, function (err, apps) {
                     console.log('Stop local server success!');
                     pm2.disconnect();   // Disconnects from PM2
 
