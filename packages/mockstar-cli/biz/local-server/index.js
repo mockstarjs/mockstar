@@ -10,6 +10,8 @@ const runConfig = require('./config');
  * @param {String} configAbsolutePath mockstar.config.js 文件的绝对路径
  * @param {String} [cwd] 项目启动的目录，默认为 process.cwd()
  * @param {Object} [opts] 额外的高优先级的参数，用于覆盖 mockstarConfig 的值
+ * @param {Number} [opts.port] 自定义服务启动端口
+ * @param {String} [opts.name] 自定义的pm2服务名称
  */
 function startServer(isDev, configAbsolutePath, cwd, opts) {
     // 开发模式下，直接调用执行
@@ -42,9 +44,10 @@ function startServer(isDev, configAbsolutePath, cwd, opts) {
 
 /**
  * 停止服务
+ * @param {String} [name] 自定义的pm2服务名称
  */
-function stopServer() {
-    runByPm2.stop();
+function stopServer(name) {
+    runByPm2.stop(name);
 }
 
 module.exports = {
