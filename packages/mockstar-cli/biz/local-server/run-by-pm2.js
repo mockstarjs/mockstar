@@ -1,8 +1,10 @@
 const path = require('path');
 const fse = require('fs-extra');
-const spawn = require('cross-spawn');
+const pm2 = require('pm2');
 
 const utilMockstar = require('../utils/mockstar');
+
+const PM2_NAME = 'mockstar_app';
 
 function startPm2(configOpts) {
     // console.log('run-by-pm2', configOpts);
@@ -19,10 +21,7 @@ function startPm2(configOpts) {
         .then(() => {
             console.log('Generate pm2.json success!', pm2ConfigFilePath);
 
-            // 注意这里一定要先删除之后再启动，否则可能造成 watch 失效
-            deleteTask(() => {
-                startTask(pm2ConfigFilePath);
-            });
+            startTask(pm2ConfigFilePath);
         })
         .catch((err) => {
             throw err;
@@ -30,11 +29,7 @@ function startPm2(configOpts) {
 }
 
 function stopPm2() {
-    // console.log('stopPm2');
-
-    deleteTask(() => {
-
-    });
+    deleteTask();
 }
 
 /**
@@ -42,66 +37,84 @@ function stopPm2() {
  * @param {String} pm2ConfigFilePath pm2.json 配置文件绝对路径
  */
 function startTask(pm2ConfigFilePath) {
-    // const runPm2 = spawn('pm2', ['start', pm2ConfigFilePath]);
-    const runPm2 = spawn('node', [
-        path.join(__dirname, '../../node_modules/pm2/bin/pm2'),
-        'start',
-        pm2ConfigFilePath
-    ]);
+    pm2.connect(function (err) {
+        if (err) {
+            console.error(err);
+            process.exit(2);
+        }
 
-    // 打印输出
-    let output = '';
+        // 注意这里一定要先删除之后再启动，否则可能造成 watch 失效
+        pm2.describe(PM2_NAME, function (err, apps) {
+            if (err) {
+                pm2.disconnect();   // Disconnects from PM2
+                throw err;
+            }
 
-    // 成功信息
-    runPm2.stdout.on('data', (data) => {
-        output += data;
-    }).pipe(process.stdout);
+            // 如果已存在，则先删除再启动
+            if (apps.length && apps[0].name === PM2_NAME) {
+                // 删除
+                pm2.delete(PM2_NAME, function (err, apps) {
+                    if (err) {
+                        pm2.disconnect();   // Disconnects from PM2
+                        throw err;
+                    }
 
-    // 异常信息
-    runPm2.stderr.on('data', (data) => {
-        output += data;
-    }).pipe(process.stderr);
+                    // 启动
+                    pm2.start(pm2ConfigFilePath, function (err, apps) {
+                        console.log('Start local server success!');
+                        pm2.disconnect();   // Disconnects from PM2
 
-    // 运行结束
-    runPm2.on('close', (code) => {
-        // console.log({ code: code, data: output });
+                        if (err) {
+                            throw err;
+                        }
+                    });
+                });
+            } else {
+                // 启动
+                pm2.start(pm2ConfigFilePath, function (err, apps) {
+                    console.log('Start local server success!');
+                    pm2.disconnect();   // Disconnects from PM2
+
+                    if (err) {
+                        throw err;
+                    }
+                });
+            }
+        });
     });
 }
 
 /**
  * 停止 pm2
  */
-function deleteTask(callback) {
-    // const deletePm2 = spawn('pm2', ['delete', 'mockstar_app']);
-    const deletePm2 = spawn('node', [
-        path.join(__dirname, '../../node_modules/pm2/bin/pm2'),
-        'delete',
-        'mockstar_app'
-    ]);
-
-    // 打印输出
-    let output = '';
-
-    // 成功信息
-    deletePm2.stdout.on('data', (data) => {
-        output += data;
-    }).pipe(process.stdout);
-
-    // 异常信息
-    deletePm2.stderr.on('data', (data) => {
-        output += data;
-    }).pipe(process.stderr);
-
-    // 运行结束
-    deletePm2.on('close', (code) => {
-        // console.log({ code: code, data: output });
-
-        if(typeof callback === 'function'){
-            setTimeout(() => {
-                callback();
-            }, 200);
+function deleteTask() {
+    pm2.connect(function (err) {
+        if (err) {
+            console.error(err);
+            process.exit(2);
         }
 
+        pm2.describe(PM2_NAME, function (err, apps) {
+            if (err) {
+                pm2.disconnect();   // Disconnects from PM2
+                throw err;
+            }
+
+            // 已存在的场景才需要删除
+            if (apps.length && apps[0].name === PM2_NAME) {
+                pm2.delete(PM2_NAME, function (err, apps) {
+                    console.log('Stop local server success!');
+                    pm2.disconnect();   // Disconnects from PM2
+
+                    if (err) {
+                        throw err;
+                    }
+                });
+            } else {
+                console.log('Stop local server success!');
+                pm2.disconnect();   // Disconnects from PM2
+            }
+        });
     });
 }
 
@@ -122,7 +135,7 @@ function getPm2Config(configOpts) {
     let result = {
         apps: [
             {
-                name: 'mockstar_app',
+                name: PM2_NAME,
                 script: path.join(__dirname, './start-app.js'),
                 watch: [mockServerPath],
                 ignore_watch: ['node_modules', buildPath],
