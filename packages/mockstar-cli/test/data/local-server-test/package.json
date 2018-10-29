@@ -3,10 +3,15 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node ../../../bin/mockstar start",
+    "start2": "node ../../../bin/mockstar start --port=9528",
+    "start3": "node ../../../bin/mockstar start --port=9529 --name=myname",
     "start-dev": "node ../../../bin/mockstar start --dev",
     "start-by-node-dev": "node-dev ../../../bin/mockstar start",
     "stop": "node ../../../bin/mockstar stop",
-    "logs": "node ../../../bin/mockstar pm2 logs"
+    "stop2": "node ../../../bin/mockstar stop mockstar_9528",
+    "stop3": "node ../../../bin/mockstar stop myname",
+    "logs": "node ../../../bin/mockstar pm2 logs",
+    "list": "node ../../../bin/mockstar pm2 list"
   },
   "author": "helinjiang",
   "license": "MIT"
