@@ -3,7 +3,6 @@ const mockstar = require('mockstar');
 const baseRouter = require('../../server/router/base-router');
 
 const handleXhr = require('./xhr');
-const utilMockstar = require('../../utils/mockstar');
 
 const PLUGIN_NAME = 'mocker';
 const HANDLER_NAME_FIELD = 'mockerName';
@@ -11,8 +10,8 @@ const HANDLER_NAME_FIELD = 'mockerName';
 module.exports = (router, entry) => {
     // 创建 Parser 对象
     const mockerParser = new mockstar.Parser({
-        basePath: utilMockstar.getMockServerPath(entry.rootPath, entry.mockServerPath),
-        buildPath: utilMockstar.getBuildPath(entry.rootPath, entry.buildPath)
+        basePath: entry.mockServerPath,
+        buildPath: entry.buildPath
     });
 
     // 获取所有的 mocker 列表
