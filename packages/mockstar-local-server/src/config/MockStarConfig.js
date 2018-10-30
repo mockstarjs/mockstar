@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { getMockServerPath, getBuildPath } = require('../utils/mockstar');
+const { getMockServerPath, getBuildPath, getLogPath } = require('../utils/mockstar');
 
 class MockStarConfig {
     /**
@@ -17,7 +17,6 @@ class MockStarConfig {
      * @param {String} [configOpts.namespace] 命名空间
      * @returns {Object}
      */
-
     constructor(configOpts = {}) {
         // 根目录
         this.rootPath = configOpts.rootPath;
@@ -26,7 +25,7 @@ class MockStarConfig {
         this.buildPath = getBuildPath(this.rootPath, configOpts.buildPath);
 
         // 日志目录
-        this.logPath = configOpts.logPath;
+        this.logPath = getLogPath(this.rootPath, this.buildPath, configOpts.logPath);
 
         // mock server 根目录
         this.mockServerPath = getMockServerPath(this.rootPath, configOpts.mockServerPath);

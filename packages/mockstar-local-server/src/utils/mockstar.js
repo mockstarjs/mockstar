@@ -33,7 +33,25 @@ function getBuildPath(rootPath, buildPath) {
     return result;
 }
 
+/**
+ * 获得 mock server 的日志路径
+ * @param {String} rootPath 项目根目录
+ * @param {String} buildPath 构建目录
+ * @param {String} logPath
+ * @returns {String}
+ */
+function getLogPath(rootPath, buildPath, logPath) {
+    let result = logPath || path.join(buildPath, 'logs');
+
+    if (!path.isAbsolute(result)) {
+        result = path.resolve(rootPath, result);
+    }
+
+    return result;
+}
+
 module.exports = {
     getMockServerPath: getMockServerPath,
-    getBuildPath: getBuildPath
+    getBuildPath: getBuildPath,
+    getLogPath: getLogPath
 };
