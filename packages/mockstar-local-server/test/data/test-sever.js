@@ -1,10 +1,12 @@
 const mockstarLocalServer = require('../../lib');
 
+let runServer;
+
 function start(opts = {}) {
     return new Promise((resolve, reject) => {
         mockstarLocalServer.findAvailablePort(9528)
             .then((port) => {
-                mockstarLocalServer.startServer(Object.assign({}, opts, { port: port }), (data) => {
+                runServer = mockstarLocalServer.startServer(Object.assign({}, opts, { port: port }), (data) => {
                     resolve(data);
                 });
             })
@@ -14,8 +16,15 @@ function start(opts = {}) {
     });
 }
 
-function stop(pid) {
-    // process.kill(pid, 'SIGKILL');
+function stop() {
+    if (!runServer || typeof runServer.stop !== 'function') {
+        return;
+    }
+
+    // let t1 = Date.now();
+    runServer.stop(() => {
+        // console.log('-close success-', Date.now() - t1);
+    });
 }
 
 module.exports = {
