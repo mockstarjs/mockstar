@@ -1,7 +1,6 @@
 const path = require('path');
 const fse = require('fs-extra');
 const pm2 = require('pm2');
-const mockstarLocalServer = require('mockstar-local-server');
 
 /**
  * 启动服务
@@ -67,7 +66,7 @@ function stopPm2(name, callback) {
  */
 function buildPm2(configOpts) {
     // pm2 的方式下，则需要先生成 pm2.json 文件，然后再使用 pm2 启动
-    const buildPath = mockstarLocalServer.getBuildPath(configOpts.rootPath, configOpts.buildPath);
+    const buildPath = configOpts.buildPath;
     const pm2ConfigFilePath = path.join(buildPath, 'pm2.json');
 
     // 获取配置信息
@@ -199,8 +198,8 @@ function _deleteTask(name, callback) {
  * @returns {{apps: *[]}}
  */
 function _getPm2Config(configOpts) {
-    const mockServerPath = mockstarLocalServer.getMockServerPath(configOpts.rootPath, configOpts.mockServerPath);
-    const buildPath = mockstarLocalServer.getBuildPath(configOpts.rootPath, configOpts.buildPath);
+    const mockServerPath = configOpts.mockServerPath;
+    const buildPath = configOpts.buildPath;
 
     let config = {
         name: configOpts.name,
