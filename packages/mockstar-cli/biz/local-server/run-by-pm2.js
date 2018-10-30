@@ -23,19 +23,10 @@ function startPm2(configOpts, callback) {
         };
     }
 
-    // pm2 的方式下，则需要先生成 pm2.json 文件，然后再使用 pm2 启动
-    const buildPath = mockstarLocalServer.getBuildPath(configOpts.rootPath, configOpts.buildPath);
-    const pm2ConfigFilePath = path.join(buildPath, 'pm2.json');
-
-    // 获取配置信息
-    let pm2Config = getPm2Config(configOpts);
-
     // 本地构建一份配置到 buildPath 下
-    fse.outputJson(pm2ConfigFilePath, pm2Config)
-        .then(() => {
-            console.log('Generate pm2.json success!', pm2ConfigFilePath);
-
-            _startTask(configOpts.name, pm2ConfigFilePath, callback);
+    buildPm2(configOpts)
+        .then((data) => {
+            _startTask(configOpts.name, data.filePath, callback);
         })
         .catch((err) => {
             console.error('fse.outputJson catch err', err);
@@ -60,6 +51,38 @@ function stopPm2(name, callback) {
     }
 
     _deleteTask(name, callback);
+}
+
+/**
+ * 构建服务
+ *
+ * @param {Object} configOpts mockstar.config.js中的配置项
+ * @param {String} [configOpts.rootPath] 项目根目录
+ * @param {String} [configOpts.buildPath] 构建之后的目录
+ * @param {String} [configOpts.logPath] 日志目录
+ * @param {String} [configOpts.mockServerPath]  mock server 根目录
+ * @param {Number} [configOpts.port] 端口号
+ * @param {String} [configOpts.name] pm2 应用的名字
+ * @param {Boolean} [configOpts.isDev] 当前是否为开发模式，即不启用pm2
+ */
+function buildPm2(configOpts) {
+    // pm2 的方式下，则需要先生成 pm2.json 文件，然后再使用 pm2 启动
+    const buildPath = mockstarLocalServer.getBuildPath(configOpts.rootPath, configOpts.buildPath);
+    const pm2ConfigFilePath = path.join(buildPath, 'pm2.json');
+
+    // 获取配置信息
+    let pm2Config = _getPm2Config(configOpts);
+
+    // 本地构建一份配置到 buildPath 下
+    return fse.outputJson(pm2ConfigFilePath, pm2Config)
+        .then(() => {
+            console.log('Generate pm2.json success!', pm2ConfigFilePath);
+
+            return {
+                filePath: pm2ConfigFilePath,
+                content: pm2Config
+            };
+        });
 }
 
 /**
@@ -172,12 +195,10 @@ function _deleteTask(name, callback) {
 /**
  * 获得最终的 pm2.json 中内容
  *
- * TODO 这里的配置项应该可以通过 configOpts 传递下来
- *
  * @param configOpts
  * @returns {{apps: *[]}}
  */
-function getPm2Config(configOpts) {
+function _getPm2Config(configOpts) {
     const mockServerPath = mockstarLocalServer.getMockServerPath(configOpts.rootPath, configOpts.mockServerPath);
     const buildPath = mockstarLocalServer.getBuildPath(configOpts.rootPath, configOpts.buildPath);
 
@@ -205,5 +226,6 @@ function getPm2Config(configOpts) {
 
 module.exports = {
     start: startPm2,
-    stop: stopPm2
+    stop: stopPm2,
+    build: buildPm2
 };
