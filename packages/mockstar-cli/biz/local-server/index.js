@@ -24,10 +24,12 @@ function startServer(configOpts = {}, callback) {
 
 /**
  * 停止服务
+ *
  * @param {String} [name] 自定义的pm2服务名称
+ * @param {Function} callback 回调函数
  */
-function stopServer(name) {
-    runByPm2.stop(name);
+function stopServer(name, callback) {
+    runByPm2.stop(name, callback);
 }
 
 module.exports = {

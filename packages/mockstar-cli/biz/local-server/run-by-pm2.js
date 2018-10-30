@@ -3,8 +3,25 @@ const fse = require('fs-extra');
 const pm2 = require('pm2');
 const mockstarLocalServer = require('mockstar-local-server');
 
+/**
+ * 启动服务
+ *
+ * @param {Object} configOpts mockstar.config.js中的配置项
+ * @param {String} [configOpts.rootPath] 项目根目录
+ * @param {String} [configOpts.buildPath] 构建之后的目录
+ * @param {String} [configOpts.logPath] 日志目录
+ * @param {String} [configOpts.mockServerPath]  mock server 根目录
+ * @param {Number} [configOpts.port] 端口号
+ * @param {String} [configOpts.name] pm2 应用的名字
+ * @param {Boolean} [configOpts.isDev] 当前是否为开发模式，即不启用pm2
+ * @param {Function} callback 回调函数
+ */
 function startPm2(configOpts, callback) {
     // console.log('run-by-pm2', configOpts);
+    if (typeof callback !== 'function') {
+        callback = (isSuccess, data) => {
+        };
+    }
 
     // pm2 的方式下，则需要先生成 pm2.json 文件，然后再使用 pm2 启动
     const buildPath = mockstarLocalServer.getBuildPath(configOpts.rootPath, configOpts.buildPath);
@@ -18,13 +35,11 @@ function startPm2(configOpts, callback) {
         .then(() => {
             console.log('Generate pm2.json success!', pm2ConfigFilePath);
 
-            startTask(configOpts.name, pm2ConfigFilePath, callback);
+            _startTask(configOpts.name, pm2ConfigFilePath, callback);
         })
         .catch((err) => {
             console.error('fse.outputJson catch err', err);
-            if (typeof callback === 'function') {
-                callback(false, err);
-            }
+            callback(false, err);
         });
 }
 
@@ -32,13 +47,19 @@ function startPm2(configOpts, callback) {
  * 停止 pm2
  *
  * @param {String} name pm2 的应用名字
+ * @param {Function} callback 回调函数
  */
-function stopPm2(name) {
+function stopPm2(name, callback) {
     if (!name) {
         throw new Error('stop pm2 but no app_name or app_id!');
     }
 
-    deleteTask(name);
+    if (typeof callback !== 'function') {
+        callback = (isSuccess, data) => {
+        };
+    }
+
+    _deleteTask(name, callback);
 }
 
 /**
@@ -46,11 +67,13 @@ function stopPm2(name) {
  *
  * @param {String} name pm2 的应用名字
  * @param {String} pm2ConfigFilePath pm2.json 配置文件绝对路径
+ * @param {Function} callback 回调函数
  */
-function startTask(name, pm2ConfigFilePath) {
+function _startTask(name, pm2ConfigFilePath, callback) {
     pm2.connect(function (err) {
         if (err) {
             console.error(err);
+            callback(false, err);
             process.exit(2);
         }
 
@@ -58,6 +81,7 @@ function startTask(name, pm2ConfigFilePath) {
         pm2.describe(name, function (err, apps) {
             if (err) {
                 pm2.disconnect();   // Disconnects from PM2
+                callback(false, err);
                 throw err;
             }
 
@@ -67,6 +91,7 @@ function startTask(name, pm2ConfigFilePath) {
                 pm2.delete(name, function (err, apps) {
                     if (err) {
                         pm2.disconnect();   // Disconnects from PM2
+                        callback(false, err);
                         throw err;
                     }
 
@@ -76,7 +101,10 @@ function startTask(name, pm2ConfigFilePath) {
                         pm2.disconnect();   // Disconnects from PM2
 
                         if (err) {
+                            callback(false, err);
                             throw err;
+                        } else {
+                            callback(true, apps);
                         }
                     });
                 });
@@ -87,7 +115,10 @@ function startTask(name, pm2ConfigFilePath) {
                     pm2.disconnect();   // Disconnects from PM2
 
                     if (err) {
+                        callback(false, err);
                         throw err;
+                    } else {
+                        callback(true, apps);
                     }
                 });
             }
@@ -97,17 +128,22 @@ function startTask(name, pm2ConfigFilePath) {
 
 /**
  * 停止 pm2
+ *
+ * @param {String} name pm2 的应用名字
+ * @param {Function} callback 回调函数
  */
-function deleteTask(name) {
+function _deleteTask(name, callback) {
     pm2.connect(function (err) {
         if (err) {
             console.error(err);
+            callback(false, err);
             process.exit(2);
         }
 
         pm2.describe(name, function (err, apps) {
             if (err) {
                 pm2.disconnect();   // Disconnects from PM2
+                callback(false, err);
                 throw err;
             }
 
@@ -118,12 +154,16 @@ function deleteTask(name) {
                     pm2.disconnect();   // Disconnects from PM2
 
                     if (err) {
+                        callback(false, err);
                         throw err;
+                    } else {
+                        callback(true, apps);
                     }
                 });
             } else {
                 console.log('Stop local server success!');
                 pm2.disconnect();   // Disconnects from PM2
+                callback(true, apps);
             }
         });
     });
