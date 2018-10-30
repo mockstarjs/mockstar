@@ -6,6 +6,8 @@
     "start2": "node ../../../bin/mockstar start --port=9528",
     "start3": "node ../../../bin/mockstar start --port=9529 --name=myname",
     "start-dev": "node ../../../bin/mockstar start --dev",
+    "build": "node ../../../bin/mockstar build",
+    "build-dev": "node ../../../bin/mockstar build --dev",
     "start-by-node-dev": "node-dev ../../../bin/mockstar start",
     "stop": "node ../../../bin/mockstar stop",
     "stop2": "node ../../../bin/mockstar stop mockstar_9528",
