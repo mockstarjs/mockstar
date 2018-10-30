@@ -10,6 +10,7 @@ const internalPluginStart = require('./internal/start');
 const internalPluginStop = require('./internal/stop');
 const internalPluginPm2 = require('./internal/pm2');
 const internalPluginInit = require('./internal/init');
+const internalPluginBuild = require('./internal/build');
 
 /**
  * Entrance file, parse user input and call a command.
@@ -38,6 +39,7 @@ function entry(args) {
         internalPluginStop,
         internalPluginPm2,
         internalPluginInit,
+        internalPluginBuild
     ])
         .then(function () {
             let cmd = args._.shift();
