@@ -202,22 +202,29 @@ function _getPm2Config(configOpts) {
     const mockServerPath = mockstarLocalServer.getMockServerPath(configOpts.rootPath, configOpts.mockServerPath);
     const buildPath = mockstarLocalServer.getBuildPath(configOpts.rootPath, configOpts.buildPath);
 
+    let config = {
+        name: configOpts.name,
+        script: path.join(__dirname, './start-app.js'),
+        args: [JSON.stringify(configOpts)],
+        env: {
+            COMMON_VARIABLE: 'true'
+        },
+        env_production: {
+            NODE_ENV: 'production'
+        }
+    };
+
+    if (configOpts.watch) {
+        config = Object.assign({}, config, {
+            watch: [mockServerPath],
+            ignore_watch: ['node_modules', buildPath]
+        });
+    }
+
     // http://pm2.keymetrics.io/docs/usage/application-declaration/
     let result = {
         apps: [
-            {
-                name: configOpts.name,
-                script: path.join(__dirname, './start-app.js'),
-                watch: [mockServerPath],
-                ignore_watch: ['node_modules', buildPath],
-                args: [JSON.stringify(configOpts)],
-                env: {
-                    COMMON_VARIABLE: 'true'
-                },
-                env_production: {
-                    NODE_ENV: 'production'
-                }
-            }
+            config
         ]
     };
 

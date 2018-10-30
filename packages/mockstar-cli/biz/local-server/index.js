@@ -34,5 +34,6 @@ function stopServer(name, callback) {
 
 module.exports = {
     startServer: startServer,
-    stopServer: stopServer
+    stopServer: stopServer,
+    buildPm2: runByPm2.build
 };
