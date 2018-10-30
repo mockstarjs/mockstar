@@ -103,23 +103,24 @@ class RunServer {
      */
     _createApp() {
         const app = mockstarServer.create();
+        const { adminBasePath } = this.configOpts;
 
         // Set default middlewares (logger, static, cors and no-cache)
         app.use(this.middleware);
 
-        // GET /，跳转到 /mockstar-admin/
+        // GET /，跳转到 `${adminBasePath}/`
         app.get('/', function (req, res) {
-            res.redirect('/mockstar-admin/');
+            res.redirect(`${adminBasePath}/`);
         });
 
-        app.get('/mytest', function (req, res) {
-            res.send('hello,world!');
-        });
+        // app.get('/mytest', function (req, res) {
+        //     res.send('hello,world!');
+        // });
 
         // 静态资源的配置
-        // GET /mockstar-admin/mockers/:name/static/* 静态资源
+        // GET ${adminBasePath}/mockers/:name/static/* 静态资源
         // http://localhost:9527/mockstar-admin/mockers/demo_03/static/sub/workflow.png
-        app.get('/mockstar-admin/mockers/:mockerName/static/*', (req, res) => {
+        app.get(`${adminBasePath}/mockers/:mockerName/static/*`, (req, res) => {
             // req.params[0] = 'sub/workflow.png'
             // req.params.name = 'demo_03'
 
@@ -134,10 +135,9 @@ class RunServer {
             }
         });
 
-        // 单页应用，因此只要是 /mockstar-admin/* 的都加载静态html页面
-        // GET /mockstar-admin/*
-        app.get('/mockstar-admin/*', function (req, res) {
-            // res.jsonp({ url2: req.url });
+        // 单页应用，因此只要是 ${adminBasePath}/* 的都加载静态html页面
+        // GET ${adminBasePath}/*
+        app.get(`${adminBasePath}/*`, function (req, res) {
             res.sendFile(path.join(__dirname, '../webui/build', 'index.html'));
         });
 
