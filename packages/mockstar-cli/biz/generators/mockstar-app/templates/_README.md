@@ -21,7 +21,7 @@ npm start
 
 ## 查看运行情况
 
-使用了 [pm2](https://www.npmjs.com/package/pm2) 来启动，命名为 `mockstar-app`，启动之后服务会常驻内存。
+使用了 [pm2](https://www.npmjs.com/package/pm2) 来启动，默认命名为 `mockstar_9527`，启动之后服务会常驻内存。
 
 如果你全局安装了 `pm2` ，则可以按照文档进行操作即可；如果你不希望全局安装，则使用 `mockstar pm2 xxx` ，将把后续的命令传递到 `mockstar` 本地依赖的 `pm2` 上。
 

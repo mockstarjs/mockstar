@@ -4,7 +4,7 @@ const pm2 = require('pm2');
 
 const utilMockstar = require('../utils/mockstar');
 
-const PM2_NAME = 'mockstar_app';
+const PM2_NAME = 'mockstar_9527';
 
 function startPm2(configOpts) {
     // console.log('run-by-pm2', configOpts);
@@ -21,22 +21,33 @@ function startPm2(configOpts) {
         .then(() => {
             console.log('Generate pm2.json success!', pm2ConfigFilePath);
 
-            startTask(pm2ConfigFilePath);
+            startTask(configOpts.name, pm2ConfigFilePath);
         })
         .catch((err) => {
             throw err;
         });
 }
 
-function stopPm2() {
-    deleteTask();
+/**
+ * 停止 pm2
+ *
+ * @param {String} name pm2 的应用名字
+ */
+function stopPm2(name) {
+    if (!name) {
+        throw new Error('stop pm2 but no app_name or app_id!');
+    }
+
+    deleteTask(name);
 }
 
 /**
  * 启动 pm2
+ *
+ * @param {String} name pm2 的应用名字
  * @param {String} pm2ConfigFilePath pm2.json 配置文件绝对路径
  */
-function startTask(pm2ConfigFilePath) {
+function startTask(name, pm2ConfigFilePath) {
     pm2.connect(function (err) {
         if (err) {
             console.error(err);
@@ -44,16 +55,16 @@ function startTask(pm2ConfigFilePath) {
         }
 
         // 注意这里一定要先删除之后再启动，否则可能造成 watch 失效
-        pm2.describe(PM2_NAME, function (err, apps) {
+        pm2.describe(name, function (err, apps) {
             if (err) {
                 pm2.disconnect();   // Disconnects from PM2
                 throw err;
             }
 
             // 如果已存在，则先删除再启动
-            if (apps.length && apps[0].name === PM2_NAME) {
+            if (apps.length && apps[0].name === name) {
                 // 删除
-                pm2.delete(PM2_NAME, function (err, apps) {
+                pm2.delete(name, function (err, apps) {
                     if (err) {
                         pm2.disconnect();   // Disconnects from PM2
                         throw err;
@@ -87,22 +98,22 @@ function startTask(pm2ConfigFilePath) {
 /**
  * 停止 pm2
  */
-function deleteTask() {
+function deleteTask(name) {
     pm2.connect(function (err) {
         if (err) {
             console.error(err);
             process.exit(2);
         }
 
-        pm2.describe(PM2_NAME, function (err, apps) {
+        pm2.describe(name, function (err, apps) {
             if (err) {
                 pm2.disconnect();   // Disconnects from PM2
                 throw err;
             }
 
             // 已存在的场景才需要删除
-            if (apps.length && apps[0].name === PM2_NAME) {
-                pm2.delete(PM2_NAME, function (err, apps) {
+            if (apps.length && apps[0].name === name) {
+                pm2.delete(name, function (err, apps) {
                     console.log('Stop local server success!');
                     pm2.disconnect();   // Disconnects from PM2
 
@@ -134,7 +145,7 @@ function getPm2Config(configOpts) {
     let result = {
         apps: [
             {
-                name: PM2_NAME,
+                name: configOpts.name,
                 script: path.join(__dirname, './start-app.js'),
                 watch: [mockServerPath],
                 ignore_watch: ['node_modules', buildPath],
