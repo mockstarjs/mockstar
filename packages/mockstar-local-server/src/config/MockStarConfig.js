@@ -15,7 +15,8 @@ class MockStarConfig {
      * @param {Boolean} [configOpts.isDev] 当前是否为开发模式
      * @param {Boolean} [configOpts.watch] 是否监听文件变化，只有在 pm2 场景下才有效
      * @param {String} [configOpts.namespace] 命名空间
-     * @param {String} [configOpts.adminBasePath] 命名空间
+     * @param {String} [configOpts.adminSitePath] 管理后台页面的根目录
+     * @param {String} [configOpts.adminCGIPath] 管理后台CGI的根目录
      * @returns {Object}
      */
     constructor(configOpts = {}) {
@@ -46,8 +47,11 @@ class MockStarConfig {
         // 命名空间
         this.namespace = configOpts.namespace || '';
 
-        // 管理后台访问的根目录
-        this.adminBasePath = configOpts.adminBasePath || `${this.namespace ? '/' + this.namespace : ''}/mockstar-admin`;
+        // 管理后台页面的根目录
+        this.adminSitePath = configOpts.adminSitePath || `${this.namespace ? '/' + this.namespace : ''}/mockstar-admin`;
+
+        // 管理后台CGI的根目录
+        this.adminCGIPath = configOpts.adminCGIPath || `${this.namespace ? '/' + this.namespace : ''}/mockstar-cgi`;
     }
 
     isValid() {

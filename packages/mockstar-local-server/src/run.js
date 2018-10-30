@@ -103,14 +103,14 @@ class RunServer {
      */
     _createApp() {
         const app = mockstarServer.create();
-        const { adminBasePath } = this.configOpts;
+        const { adminSitePath } = this.configOpts;
 
         // Set default middlewares (logger, static, cors and no-cache)
         app.use(this.middleware);
 
-        // GET /，跳转到 `${adminBasePath}/`
+        // GET /，跳转到 `${adminSitePath}/`
         app.get('/', function (req, res) {
-            res.redirect(`${adminBasePath}/`);
+            res.redirect(`${adminSitePath}/`);
         });
 
         // app.get('/mytest', function (req, res) {
@@ -118,9 +118,9 @@ class RunServer {
         // });
 
         // 静态资源的配置
-        // GET ${adminBasePath}/mockers/:name/static/* 静态资源
+        // GET ${adminSitePath}/mockers/:name/static/* 静态资源
         // http://localhost:9527/mockstar-admin/mockers/demo_03/static/sub/workflow.png
-        app.get(`${adminBasePath}/mockers/:mockerName/static/*`, (req, res) => {
+        app.get(`${adminSitePath}/mockers/:mockerName/static/*`, (req, res) => {
             // req.params[0] = 'sub/workflow.png'
             // req.params.name = 'demo_03'
 
@@ -135,9 +135,9 @@ class RunServer {
             }
         });
 
-        // 单页应用，因此只要是 ${adminBasePath}/* 的都加载静态html页面
-        // GET ${adminBasePath}/*
-        app.get(`${adminBasePath}/*`, function (req, res) {
+        // 单页应用，因此只要是 ${adminSitePath}/* 的都加载静态html页面
+        // GET ${adminSitePath}/*
+        app.get(`${adminSitePath}/*`, function (req, res) {
             res.sendFile(path.join(__dirname, '../webui/build', 'index.html'));
         });
 
