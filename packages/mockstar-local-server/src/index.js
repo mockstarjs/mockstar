@@ -20,6 +20,10 @@ function startServer(configOpts = {}, callback) {
     // 获取标准的参数
     configOpts = runConfig.getConfigOpts(configOpts);
 
+    if (!configOpts) {
+        throw new Error('CAN NOT get configOpts!');
+    }
+
     // 启动服务
     return run(configOpts, callback);
 }
