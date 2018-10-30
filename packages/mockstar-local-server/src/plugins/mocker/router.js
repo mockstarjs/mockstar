@@ -3,7 +3,7 @@ const mockstar = require('mockstar');
 const baseRouter = require('../../server/router/base-router');
 
 const handleXhr = require('./xhr');
-const utilMockstar = require('../../../utils/mockstar');
+const utilMockstar = require('../../utils/mockstar');
 
 const PLUGIN_NAME = 'mocker';
 const HANDLER_NAME_FIELD = 'mockerName';

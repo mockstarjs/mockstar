@@ -1,4 +1,6 @@
 const run = require('./run');
+const utilsPort = require('./utils/port');
+const utilsMockstar = require('./utils/mockstar');
 const runConfig = require('./config');
 
 /**
@@ -12,15 +14,20 @@ const runConfig = require('./config');
  * @param {Number} [configOpts.port] 端口号
  * @param {String} [configOpts.name] pm2 应用的名字
  * @param {Boolean} [configOpts.isDev] 当前是否为开发模式
+ * @param {Function} callback 回调函数
  */
-function startServer(configOpts = {}) {
+function startServer(configOpts = {}, callback) {
     // 获取标准的参数
     configOpts = runConfig.getConfigOpts(configOpts);
 
     // 启动服务
-    run(configOpts);
+    run(configOpts, callback);
 }
 
 module.exports = {
-    startServer: startServer
+    startServer: startServer,
+    findAvailablePort: utilsPort.findAvailablePort,
+    getConfigOpts: runConfig.getConfigOpts,
+    getMockServerPath: utilsMockstar.getMockServerPath,
+    getBuildPath: utilsMockstar.getBuildPath
 };

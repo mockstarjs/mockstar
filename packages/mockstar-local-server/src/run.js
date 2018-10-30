@@ -27,8 +27,9 @@ global.attentionLogger = attentionLogger;
  * @param {String} [configOpts.mockServerPath]  mock server 根目录
  * @param {Number} [configOpts.port] 端口号
  * @param {String} [configOpts.name] pm2 应用的名字
+ * @param {Function} callback 回调函数
  */
-module.exports = (configOpts) => {
+module.exports = (configOpts, callback) => {
     //====================================================================================
     // 1. 获取配置项
     // 如果没法获取配置项，则将无法启动成功
@@ -125,15 +126,15 @@ module.exports = (configOpts) => {
         require('./plugins/mocker/websocket')(configOpts, server, routerMocker._mockerParser);
     }
 
-    server.listen(configOpts.port || 9527, () => {
+    server.listen(configOpts.port, () => {
         // mockstarLogger.info('mockstar server is running');
-        console.log('mockstar server is running');
+        console.log('mockstar server is running!');
+        console.log('Use your device to visit the following URL list, gets the IP of the URL you can visit:');
+        console.log(` http://127.0.0.1:${configOpts.port}/`);
 
-        if (configOpts.shouldWatch) {
-            // mockstarLogger.info('watching files...');
-            console.log('watching files...');
-
-            // TODO 文件变化了，需要重启！
+        // 启动成功之后进行回调
+        if (typeof callback === 'function') {
+            callback(Object.assign({}, configOpts));
         }
     });
 };
