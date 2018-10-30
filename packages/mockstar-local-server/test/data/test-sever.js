@@ -6,8 +6,8 @@ function start(opts = {}) {
     return new Promise((resolve, reject) => {
         mockstarLocalServer.findAvailablePort(9528)
             .then((port) => {
-                runServer = mockstarLocalServer.startServer(Object.assign({}, opts, { port: port }), (data) => {
-                    resolve(data);
+                runServer = mockstarLocalServer.startServer(Object.assign({}, opts, { port: port }), (isSuccess, data) => {
+                    isSuccess ? resolve(data) : reject(data);
                 });
             })
             .catch((err) => {

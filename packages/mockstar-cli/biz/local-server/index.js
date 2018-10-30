@@ -1,4 +1,4 @@
-const run = require('./run');
+const mockstarLocalServer = require('mockstar-local-server');
 const runByPm2 = require('./run-by-pm2');
 
 /**
@@ -12,14 +12,13 @@ const runByPm2 = require('./run-by-pm2');
  * @param {Number} [configOpts.port] 端口号
  * @param {String} [configOpts.name] pm2 应用的名字
  * @param {Boolean} [configOpts.isDev] 当前是否为开发模式，即不启用pm2
+ * @param {Function} callback 回调函数
  */
-function startServer(configOpts = {}) {
-    // console.log('--startServer--', configOpts);
-
+function startServer(configOpts = {}, callback) {
     if (configOpts.isDev) {
-        run(configOpts);
+        return mockstarLocalServer.startServer(configOpts, callback);
     } else {
-        runByPm2.start(configOpts);
+        runByPm2.start(configOpts, callback);
     }
 }
 
