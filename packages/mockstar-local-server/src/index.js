@@ -21,7 +21,7 @@ function startServer(configOpts = {}, callback) {
     configOpts = runConfig.getConfigOpts(configOpts);
 
     // 启动服务
-    run(configOpts, callback);
+    return run(configOpts, callback);
 }
 
 module.exports = {
