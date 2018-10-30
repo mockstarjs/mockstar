@@ -14,42 +14,44 @@ module.exports = (router, entry) => {
         buildPath: entry.buildPath
     });
 
+    const { adminCGIPath } = entry;
+
     // 获取所有的 mocker 列表
     let mockerList = mockerParser.getAllMocker();
 
-    // GET /mockstar-cgi/mocker 所有的 mocker 列表信息
-    baseRouter.initGetList(router, PLUGIN_NAME, (req, res) => {
+    // GET ${adminCGIPath}/mocker 所有的 mocker 列表信息
+    baseRouter.initGetList(router, adminCGIPath, PLUGIN_NAME, (req, res) => {
         let mockerList = mockerParser.getAllMocker();
 
         res.jsonp(mockerList);
     });
 
-    // GET /mockstar-cgi/mocker/:mockerName 获得这个 mocker 的信息
-    baseRouter.initGetOne(router, PLUGIN_NAME, HANDLER_NAME_FIELD, (req, res) => {
+    // GET ${adminCGIPath}/mocker/:mockerName 获得这个 mocker 的信息
+    baseRouter.initGetOne(router, adminCGIPath, PLUGIN_NAME, HANDLER_NAME_FIELD, (req, res) => {
         let result = mockerParser.getMockerByName(req.params[HANDLER_NAME_FIELD]);
 
         res.jsonp(result);
     });
 
-    // POST /mockstar-cgi/mocker/:mockerName 设置这个 mocker 的信息
-    baseRouter.initPostOne(router, PLUGIN_NAME, HANDLER_NAME_FIELD, (req, res) => {
+    // POST ${adminCGIPath}/mocker/:mockerName 设置这个 mocker 的信息
+    baseRouter.initPostOne(router, adminCGIPath, PLUGIN_NAME, HANDLER_NAME_FIELD, (req, res) => {
         let result = mockerParser.updateMocker(req.params[HANDLER_NAME_FIELD], req.body);
 
         res.jsonp(result);
     });
 
-    // GET /mockstar-cgi/mocker/:mockerName/readme 获得这个 mocker 的 readme 信息
-    baseRouter.initGetOneReadMe(router, PLUGIN_NAME, HANDLER_NAME_FIELD, (req, res) => {
+    // GET ${adminCGIPath}/mocker/:mockerName/readme 获得这个 mocker 的 readme 信息
+    baseRouter.initGetOneReadMe(router, adminCGIPath, PLUGIN_NAME, HANDLER_NAME_FIELD, (req, res) => {
         res.jsonp({
             html: mockerParser.getReadMeContent(req.params[HANDLER_NAME_FIELD])
         });
     });
 
-    // GET /mockstar-cgi/detail 获得配置项数据
-    router.get(`/mockstar-cgi/detail`, (req, res) => {
+    // GET ${adminCGIPath}/detail 获得配置项数据
+    baseRouter.initGetAdminDetail(router, adminCGIPath, (req, res) => {
         res.jsonp({
+            status: 200,
             url: req.url,
-            host: req.host,
             hostname: req.hostname,
             ip: req.ip,
             method: req.method,
