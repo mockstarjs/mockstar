@@ -103,13 +103,14 @@ class RunServer {
      */
     _createApp() {
         const app = mockstarServer.create();
-        const { adminSitePath } = this.configOpts;
+        const { adminSitePath, namespace } = this.configOpts;
 
         // Set default middlewares (logger, static, cors and no-cache)
         app.use(this.middleware);
 
         // GET /，跳转到 `${adminSitePath}/`
-        app.get('/', function (req, res) {
+        // 这里需要额外处理
+        app.get(`${namespace ? '/' + namespace : ''}/`, function (req, res) {
             res.redirect(`${adminSitePath}/`);
         });
 
