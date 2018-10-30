@@ -1,0 +1,52 @@
+{
+  "name": "mockstar-local-server",
+  "version": "0.2.10",
+  "description": "Local server for MockStar",
+  "main": "src/index.js",
+  "scripts": {
+    "prepublishOnly": "npm run build-ui",
+    "dev-ui": "cd ./biz/webui && npm run start",
+    "build-ui": "cd ./biz/webui && npm run build",
+    "test-mocha": "node ./node_modules/mocha/bin/_mocha",
+    "test": "npm run eslint && npm run test-cov",
+    "eslint": "eslint src/",
+    "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha"
+  },
+  "keywords": [
+    "mock",
+    "server"
+  ],
+  "author": "helinjiang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mockstarjs/mockstar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mockstarjs/mockstar/issues"
+  },
+  "homepage": "https://github.com/mockstarjs/mockstar#readme",
+  "engines": {
+    "node": ">=5.6.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "compression": "^1.7.2",
+    "cors": "^2.8.4",
+    "errorhandler": "^1.5.0",
+    "express": "^4.16.3",
+    "fs-extra": "^5.0.0",
+    "log4js": "^2.8.0",
+    "method-override": "^2.3.10",
+    "mockstar": "^0.2.8",
+    "pm2": "^3.2.2",
+    "request": "^2.81.0",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "eslint": "^5.7.0",
+    "mocha": "^5.2.0"
+  }
+}
