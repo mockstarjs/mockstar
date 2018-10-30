@@ -94,6 +94,7 @@ module.exports = (entry) => {
                 .pipe(res);
         } else {
             res.status(404).jsonp({
+                status: 404,
                 url: req.url,
                 host: req.host,
                 hostname: req.hostname,
