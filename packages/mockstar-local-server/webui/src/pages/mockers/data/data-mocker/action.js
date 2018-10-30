@@ -1,4 +1,5 @@
 import { CALL_API } from '../../../../middlewares/api';
+import { getCGIPath } from '../../../../custom';
 
 export const MOCKER_REQUEST = 'MOCKER_REQUEST';
 export const MOCKER_REQUEST_SUCCESS = 'MOCKER_REQUEST_SUCCESS';
@@ -13,62 +14,62 @@ export const SET_ACTIVE_MODULE_REQUEST_SUCCESS = 'SET_ACTIVE_MODULE_REQUEST_SUCC
 export const SET_ACTIVE_MODULE_REQUEST_FAIL = 'SET_ACTIVE_MODULE_REQUEST_FAIL';
 
 function fetchMocker(mockerName) {
-  return {
-    [CALL_API]: {
-      types: [MOCKER_REQUEST, MOCKER_REQUEST_SUCCESS, MOCKER_REQUEST_FAIL],
-      url: `/mockstar-cgi/mocker/${mockerName}`
-    }
-  };
+    return {
+        [CALL_API]: {
+            types: [MOCKER_REQUEST, MOCKER_REQUEST_SUCCESS, MOCKER_REQUEST_FAIL],
+            url: `${getCGIPath()}/mocker/${mockerName}`
+        }
+    };
 }
 
 export function loadMocker(mockerName) {
-  return (dispatch, getState) => {
-    return dispatch(fetchMocker(mockerName));
-  };
+    return (dispatch, getState) => {
+        return dispatch(fetchMocker(mockerName));
+    };
 }
 
 function fetchMockerReadme(mockerName) {
-  return {
-    [CALL_API]: {
-      types: [MOCKER_README_REQUEST, MOCKER_README_REQUEST_SUCCESS, MOCKER_README_REQUEST_FAIL],
-      url: `/mockstar-cgi/mocker/${mockerName}/readme`
-    }
-  };
+    return {
+        [CALL_API]: {
+            types: [MOCKER_README_REQUEST, MOCKER_README_REQUEST_SUCCESS, MOCKER_README_REQUEST_FAIL],
+            url: `${getCGIPath()}/mocker/${mockerName}/readme`
+        }
+    };
 }
 
 export function loadMockerReadme(mockerName) {
-  return (dispatch, getState) => {
-    return dispatch(fetchMockerReadme(mockerName));
-  };
+    return (dispatch, getState) => {
+        return dispatch(fetchMockerReadme(mockerName));
+    };
 }
 
 function requestUpdateMocker(mockerName, newMockerState) {
-  return {
-    [CALL_API]: {
-      types: [SET_ACTIVE_MODULE_REQUEST, SET_ACTIVE_MODULE_REQUEST_SUCCESS, SET_ACTIVE_MODULE_REQUEST_FAIL],
-      url: `/mockstar-cgi/mocker/${mockerName}`,
-      type: 'POST',
-      data: newMockerState
-    }
-  };
+    return {
+        [CALL_API]: {
+            types: [SET_ACTIVE_MODULE_REQUEST, SET_ACTIVE_MODULE_REQUEST_SUCCESS, SET_ACTIVE_MODULE_REQUEST_FAIL],
+            url: `${getCGIPath()}/mocker/${mockerName}`,
+            type: 'POST',
+            data: newMockerState
+        }
+    };
 }
 
 export function setMockerActiveModule(mockerName, mockModuleName) {
-  return (dispatch, getState) => {
-    return dispatch(requestUpdateMocker(mockerName, {
-      config: {
-        activeModule: mockModuleName
-      }
-    }));
-  };
+    return (dispatch, getState) => {
+        return dispatch(requestUpdateMocker(mockerName, {
+            config: {
+                activeModule: mockModuleName
+            }
+        }));
+    };
 }
 
 export function setMockerDisable(mockerName, value) {
-  return (dispatch, getState) => {
-    return dispatch(requestUpdateMocker(mockerName, {
-      config: {
-        disable: value
-      }
-    }));
-  };
+    return (dispatch, getState) => {
+        return dispatch(requestUpdateMocker(mockerName, {
+            config: {
+                disable: value
+            }
+        }));
+    };
 }

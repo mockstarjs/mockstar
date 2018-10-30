@@ -1,4 +1,5 @@
 import { CALL_API } from '../../../../middlewares/api';
+import { getCGIPath } from '../../../../custom';
 
 export const MOCKER_LIST_REQUEST = 'MOCKER_LIST_REQUEST';
 export const MOCKER_LIST_REQUEST_SUCCESS = 'MOCKER_LIST_REQUEST_SUCCESS';
@@ -8,7 +9,7 @@ function fetchMockerList() {
     return {
         [CALL_API]: {
             types: [MOCKER_LIST_REQUEST, MOCKER_LIST_REQUEST_SUCCESS, MOCKER_LIST_REQUEST_FAIL],
-            url: '/mockstar-cgi/mocker'
+            url: `${getCGIPath()}/mocker`
         }
     };
 }
