@@ -7,7 +7,6 @@ const testServer = require('../data/test-sever');
 
 describe('local server for mockstar', () => {
     let port;
-
     let cgiBase;
 
     before(function () {
@@ -15,7 +14,7 @@ describe('local server for mockstar', () => {
 
         return testServer.start(require(path.join(__dirname, '../data/local-server-test/mockstar.config.js')))
             .then((data) => {
-                console.log('----', data);
+                // console.log('----', data);
                 port = data.port;
                 cgiBase = `http://localhost:${port}`;
 
