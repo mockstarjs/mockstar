@@ -1,10 +1,10 @@
 const spawn = require('cross-spawn');
 
-const { findAvailablePort } = require('../../biz/port');
+const mockstarLocalServer = require('mockstar-local-server');
 
 function start(cmder, nodeArgs) {
     return new Promise((resolve, reject) => {
-        findAvailablePort(9528)
+        mockstarLocalServer.findAvailablePort(9528)
             .then((port) => {
                 const run = spawn('node', [
                     cmder,
