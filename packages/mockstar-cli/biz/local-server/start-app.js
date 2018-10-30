@@ -1,4 +1,4 @@
-const run = require('./run');
+const mockstarLocalServer = require('mockstar-local-server');
 
 // console.log('==', process.argv);
 
@@ -10,4 +10,6 @@ try {
     throw e;
 }
 
-run(configOpts);
+mockstarLocalServer.startServer(configOpts, (isSuccess, data) => {
+
+});
