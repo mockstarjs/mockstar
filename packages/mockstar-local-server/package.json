@@ -2,11 +2,14 @@
   "name": "mockstar-local-server",
   "version": "0.2.10",
   "description": "Local server for MockStar",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "prepublishOnly": "npm run build-ui",
-    "dev-ui": "cd ./biz/webui && npm run start",
-    "build-ui": "cd ./biz/webui && npm run build",
+    "prepublishOnly": "npm run build && npm run build-ui",
+    "build": "babel --presets env,stage-0 src/ --out-dir lib/ --source-maps",
+    "watch-compile": "npm run build -- --watch",
+    "watch": "npm run watch-compile",
+    "dev-ui": "cd ./webui && npm run start",
+    "build-ui": "cd ./webui && npm run build",
     "test-mocha": "node ./node_modules/mocha/bin/_mocha",
     "test": "npm run eslint && npm run test-cov",
     "eslint": "eslint src/",
@@ -43,7 +46,10 @@
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^10.0.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
     "chai": "^4.2.0",
     "eslint": "^5.7.0",
     "mocha": "^5.2.0"
