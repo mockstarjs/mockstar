@@ -10,21 +10,23 @@ import Mockers from './pages/mockers';
 
 import './App.less';
 
+import { getSitePath, getSiteRoot } from './custom';
+
 const App = () => (
-  <Router>
+    <Router>
 
-    <Layout className="mockstar-container">
+        <Layout className="mockstar-container">
 
-      <LayoutHeader />
+            <LayoutHeader />
 
-      <Layout.Content>
-        <Route exact path="/" component={Home} />
-        <Route path="/mockstar-admin/dashboard" component={Home} />
-        <Route path="/mockstar-admin/mockers" component={Mockers} />
-      </Layout.Content>
-    </Layout>
+            <Layout.Content>
+                <Route exact path={`${getSiteRoot()}`} component={Home} />
+                <Route path={`${getSitePath()}/dashboard`} component={Home} />
+                <Route path={`${getSitePath()}/mockers`} component={Mockers} />
+            </Layout.Content>
+        </Layout>
 
-  </Router>
+    </Router>
 );
 
 export default App;

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Layout, Menu } from 'antd';
 import { NavLink } from 'react-router-dom';
 
+import { getSitePath, getSiteRoot } from '../../custom';
+
 import './index.less';
 
 class LayoutHeader extends Component {
@@ -22,9 +24,9 @@ class LayoutHeader extends Component {
         // console.log('---handleIsActive---', curMenu);
 
         const map = {
-            '/': 'home',
-            '/mockstar-admin/dashboard': 'home',
-            '/mockstar-admin/mockers': 'mockers',
+            [getSiteRoot()]: 'home',
+            [`${getSitePath()}/dashboard`]: 'home',
+            [`${getSitePath()}/mockers`]: 'mockers'
         };
 
         let newMenuId = map[curMenu.url];
@@ -51,11 +53,11 @@ class LayoutHeader extends Component {
                     style={{ lineHeight: '64px' }}
                 >
                     <Menu.Item key="home">
-                        <NavLink to="/mockstar-admin/dashboard" isActive={this.handleIsActive}>首页</NavLink>
+                        <NavLink to="/now/mockstar-admin/dashboard" isActive={this.handleIsActive}>首页</NavLink>
                     </Menu.Item>
 
                     <Menu.Item key="mockers">
-                        <NavLink to="/mockstar-admin/mockers" isActive={this.handleIsActive}>数据模拟</NavLink>
+                        <NavLink to="/now/mockstar-admin/mockers" isActive={this.handleIsActive}>数据模拟</NavLink>
                     </Menu.Item>
                 </Menu>
             </Layout.Header>
