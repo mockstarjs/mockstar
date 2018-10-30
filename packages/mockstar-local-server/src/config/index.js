@@ -11,12 +11,13 @@ const fs = require('fs');
  * @param {Number} [configOpts.port] 端口号
  * @param {String} [configOpts.name] pm2 应用的名字
  * @param {Boolean} [configOpts.isDev] 当前是否为开发模式
+ * @param {Boolean} [configOpts.watch] 是否监听文件变化，只有在 pm2 场景下才有效
  * @param {Object} opts 额外的一些参数
  * @param {String} [opts.cwd] 当前执行node的路径
  * @param {Number} [opts.port] 端口号
  * @param {String} [opts.name] pm2 应用的名字
  * @param {Boolean} [opts.isDev] 当前是否为开发模式
- *
+ * @param {Boolean} [opts.watch] 是否监听文件变化，只有在 pm2 场景下才有效
  * @returns {Object}
  */
 function getConfigOpts(configOpts = {}, opts = {}) {
@@ -45,6 +46,9 @@ function getConfigOpts(configOpts = {}, opts = {}) {
 
     // 当前是否为开发模式
     configOpts.isDev = configOpts.isDev || opts.isDev || false;
+
+    // 是否监听文件变化，只有在 pm2 场景下才有效
+    configOpts.watch = configOpts.watch || opts.watch || false;
 
     return configOpts;
 }
