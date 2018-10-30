@@ -24,10 +24,10 @@ export default function ProxyInfo(props) {
                         注意，由于您启用了 <code>namespace</code> 参数，因此，需要在 nginx 的配置中增加如下配置，否则代理将无法生效！
                         <pre>
                             <code>
-                                location {getSiteRoot()} {'{'}
-                                    rewrite {getSiteRoot()}(.*) /$1 break;
-                                    proxy_pass http://127.0.0.1:{getPort()}/;
-                                {'}'}
+                                <p>location {getSiteRoot()} {'{'}</p>
+                                <p>    rewrite {getSiteRoot()}(.*) /$1 break;</p>
+                                <p>    proxy_pass http://127.0.0.1:{getPort()}/;</p>
+                                <p>{'}'}</p>
                             </code>
                         </pre>
                     </div>
