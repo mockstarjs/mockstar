@@ -53,12 +53,13 @@ class LayoutHeader extends Component {
                     style={{ lineHeight: '64px' }}
                 >
                     <Menu.Item key="home">
-                        <NavLink to="/now/mockstar-admin/dashboard" isActive={this.handleIsActive}>首页</NavLink>
+                        <NavLink to={`${getSitePath()}/dashboard`} isActive={this.handleIsActive}>首页</NavLink>
                     </Menu.Item>
 
                     <Menu.Item key="mockers">
-                        <NavLink to="/now/mockstar-admin/mockers" isActive={this.handleIsActive}>数据模拟</NavLink>
+                        <NavLink to={`${getSitePath()}/mockers`} isActive={this.handleIsActive}>数据模拟</NavLink>
                     </Menu.Item>
+
                 </Menu>
             </Layout.Header>
         );
