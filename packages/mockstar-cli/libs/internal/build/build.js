@@ -26,9 +26,5 @@ module.exports = function (args) {
 
     // 构建本地服务
     console.log('Ready to build local server!', configOpts);
-    return new Promise((resolve, reject) => {
-        localServer.startServer(configOpts, () => {
-            resolve();
-        });
-    });
+    return localServer.buildPm2(configOpts);
 };
