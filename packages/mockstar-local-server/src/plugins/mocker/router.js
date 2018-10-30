@@ -45,10 +45,25 @@ module.exports = (router, entry) => {
         });
     });
 
+    // GET /mockstar-cgi/detail 获得配置项数据
+    router.get(`/mockstar-cgi/detail`, (req, res) => {
+        res.jsonp({
+            url: req.url,
+            host: req.host,
+            hostname: req.hostname,
+            ip: req.ip,
+            method: req.method,
+            body: req.body,
+            params: req.params,
+            query: req.query,
+            path: req.path,
+            config: entry
+        });
+    });
+
     // 处理 plugin=xhr 的场景
     handleXhr(router, mockerList, mockerParser);
 
     // 携带变量出去
-    router._mockerParser = mockerParser;
     router._mockerParser = mockerParser;
 };

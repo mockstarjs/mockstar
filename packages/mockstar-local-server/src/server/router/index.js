@@ -103,7 +103,7 @@ module.exports = (entry) => {
                 params: req.params,
                 query: req.query,
                 path: req.path,
-                entry: entry
+                config: entry
             });
         }
     });
