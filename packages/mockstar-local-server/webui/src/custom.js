@@ -28,6 +28,12 @@ export function getCGIPath() {
     return adminCGIPath;
 }
 
+export function getPort() {
+    let { port } = getMockStarConfig();
+
+    return port;
+}
+
 
 
 
