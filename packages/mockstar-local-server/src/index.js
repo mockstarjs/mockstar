@@ -33,5 +33,6 @@ module.exports = {
     findAvailablePort: utilsPort.findAvailablePort,
     getConfigOpts: runConfig.getConfigOpts,
     getMockServerPath: utilsMockstar.getMockServerPath,
-    getBuildPath: utilsMockstar.getBuildPath
+    getBuildPath: utilsMockstar.getBuildPath,
+    getLogPath: utilsMockstar.getLogPath
 };
