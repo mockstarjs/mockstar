@@ -6,12 +6,9 @@
     "mockstar": "./bin/mockstar"
   },
   "scripts": {
-    "prepublishOnly": "npm run build-ui",
-    "dev-ui": "cd ./biz/webui && npm run start",
-    "build-ui": "cd ./biz/webui && npm run build",
     "test-mocha": "node ./node_modules/mocha/bin/_mocha",
     "test": "npm run eslint && npm run test-cov",
-    "eslint": "eslint src/",
+    "eslint": "eslint libs/",
     "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha"
   },
   "keywords": [
