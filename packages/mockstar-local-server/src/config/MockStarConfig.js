@@ -15,6 +15,7 @@ class MockStarConfig {
      * @param {Boolean} [configOpts.isDev] 当前是否为开发模式
      * @param {Boolean} [configOpts.watch] 是否监听文件变化，只有在 pm2 场景下才有效
      * @param {String} [configOpts.namespace] 命名空间
+     * @param {String} [configOpts.adminBasePath] 命名空间
      * @returns {Object}
      */
     constructor(configOpts = {}) {
@@ -31,22 +32,22 @@ class MockStarConfig {
         this.mockServerPath = getMockServerPath(this.rootPath, configOpts.mockServerPath);
 
         // mockstar 启动之后的服务端口号，默认为 9527
-        this.port = this.port || 9527;
+        this.port = configOpts.port || 9527;
 
         // pm2 应用的名字
-        this.name = this.name || `mockstar_${this.port}`;
+        this.name = configOpts.name || `mockstar_${this.port}`;
 
         // 当前是否为开发模式
-        this.isDev = this.isDev || false;
+        this.isDev = configOpts.isDev || false;
 
         // 是否监听文件变化，只有在 pm2 场景下才有效
-        this.watch = this.watch || false;
+        this.watch = configOpts.watch || false;
 
         // 命名空间
-        this.namespace = this.namespace || '';
+        this.namespace = configOpts.namespace || '';
 
         // 管理后台访问的根目录
-        this.adminBasePath = this.adminBasePath || `${this.namespace ? '/' + this.namespace : ''}/mockstar-admin`;
+        this.adminBasePath = configOpts.adminBasePath || `${this.namespace ? '/' + this.namespace : ''}/mockstar-admin`;
     }
 
     isValid() {
