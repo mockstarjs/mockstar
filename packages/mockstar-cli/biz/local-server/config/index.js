@@ -1,42 +1,28 @@
-const fs = require('fs');
-
 /**
  * 获取最终的配置数据
  *
- * @param {Object | String} opts 用户传递过来的参数
- * @param {String} [opts.rootPath] 项目根目录
- * @param {String} [opts.buildPath] 构建之后的目录
- * @param {String} [opts.logPath] 日志目录
- * @param {String} [opts.mockServerPath]  mock server 根目录
+ * @param {Object} configOpts mockstar.config.js中的配置项
+ * @param {String} [configOpts.rootPath] 项目根目录
+ * @param {String} [configOpts.buildPath] 构建之后的目录
+ * @param {String} [configOpts.logPath] 日志目录
+ * @param {String} [configOpts.mockServerPath]  mock server 根目录
+ * @param {Number} [configOpts.port] 端口号
+ * @param {String} [configOpts.name] pm2 应用的名字
+ * @param {Boolean} [configOpts.isDev] 当前是否为开发模式，即不启用pm2
+ * @param {Object} opts 额外的一些参数
+ * @param {String} [opts.cwd] 当前执行node的路径
+ * @param {Number} [opts.port] 端口号
+ * @param {String} [opts.name] pm2 应用的名字
+ * @param {Boolean} [opts.isDev] 当前是否为开发模式，即不启用pm2
  *
  * @returns {Object}
  */
-function getConfigOpts(opts) {
-    let configOpts;
-
-    try {
-        // opts 如果是字符串则认为是文件路径，可将配置项放在独立的配置文件中
-        if (typeof opts === 'string' && fs.existsSync(opts)) {
-            configOpts = require(opts);
-        } else if (opts && (typeof opts === 'object')) {
-            configOpts = opts;
-        } else {
-            configOpts = null;
-        }
-    } catch (e) {
-        console.error('getConfigOpts catch e:', e);
-    }
-
-    // 必须要存在配置
-    if (!configOpts) {
-        console.error('Could not get configOpts!', opts);
-        return null;
-    }
-
+function getConfigOpts(configOpts = {}, opts = {}) {
     // 如果没有 rootPath，则将无法启动成功
+    configOpts.rootPath = configOpts.rootPath || opts.cwd;
     if (!configOpts.rootPath) {
-        console.error('Should define rootPath!', opts, configOpts);
-        return null;
+        console.error('UNKNOWN rootPath!', configOpts, opts);
+        throw new Error('UNKNOWN rootPath!');
     }
 
     // mocker 的配置项，设置一些默认值
@@ -49,7 +35,13 @@ function getConfigOpts(opts) {
     // }
 
     // mockstar 启动之后的服务端口号，默认为 9527
-    configOpts.port = configOpts.port || 9527;
+    configOpts.port = configOpts.port || opts.port || 9527;
+
+    // pm2 应用的名字
+    configOpts.name = configOpts.name || opts.name || `mockstar_${configOpts.port}`;
+
+    // 当前是否为开发模式，即不启用pm2
+    configOpts.isDev = configOpts.isDev || opts.isDev || false;
 
     return configOpts;
 }
