@@ -1,4 +1,4 @@
-const mockstarLocalServer = require('../lib');
+const mockstarLocalServer = require('../../lib');
 
 function start(opts = {}) {
     return new Promise((resolve, reject) => {

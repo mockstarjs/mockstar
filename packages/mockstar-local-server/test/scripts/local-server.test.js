@@ -7,7 +7,7 @@ const testServer = require('../data/test-sever');
 
 describe('local server for mockstar', () => {
     let port;
-    let pid;
+    // let pid;
     let cgiBase;
 
     before(function () {
@@ -16,7 +16,7 @@ describe('local server for mockstar', () => {
         return testServer.start(require(path.join(__dirname, '../data/local-server-test/mockstar.config.js')))
             .then((data) => {
                 // console.log('----', data);
-                pid = data.pid;
+                // pid = data.pid;
                 port = data.port;
                 cgiBase = `http://localhost:${port}`;
 
@@ -26,7 +26,7 @@ describe('local server for mockstar', () => {
 
     after(function () {
         fse.removeSync(path.join(__dirname, '../data/local-server-test/build'));
-        testServer.stop(pid);
+        // testServer.stop(pid);
     });
 
     describe('get /mockstar-cgi/mocker', () => {
