@@ -54,6 +54,7 @@
     "minimist": "^1.2.0",
     "mockstar": "^0.2.8",
     "mockstar-client": "^0.2.8",
+    "mockstar-local-server": "^0.2.10",
     "ora": "^1.4.0",
     "osenv": "^0.1.4",
     "pm2": "^3.2.2",

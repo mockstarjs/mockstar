@@ -1,16 +1,13 @@
 const path = require('path');
 const fse = require('fs-extra');
 const pm2 = require('pm2');
+const mockstarLocalServer = require('mockstar-local-server');
 
-const utilMockstar = require('../utils/mockstar');
-
-const PM2_NAME = 'mockstar_9527';
-
-function startPm2(configOpts) {
+function startPm2(configOpts, callback) {
     // console.log('run-by-pm2', configOpts);
 
     // pm2 的方式下，则需要先生成 pm2.json 文件，然后再使用 pm2 启动
-    const buildPath = utilMockstar.getBuildPath(configOpts.rootPath, configOpts.buildPath);
+    const buildPath = mockstarLocalServer.getBuildPath(configOpts.rootPath, configOpts.buildPath);
     const pm2ConfigFilePath = path.join(buildPath, 'pm2.json');
 
     // 获取配置信息
@@ -21,10 +18,13 @@ function startPm2(configOpts) {
         .then(() => {
             console.log('Generate pm2.json success!', pm2ConfigFilePath);
 
-            startTask(configOpts.name, pm2ConfigFilePath);
+            startTask(configOpts.name, pm2ConfigFilePath, callback);
         })
         .catch((err) => {
-            throw err;
+            console.error('fse.outputJson catch err', err);
+            if (typeof callback === 'function') {
+                callback(false, err);
+            }
         });
 }
 
@@ -138,8 +138,8 @@ function deleteTask(name) {
  * @returns {{apps: *[]}}
  */
 function getPm2Config(configOpts) {
-    const mockServerPath = utilMockstar.getMockServerPath(configOpts.rootPath, configOpts.mockServerPath);
-    const buildPath = utilMockstar.getBuildPath(configOpts.rootPath, configOpts.buildPath);
+    const mockServerPath = mockstarLocalServer.getMockServerPath(configOpts.rootPath, configOpts.mockServerPath);
+    const buildPath = mockstarLocalServer.getBuildPath(configOpts.rootPath, configOpts.buildPath);
 
     // http://pm2.keymetrics.io/docs/usage/application-declaration/
     let result = {

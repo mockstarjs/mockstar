@@ -197,7 +197,7 @@ class RunServer {
 
             // 启动成功之后进行回调
             if (typeof callback === 'function') {
-                callback(Object.assign({}, this.configOpts));
+                callback(true, Object.assign({}, this.configOpts));
             }
         });
     }
