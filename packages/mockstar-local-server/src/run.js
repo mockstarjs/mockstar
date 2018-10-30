@@ -38,6 +38,9 @@ class RunServer {
         this.middleware = null;
         this.app = null;
         this.server = null;
+
+        this.html = '';
+
     }
 
     /**
@@ -104,6 +107,7 @@ class RunServer {
     _createApp() {
         const app = mockstarServer.create();
         const { adminSitePath, namespace } = this.configOpts;
+        const self = this;
 
         // Set default middlewares (logger, static, cors and no-cache)
         app.use(this.middleware);
@@ -139,7 +143,16 @@ class RunServer {
         // 单页应用，因此只要是 ${adminSitePath}/* 的都加载静态html页面
         // GET ${adminSitePath}/*
         app.get(`${adminSitePath}/*`, function (req, res) {
-            res.sendFile(path.join(__dirname, '../webui/build', 'index.html'));
+            // res.sendFile(path.join(__dirname, '../webui/build', 'index.html'));
+            // 这里没有使用 res.sendFile，原因是需要将一些参数项放在 index.html 上
+
+            self._getHtml()
+                .then((data) => {
+                    res.send(data);
+                })
+                .catch((err) => {
+                    res.status(500).send(err);
+                });
         });
 
         // 日志打印模块
@@ -160,6 +173,28 @@ class RunServer {
         app.use(this.router);
 
         this.app = app;
+    }
+
+    _getHtml() {
+        return new Promise((resolve, reject) => {
+            if (this.html) {
+                return resolve(this.html);
+            }
+
+            fs.readFile(path.join(__dirname, '../webui/build', 'index.html'), 'utf8', (err, content) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    // 需要插入到 html head 的脚本
+                    const injectInHead = '<script>window._mockstar_config_=' + JSON.stringify(this.configOpts) + '</script>';
+
+                    // 替换内容
+                    this.html = content.replace('</head>', injectInHead + '</head>');
+
+                    resolve(this.html);
+                }
+            });
+        });
     }
 
     /**
