@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 /**
  * 获取最终的配置数据
  *
@@ -8,21 +10,22 @@
  * @param {String} [configOpts.mockServerPath]  mock server 根目录
  * @param {Number} [configOpts.port] 端口号
  * @param {String} [configOpts.name] pm2 应用的名字
- * @param {Boolean} [configOpts.isDev] 当前是否为开发模式，即不启用pm2
+ * @param {Boolean} [configOpts.isDev] 当前是否为开发模式
  * @param {Object} opts 额外的一些参数
  * @param {String} [opts.cwd] 当前执行node的路径
  * @param {Number} [opts.port] 端口号
  * @param {String} [opts.name] pm2 应用的名字
- * @param {Boolean} [opts.isDev] 当前是否为开发模式，即不启用pm2
+ * @param {Boolean} [opts.isDev] 当前是否为开发模式
  *
  * @returns {Object}
  */
 function getConfigOpts(configOpts = {}, opts = {}) {
     // 如果没有 rootPath，则将无法启动成功
     configOpts.rootPath = configOpts.rootPath || opts.cwd;
-    if (!configOpts.rootPath) {
-        console.error('UNKNOWN rootPath!', configOpts, opts);
-        throw new Error('UNKNOWN rootPath!');
+
+    if (!configOpts.rootPath || !fs.existsSync(configOpts.rootPath)) {
+        console.error('UNKNOWN rootPath=' + configOpts.rootPath, configOpts, opts);
+        throw new Error('UNKNOWN rootPath=' + configOpts.rootPath);
     }
 
     // mocker 的配置项，设置一些默认值
@@ -40,7 +43,7 @@ function getConfigOpts(configOpts = {}, opts = {}) {
     // pm2 应用的名字
     configOpts.name = configOpts.name || opts.name || `mockstar_${configOpts.port}`;
 
-    // 当前是否为开发模式，即不启用pm2
+    // 当前是否为开发模式
     configOpts.isDev = configOpts.isDev || opts.isDev || false;
 
     return configOpts;

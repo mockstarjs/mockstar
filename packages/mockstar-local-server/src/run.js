@@ -17,6 +17,17 @@ const attentionLogger = logger.attentionLogger();
 global.mockstarLogger = mockstarLogger;
 global.attentionLogger = attentionLogger;
 
+/**
+ * 启动服务
+ *
+ * @param {Object} configOpts 配置项参数
+ * @param {String} configOpts.rootPath 项目根目录
+ * @param {String} [configOpts.buildPath] 构建之后的目录
+ * @param {String} [configOpts.logPath] 日志目录
+ * @param {String} [configOpts.mockServerPath]  mock server 根目录
+ * @param {Number} [configOpts.port] 端口号
+ * @param {String} [configOpts.name] pm2 应用的名字
+ */
 module.exports = (configOpts) => {
     //====================================================================================
     // 1. 获取配置项

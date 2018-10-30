@@ -1,5 +1,5 @@
 const run = require('./run');
-const runByPm2 = require('./run-by-pm2');
+const runConfig = require('./config');
 
 /**
  * 启动服务
@@ -11,27 +11,16 @@ const runByPm2 = require('./run-by-pm2');
  * @param {String} [configOpts.mockServerPath]  mock server 根目录
  * @param {Number} [configOpts.port] 端口号
  * @param {String} [configOpts.name] pm2 应用的名字
- * @param {Boolean} [configOpts.isDev] 当前是否为开发模式，即不启用pm2
+ * @param {Boolean} [configOpts.isDev] 当前是否为开发模式
  */
 function startServer(configOpts = {}) {
-    // console.log('--startServer--', configOpts);
+    // 获取标准的参数
+    configOpts = runConfig.getConfigOpts(configOpts);
 
-    if (configOpts.isDev) {
-        run(configOpts);
-    } else {
-        runByPm2.start(configOpts);
-    }
-}
-
-/**
- * 停止服务
- * @param {String} [name] 自定义的pm2服务名称
- */
-function stopServer(name) {
-    runByPm2.stop(name);
+    // 启动服务
+    run(configOpts);
 }
 
 module.exports = {
-    startServer: startServer,
-    stopServer: stopServer
+    startServer: startServer
 };
