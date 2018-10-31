@@ -34,7 +34,10 @@ export function getPort() {
     return port;
 }
 
+export function getNamespace() {
+    let { namespace } = getMockStarConfig();
 
-
+    return namespace;
+}
 
 
