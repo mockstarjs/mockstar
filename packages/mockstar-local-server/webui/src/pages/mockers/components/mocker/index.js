@@ -17,6 +17,8 @@ import MockModuleList from './display-mock-module-list';
 import MockerReadme from './display-readme';
 import MockerMenu from './display-menu';
 
+import { getNamespace } from '../../../../custom';
+
 import './index.less';
 
 class Mocker extends Component {
@@ -57,7 +59,10 @@ class Mocker extends Component {
         if (mockerItem.config.plugin !== 'async') {
             // 如果有指定的host，则使用指定的host
             if (host && (actualURL.indexOf(host) < 0)) {
-                actualURL = `http://${host}${actualURL}`;
+                let namespace = getNamespace();
+                let url = (actualURL.indexOf('/') === 0) ? actualURL : '/' + actualURL;
+                let fullPath = (namespace ? `/${namespace}` : '') + url;
+                actualURL = `http://${host}${fullPath}`;
             }
 
             ajax({
