@@ -1,6 +1,6 @@
 {
   "name": "mockstar-cli",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "description": "CLI tool for MockStar",
   "bin": {
     "mockstar": "./bin/mockstar"
@@ -44,7 +44,7 @@
     "meow": "^3.7.0",
     "minimist": "^1.2.0",
     "mockstar": "^0.2.8",
-    "mockstar-local-server": "^0.3.0",
+    "mockstar-local-server": "^0.3.2",
     "ora": "^1.4.0",
     "osenv": "^0.1.4",
     "pm2": "^3.2.2",

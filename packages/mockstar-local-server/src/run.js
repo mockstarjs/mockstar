@@ -114,8 +114,9 @@ class RunServer {
 
         // GET /，跳转到 `${adminSitePath}/`
         // 这里需要额外处理
-        app.get(`${namespace ? '/' + namespace : ''}/`, function (req, res) {
-            res.redirect(`${adminSitePath}/`);
+        let siteRootPath = `${namespace ? '/' + namespace : ''}/`;
+        app.get(siteRootPath, function (req, res) {
+            res.redirect(`${siteRootPath + adminSitePath}/dashboard`);
         });
 
         // app.get('/mytest', function (req, res) {
