@@ -114,9 +114,11 @@ class RunServer {
 
         // GET /，跳转到 `${adminSitePath}/`
         // 这里需要额外处理
+        // TODO 这里的规则似乎没有生效
         let siteRootPath = `${namespace ? '/' + namespace : ''}/`;
+        let pageHome = `${(namespace ? '/' + namespace : '') + adminSitePath}/dashboard`;
         app.get(siteRootPath, function (req, res) {
-            res.redirect(`${siteRootPath + adminSitePath}/dashboard`);
+            res.redirect(pageHome);
         });
 
         // app.get('/mytest', function (req, res) {
