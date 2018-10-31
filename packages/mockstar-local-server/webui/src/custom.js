@@ -17,15 +17,15 @@ export function getSiteRoot() {
 }
 
 export function getSitePath() {
-    let { adminSitePath } = getMockStarConfig();
+    let { namespace, adminSitePath } = getMockStarConfig();
 
-    return adminSitePath;
+    return (namespace ? '/' + namespace : '') + adminSitePath;
 }
 
 export function getCGIPath() {
-    let { adminCGIPath } = getMockStarConfig();
+    let { namespace, adminCGIPath } = getMockStarConfig();
 
-    return adminCGIPath;
+    return (namespace ? '/' + namespace : '') + adminCGIPath;
 }
 
 export function getPort() {
