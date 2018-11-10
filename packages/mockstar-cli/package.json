@@ -1,6 +1,6 @@
 {
   "name": "mockstar-cli",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "CLI tool for MockStar",
   "bin": {
     "mockstar": "./bin/mockstar"
@@ -43,8 +43,8 @@
     "hexo-fs": "^0.2.3",
     "meow": "^3.7.0",
     "minimist": "^1.2.0",
-    "mockstar": "^0.2.8",
-    "mockstar-local-server": "^0.3.2",
+    "mockstar": "^0.3.3",
+    "mockstar-local-server": "^0.3.3",
     "ora": "^1.4.0",
     "osenv": "^0.1.4",
     "pm2": "^3.2.2",
@@ -58,7 +58,7 @@
     "chai": "^4.2.0",
     "eslint": "^5.7.0",
     "mocha": "^5.2.0",
-    "mockstar-client": "^0.2.8",
+    "mockstar-client": "^0.3.3",
     "superagent": "^3.8.3"
   }
 }
