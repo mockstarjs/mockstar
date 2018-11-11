@@ -55,7 +55,7 @@ module.exports = function (args) {
     let mockstarConfig = require(configAbsolutePath);
 
     // 获取一些默认值
-    return mockstarLocalServer.getConfigOpts(mockstarConfig, {
+    return mockstarLocalServer.getMockStarConfig(mockstarConfig, {
         port: port,
         name: name,
         cwd: cwd,
