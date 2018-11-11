@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const MockStarConfig = require('./MockStarConfig');
+const LocalServerConfig = require('./LocalServerConfig');
 
 /**
  * 获取最终的配置数据
@@ -20,19 +20,19 @@ const MockStarConfig = require('./MockStarConfig');
  * @param {String} [opts.name] pm2 应用的名字
  * @param {Boolean} [opts.isDev] 当前是否为开发模式
  * @param {Boolean} [opts.watch] 是否监听文件变化，只有在 pm2 场景下才有效
- * @returns {MockStarConfig}
+ * @returns {LocalServerConfig}
  */
-function getMockStarConfig(configOpts = {}, opts = {}) {
+function getLocalServerConfig(configOpts = {}, opts = {}) {
     // 注意要用 _.merge，因为 Object.assign 会将 undefined 属性值也拷贝过去
-    let mockStarConfig = new MockStarConfig(_.merge({}, configOpts, opts));
+    let localServerConfig = new LocalServerConfig(_.merge({}, configOpts, opts));
 
-    if (!mockStarConfig.isValid()) {
+    if (!localServerConfig.isValid()) {
         return null;
     }
 
-    return mockStarConfig;
+    return localServerConfig;
 }
 
 module.exports = {
-    getMockStarConfig: getMockStarConfig
+    getLocalServerConfig: getLocalServerConfig
 };

@@ -18,7 +18,7 @@ const runConfig = require('./config');
  */
 function startServer(configOpts = {}, callback) {
     // 获取标准的参数
-    const mockStarConfig = runConfig.getMockStarConfig(configOpts);
+    const mockStarConfig = runConfig.getLocalServerConfig(configOpts);
 
     if (!mockStarConfig) {
         throw new Error('CAN NOT get mockStarConfig!');
@@ -31,7 +31,7 @@ function startServer(configOpts = {}, callback) {
 module.exports = {
     startServer: startServer,
     findAvailablePort: utilsPort.findAvailablePort,
-    getMockStarConfig: runConfig.getMockStarConfig,
+    getLocalServerConfig: runConfig.getLocalServerConfig,
     getMockServerPath: utilsMockstar.getMockServerPath,
     getBuildPath: utilsMockstar.getBuildPath,
     getLogPath: utilsMockstar.getLogPath
