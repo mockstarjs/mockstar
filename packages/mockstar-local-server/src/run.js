@@ -19,20 +19,20 @@ global.attentionLogger = attentionLogger;
 
 class RunServer {
     /**
-     * @param {Object} configOpts 配置项参数
-     * @param {String} configOpts.rootPath 项目根目录
-     * @param {String} [configOpts.buildPath] 构建之后的目录
-     * @param {String} [configOpts.logPath] 日志目录
-     * @param {String} [configOpts.mockServerPath]  mock server 根目录
-     * @param {Number} [configOpts.port] 端口号
-     * @param {String} [configOpts.name] pm2 应用的名字
+     * @param {Object} localServerConfig 配置项参数
+     * @param {String} localServerConfig.rootPath 项目根目录
+     * @param {String} [localServerConfig.buildPath] 构建之后的目录
+     * @param {String} [localServerConfig.logPath] 日志目录
+     * @param {String} [localServerConfig.mockServerPath]  mock server 根目录
+     * @param {Number} [localServerConfig.port] 端口号
+     * @param {String} [localServerConfig.name] pm2 应用的名字
      */
-    constructor(configOpts) {
-        if (!configOpts) {
+    constructor(localServerConfig) {
+        if (!localServerConfig) {
             throw new Error('Invalid param!');
         }
 
-        this.configOpts = configOpts;
+        this.localServerConfig = localServerConfig;
 
         this.router = null;
         this.middleware = null;
@@ -72,7 +72,7 @@ class RunServer {
      * @private
      */
     _initBabel() {
-        // babelCompileDirectory(configOpts.SRC_PATH, configOpts.APP_PATH);
+        // babelCompileDirectory(localServerConfig.SRC_PATH, localServerConfig.APP_PATH);
     }
 
     /**
@@ -80,8 +80,8 @@ class RunServer {
      * @private
      */
     _initLog() {
-        logger.init(this.configOpts.logPath);
-        mockstarLogger.info(this.configOpts);
+        logger.init(this.localServerConfig.logPath);
+        mockstarLogger.info(this.localServerConfig);
     }
 
     /**
@@ -89,7 +89,7 @@ class RunServer {
      * @private
      */
     _createRouter() {
-        this.router = mockstarServer.router(this.configOpts);
+        this.router = mockstarServer.router(this.localServerConfig);
     }
 
     /**
@@ -105,20 +105,21 @@ class RunServer {
      * @private
      */
     _createApp() {
-        const app = mockstarServer.create();
-        const { adminSitePath, namespace } = this.configOpts;
         const self = this;
+        const app = mockstarServer.create();
+
+        const adminSiteRootPath = this.localServerConfig.getAdminSiteRootPath();
+        const adminSiteBase = this.localServerConfig.getAdminSiteBase();
 
         // Set default middlewares (logger, static, cors and no-cache)
         app.use(this.middleware);
 
-        // GET /，跳转到 `${adminSitePath}/`
-        // 这里需要额外处理
+        // 如果访问的是根目录，则跳转到首页
+        // GET adminSiteRootPath，跳转到 adminPageHome
+        // GET /，跳转到 /mockstar-admin/dashboard
         // TODO 这里的规则似乎没有生效
-        let siteRootPath = `${namespace ? '/' + namespace : ''}/`;
-        let pageHome = `${(namespace ? '/' + namespace : '') + adminSitePath}/dashboard`;
-        app.get(siteRootPath, function (req, res) {
-            res.redirect(pageHome);
+        app.get(adminSiteRootPath, function (req, res) {
+            res.redirect(`${adminSiteBase}/dashboard`);
         });
 
         // app.get('/mytest', function (req, res) {
@@ -126,9 +127,9 @@ class RunServer {
         // });
 
         // 静态资源的配置
-        // GET ${adminSitePath}/mockers/:name/static/* 静态资源
+        // GET ${adminSiteBase}/mockers/:name/static/* 静态资源
         // http://localhost:9527/mockstar-admin/mockers/demo_03/static/sub/workflow.png
-        app.get(`${adminSitePath}/mockers/:mockerName/static/*`, (req, res) => {
+        app.get(`${adminSiteBase}/mockers/:mockerName/static/*`, (req, res) => {
             // req.params[0] = 'sub/workflow.png'
             // req.params.name = 'demo_03'
 
@@ -143,9 +144,9 @@ class RunServer {
             }
         });
 
-        // 单页应用，因此只要是 ${adminSitePath}/* 的都加载静态html页面
-        // GET ${adminSitePath}/*
-        app.get(`${adminSitePath}/*`, function (req, res) {
+        // 单页应用，因此只要是 ${adminSiteBase}/* 的都加载静态html页面
+        // GET ${adminSiteBase}/*
+        app.get(`${adminSiteBase}/*`, function (req, res) {
             // res.sendFile(path.join(__dirname, '../webui/build', 'index.html'));
             // 这里没有使用 res.sendFile，原因是需要将一些参数项放在 index.html 上
 
@@ -189,7 +190,7 @@ class RunServer {
                     reject(err);
                 } else {
                     // 需要插入到 html head 的脚本
-                    const injectInHead = '<script>window._mockstar_config_=' + JSON.stringify(this.configOpts) + '</script>';
+                    const injectInHead = '<script>window._mockstar_config_=' + JSON.stringify(this.localServerConfig) + '</script>';
 
                     // 替换内容
                     this.html = content.replace('</head>', injectInHead + '</head>');
@@ -214,7 +215,7 @@ class RunServer {
         // TODO 触发 onBeforeServerListen 事件
         // 如果启动了 plugin=async 则开启 websocket
         if (this.router._mockerParser.isSupportAsync()) {
-            require('./plugins/mocker/websocket')(this.configOpts, server, this.router._mockerParser);
+            require('./plugins/mocker/websocket')(this.localServerConfig, server, this.router._mockerParser);
         }
 
         this.server = server;
@@ -226,17 +227,17 @@ class RunServer {
      * @private
      */
     _startServer(callback) {
-        this.server.listen(this.configOpts.port, () => {
+        this.server.listen(this.localServerConfig.port, () => {
             // mockstarLogger.info('mockstar server is running');
             console.log('mockstar server is running!');
             console.log('Use your device to visit the following URL list, gets the IP of the URL you can visit:');
             console.log('\n');
-            console.log(`http://127.0.0.1:${this.configOpts.port}/`);
+            console.log(`http://127.0.0.1:${this.localServerConfig.port}/`);
             console.log('\n');
 
             // 启动成功之后进行回调
             if (typeof callback === 'function') {
-                callback(true, Object.assign({}, this.configOpts));
+                callback(true, Object.assign({}, this.localServerConfig));
             }
         });
     }
@@ -254,17 +255,17 @@ class RunServer {
 /**
  * 启动服务
  *
- * @param {LocalServerConfig} configOpts 配置项参数
- * @param {String} configOpts.rootPath 项目根目录
- * @param {String} [configOpts.buildPath] 构建之后的目录
- * @param {String} [configOpts.logPath] 日志目录
- * @param {String} [configOpts.mockServerPath]  mock server 根目录
- * @param {Number} [configOpts.port] 端口号
- * @param {String} [configOpts.name] pm2 应用的名字
+ * @param {LocalServerConfig} localServerConfig 配置项参数
+ * @param {String} localServerConfig.rootPath 项目根目录
+ * @param {String} [localServerConfig.buildPath] 构建之后的目录
+ * @param {String} [localServerConfig.logPath] 日志目录
+ * @param {String} [localServerConfig.mockServerPath]  mock server 根目录
+ * @param {Number} [localServerConfig.port] 端口号
+ * @param {String} [localServerConfig.name] pm2 应用的名字
  * @param {Function} callback 回调函数
  */
-module.exports = (configOpts, callback) => {
-    let runServer = new RunServer(configOpts);
+module.exports = (localServerConfig, callback) => {
+    let runServer = new RunServer(localServerConfig);
 
     runServer.start(callback);
 
