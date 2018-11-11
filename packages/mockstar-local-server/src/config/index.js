@@ -20,9 +20,9 @@ const MockStarConfig = require('./MockStarConfig');
  * @param {String} [opts.name] pm2 应用的名字
  * @param {Boolean} [opts.isDev] 当前是否为开发模式
  * @param {Boolean} [opts.watch] 是否监听文件变化，只有在 pm2 场景下才有效
- * @returns {Object}
+ * @returns {MockStarConfig}
  */
-function getConfigOpts(configOpts = {}, opts = {}) {
+function getMockStarConfig(configOpts = {}, opts = {}) {
     // 注意要用 _.merge，因为 Object.assign 会将 undefined 属性值也拷贝过去
     let mockStarConfig = new MockStarConfig(_.merge({}, configOpts, opts));
 
@@ -34,5 +34,5 @@ function getConfigOpts(configOpts = {}, opts = {}) {
 }
 
 module.exports = {
-    getConfigOpts: getConfigOpts
+    getMockStarConfig: getMockStarConfig
 };

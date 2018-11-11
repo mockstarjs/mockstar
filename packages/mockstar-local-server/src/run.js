@@ -254,7 +254,7 @@ class RunServer {
 /**
  * 启动服务
  *
- * @param {Object} configOpts 配置项参数
+ * @param {MockStarConfig} configOpts 配置项参数
  * @param {String} configOpts.rootPath 项目根目录
  * @param {String} [configOpts.buildPath] 构建之后的目录
  * @param {String} [configOpts.logPath] 日志目录
