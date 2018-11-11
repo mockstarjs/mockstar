@@ -1,5 +1,5 @@
 import { CALL_API } from '../../../../middlewares/api';
-import { getCGIPath } from '../../../../custom';
+import { getCGIBase } from '../../../../custom';
 
 export const MOCKER_REQUEST = 'MOCKER_REQUEST';
 export const MOCKER_REQUEST_SUCCESS = 'MOCKER_REQUEST_SUCCESS';
@@ -17,7 +17,7 @@ function fetchMocker(mockerName) {
     return {
         [CALL_API]: {
             types: [MOCKER_REQUEST, MOCKER_REQUEST_SUCCESS, MOCKER_REQUEST_FAIL],
-            url: `${getCGIPath()}/mocker/${mockerName}`
+            url: `${getCGIBase()}/mocker/${mockerName}`
         }
     };
 }
@@ -32,7 +32,7 @@ function fetchMockerReadme(mockerName) {
     return {
         [CALL_API]: {
             types: [MOCKER_README_REQUEST, MOCKER_README_REQUEST_SUCCESS, MOCKER_README_REQUEST_FAIL],
-            url: `${getCGIPath()}/mocker/${mockerName}/readme`
+            url: `${getCGIBase()}/mocker/${mockerName}/readme`
         }
     };
 }
@@ -47,7 +47,7 @@ function requestUpdateMocker(mockerName, newMockerState) {
     return {
         [CALL_API]: {
             types: [SET_ACTIVE_MODULE_REQUEST, SET_ACTIVE_MODULE_REQUEST_SUCCESS, SET_ACTIVE_MODULE_REQUEST_FAIL],
-            url: `${getCGIPath()}/mocker/${mockerName}`,
+            url: `${getCGIBase()}/mocker/${mockerName}`,
             type: 'POST',
             data: newMockerState
         }

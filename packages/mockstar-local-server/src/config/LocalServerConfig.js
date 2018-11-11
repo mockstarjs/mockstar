@@ -45,12 +45,6 @@ class LocalServerConfig {
         // 命名空间
         this.namespace = configOpts.namespace || '';
 
-        // 管理后台页面的根目录，实际访问时路径为 yourdomain/{this.namespace}/{this.adminSitePath}
-        this.adminSitePath = `/mockstar-admin`;
-
-        // 管理后台CGI的根目录，实际访问时路径为 yourdomain/{this.namespace}/{this.adminCGIPath}
-        this.adminCGIPath = `/mockstar-cgi`;
-
         // 管理后台页面的路由名，实际访问时路径为 yourdomain/{this.namespace}/{this.adminSiteRouteName}
         this.adminSiteRouteName = `mockstar-admin`;
 
