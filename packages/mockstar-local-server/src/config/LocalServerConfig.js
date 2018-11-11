@@ -50,6 +50,12 @@ class LocalServerConfig {
 
         // 管理后台CGI的根目录，实际访问时路径为 yourdomain/{this.namespace}/{this.adminCGIPath}
         this.adminCGIPath = `/mockstar-cgi`;
+
+        // 管理后台页面的路由名，实际访问时路径为 yourdomain/{this.namespace}/{this.adminSiteRouteName}
+        this.adminSiteRouteName = `mockstar-admin`;
+
+        // 管理后台CGI的路由名，实际访问时路径为 yourdomain/{this.namespace}/{this.adminCGIRouteName}
+        this.adminCGIRouteName = `mockstar-cgi`;
     }
 
     isValid() {
@@ -66,6 +72,45 @@ class LocalServerConfig {
         }
 
         return true;
+    }
+
+    /**
+     * 获得管理后台站点根目录
+     *
+     * 1. /
+     * 2. /xxx/
+     *
+     * @param {Boolean} [ignoreNamespace] 是否忽略 namespace
+     * @return {String}
+     */
+    getAdminSiteRootPath(ignoreNamespace) {
+        return `${!ignoreNamespace && this.namespace ? '/' + this.namespace : ''}/`;
+    }
+
+    /**
+     * 获得管理后台页面的基础路径
+     *
+     * 1. /mockstar-admin
+     * 2. /xxx/mockstar-admin
+     *
+     * @param {Boolean} [ignoreNamespace] 是否忽略 namespace
+     * @return {String}
+     */
+    getAdminSiteBase(ignoreNamespace) {
+        return `${this.getAdminSiteRootPath(ignoreNamespace)}${this.adminSiteRouteName}`;
+    }
+
+    /**
+     * 获得管理后台CGI的基础路径
+     *
+     * 1. /mockstar-cgi
+     * 2. /xxx/mockstar-cgi
+     *
+     * @param {Boolean} [ignoreNamespace] 是否忽略 namespace
+     * @return {String}
+     */
+    getAdminCGIBase(ignoreNamespace) {
+        return `${this.getAdminSiteRootPath(ignoreNamespace)}${this.adminCGIRouteName}`;
     }
 }
 

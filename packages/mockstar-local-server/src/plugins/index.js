@@ -1,8 +1,8 @@
 const mockerRouter = require('./mocker/router');
 
-module.exports = (router, entry) => {
+module.exports = (router, localServerConfig) => {
 
   // 初始化 mocker
-  mockerRouter(router, entry);
+  mockerRouter(router, localServerConfig);
 
 };
