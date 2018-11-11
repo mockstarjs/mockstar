@@ -1,6 +1,6 @@
 {
   "name": "mockstar-client",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "mockstar client",
   "main": "lib/index.js",
   "scripts": {
