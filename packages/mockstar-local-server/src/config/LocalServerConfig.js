@@ -106,6 +106,26 @@ class LocalServerConfig {
     getAdminCGIBase(ignoreNamespace) {
         return `${this.getAdminSiteRootPath(ignoreNamespace)}${this.adminCGIRouteName}`;
     }
+
+    /**
+     * 获得在 web 页面展示的数据
+     * @return {Object}
+     */
+    getShowDataInWeb() {
+        // 开发者模式下展示所有的数据
+        if (this.isDev) {
+            return this;
+        }
+
+        // 生产环境下只展示必要的
+        return {
+            name: this.name,
+            port: this.port,
+            namespace: this.namespace,
+            adminSiteRouteName: this.adminSiteRouteName,
+            adminCGIRouteName: this.adminCGIRouteName
+        };
+    }
 }
 
 module.exports = LocalServerConfig;
