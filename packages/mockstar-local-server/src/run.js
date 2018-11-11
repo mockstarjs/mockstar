@@ -190,7 +190,7 @@ class RunServer {
                     reject(err);
                 } else {
                     // 需要插入到 html head 的脚本
-                    const injectInHead = '<script>window._mockstar_config_=' + JSON.stringify(this.localServerConfig) + '</script>';
+                    const injectInHead = '<script>window._mockstar_config_=' + JSON.stringify(this.localServerConfig.getShowDataInWeb()) + '</script>';
 
                     // 替换内容
                     this.html = content.replace('</head>', injectInHead + '</head>');
