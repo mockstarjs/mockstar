@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { getMockServerPath, getBuildPath, getLogPath } = require('../utils/mockstar');
 
-class MockStarConfig {
+class LocalServerConfig {
     /**
      * 获取最终的配置数据
      *
@@ -69,4 +69,4 @@ class MockStarConfig {
     }
 }
 
-module.exports = MockStarConfig;
+module.exports = LocalServerConfig;
