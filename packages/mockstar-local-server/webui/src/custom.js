@@ -1,9 +1,11 @@
-export function getMockStarConfig() {
-    let config = window._mockstar_config_ || {
+import _ from 'lodash';
+
+export function getLocalServerConfig() {
+    const config = _.merge({
         'namespace': '',
-        'adminSitePath': '/mockstar-admin',
-        'adminCGIPath': '/mockstar-cgi'
-    };
+        'adminSiteRouteName': 'mockstar-admin',
+        'adminCGIRouteName': 'mockstar-cgi'
+    }, window._mockstar_config_);
 
     window._mockstar_config_ = config;
 
@@ -11,31 +13,31 @@ export function getMockStarConfig() {
 }
 
 export function getSiteRoot() {
-    let { namespace } = getMockStarConfig();
+    let { namespace } = getLocalServerConfig();
 
     return namespace ? `/${namespace}/` : '/';
 }
 
-export function getSitePath() {
-    let { namespace, adminSitePath } = getMockStarConfig();
+export function getSiteBase() {
+    let { adminSiteRouteName } = getLocalServerConfig();
 
-    return (namespace ? '/' + namespace : '') + adminSitePath;
+    return getSiteRoot() + adminSiteRouteName;
 }
 
-export function getCGIPath() {
-    let { namespace, adminCGIPath } = getMockStarConfig();
+export function getCGIBase() {
+    let { adminCGIRouteName } = getLocalServerConfig();
 
-    return (namespace ? '/' + namespace : '') + adminCGIPath;
+    return getSiteRoot() + adminCGIRouteName;
 }
 
 export function getPort() {
-    let { port } = getMockStarConfig();
+    let { port } = getLocalServerConfig();
 
     return port;
 }
 
 export function getNamespace() {
-    let { namespace } = getMockStarConfig();
+    let { namespace } = getLocalServerConfig();
 
     return namespace;
 }
