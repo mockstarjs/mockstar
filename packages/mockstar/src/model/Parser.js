@@ -16,11 +16,15 @@ export default class Parser {
      * @param {Object} opts 参数
      * @param {String} opts.basePath mocker的根目录，绝对路径
      * @param {String} [opts.buildPath] 构建之后的目录，也是数据存储的根目录，绝对路径
+     * @param {Boolean} [opts.watch] 当前是否支持 watch
      * @param {Array} [opts.definedMockers] 预定义的 Mocker 列表
      */
     constructor(opts) {
         this.basePath = opts.basePath;
         this.definedMockers = Array.isArray(opts.definedMockers) ? [...opts.definedMockers] : [];
+
+        // 当前是否支持 watch
+        this.watch = !!opts.watch;
 
         // 只有传递了 opts.buildPath，才处理 db
         if (opts.buildPath) {
@@ -62,6 +66,11 @@ export default class Parser {
 
             // 引入这个模块
             let mockerItem = requireModule(path.join(this.basePath, item.relativePath));
+
+            // 记得初始化
+            mockerItem.init({
+                watch: this.watch
+            });
 
             // 更新用户操作历史记录
             if (this.db) {

@@ -11,8 +11,8 @@ export function requireModule(moduleId, ignoreCache) {
     }
 
     const filePath = require.resolve(moduleId);
-    ignoreCache = true;
-    // 忽略缓存
+
+    // 忽略 require 的缓存
     if (ignoreCache) {
         // Delete itself from module parent
         if (require.cache[filePath] && require.cache[filePath].parent) {
