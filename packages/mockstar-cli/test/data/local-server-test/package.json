@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node ../../../bin/mockstar start",
-    "start2": "node ../../../bin/mockstar start --port=9528",
-    "start3": "node ../../../bin/mockstar start --port=9529 --name=myname",
-    "start-dev": "node ../../../bin/mockstar start --dev",
+    "start-dev-watch": "node ../../../bin/mockstar start --dev --watch",
+    "start-port9528": "node ../../../bin/mockstar start --port=9528",
+    "start-port-name": "node ../../../bin/mockstar start --port=9529 --name=myname",
     "build": "node ../../../bin/mockstar build",
     "build-watch": "node ../../../bin/mockstar build --watch",
     "start-by-node-dev": "node-dev ../../../bin/mockstar start",
