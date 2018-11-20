@@ -4,9 +4,10 @@ import path from 'path';
 import _ from 'lodash';
 import marked from 'marked';
 import fsHandler from 'fs-handler';
-
 import { getDB } from '../store';
 import { LOCAL_STORE_FILE, MOCK_MODULES, MS_TARGET } from '../config';
+
+import { requireModule } from '../file';
 
 export default class Parser {
     /**
@@ -56,11 +57,11 @@ export default class Parser {
             // console.log('\n找到 mocker ：', name, item);
 
             // 获得 require 这个模块的相对路径
-            let requirePath = getRequirePath(path.join(this.basePath, item.relativePath));
+            // let requirePath = getRequirePath(path.join(this.basePath, item.relativePath));
             // console.log('requirePath ：', requirePath);
 
             // 引入这个模块
-            let mockerItem = require(requirePath);
+            let mockerItem = requireModule(path.join(this.basePath, item.relativePath));
 
             // 更新用户操作历史记录
             if (this.db) {
