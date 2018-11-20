@@ -36,7 +36,6 @@
     "bluebird": "^3.5.0",
     "bunyan": "^1.8.12",
     "chalk": "^2.3.2",
-    "cross-spawn": "^5.1.0",
     "figlet": "^1.2.0",
     "fs-extra": "^5.0.0",
     "fs-handler": "^0.1.2",
@@ -55,6 +54,7 @@
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "chai": "^4.2.0",
+    "cross-spawn": "^5.1.0",
     "eslint": "^5.7.0",
     "mocha": "^5.2.0",
     "mockstar-client": "^0.4.0",
