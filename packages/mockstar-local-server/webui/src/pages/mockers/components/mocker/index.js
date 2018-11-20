@@ -13,6 +13,7 @@ import MockerBreadcrumb from './display-breadcrumb';
 import MockerDetail from './display-detail';
 import MockerShowResult from './display-show-result';
 import MockerSwitcher from './display-action';
+import MockerProxyTips from './display-proxy-tips';
 import MockModuleList from './display-mock-module-list';
 import MockerReadme from './display-readme';
 import MockerMenu from './display-menu';
@@ -43,11 +44,7 @@ class Mocker extends Component {
         this.props.loadMockerList();
     }
 
-    handlePreviewResult = (query) => {
-        const { mockerItem } = this.props;
-
-        let actualURL = mockerItem.config.route;
-
+    getMockServerHost() {
         // 在预览的情况下，host 的值应该是与当前页面一致的
         let host = window.location.host;
 
@@ -55,6 +52,17 @@ class Mocker extends Component {
         if (process.env.NODE_ENV !== 'production') {
             host = '127.0.0.1:9527';
         }
+
+        return host;
+    }
+
+    handlePreviewResult = (query) => {
+        const { mockerItem } = this.props;
+
+        let actualURL = mockerItem.config.route;
+
+        // 获得 host
+        let host = this.getMockServerHost();
 
         if (mockerItem.config.plugin !== 'async') {
             // 如果有指定的host，则使用指定的host
@@ -166,6 +174,11 @@ class Mocker extends Component {
                                     activeModule={mockerItem.config.activeModule}
                                     previewResult={this.handlePreviewResult.bind(this, null)}
                                     updateDisable={this.handleDisable}
+                                />
+
+                                <MockerProxyTips
+                                    isDisabled={mockerItem.config.disable}
+                                    mockerItem={mockerItem}
                                 />
 
                                 <MockerDetail

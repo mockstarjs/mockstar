@@ -78,7 +78,7 @@ describe('local server for mockstar', () => {
         });
 
         it('should return object', () => {
-            expect(data).to.be.a('object').and.have.all.keys('basePath', 'name', 'mockModuleList', 'config');
+            expect(data).to.be.a('object').and.have.all.keys('basePath', 'name', 'mockModuleList', 'config', 'watch');
         });
 
         it('should exist target.mockModuleList', () => {

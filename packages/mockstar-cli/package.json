@@ -1,6 +1,6 @@
 {
   "name": "mockstar-cli",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "CLI tool for MockStar",
   "bin": {
     "mockstar": "./bin/mockstar"
@@ -36,18 +36,16 @@
     "bluebird": "^3.5.0",
     "bunyan": "^1.8.12",
     "chalk": "^2.3.2",
-    "cross-spawn": "^5.1.0",
     "figlet": "^1.2.0",
     "fs-extra": "^5.0.0",
     "fs-handler": "^0.1.2",
     "hexo-fs": "^0.2.3",
     "meow": "^3.7.0",
     "minimist": "^1.2.0",
-    "mockstar": "^0.4.0",
-    "mockstar-local-server": "^0.4.0",
+    "mockstar": "^1.0.0",
+    "mockstar-local-server": "^1.0.0",
     "ora": "^1.4.0",
     "osenv": "^0.1.4",
-    "pm2": "^3.2.2",
     "request-promise": "^4.2.1",
     "semver": "^5.4.1",
     "yeoman-environment": "^1.6.6",
@@ -56,9 +54,10 @@
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "chai": "^4.2.0",
+    "cross-spawn": "^5.1.0",
     "eslint": "^5.7.0",
     "mocha": "^5.2.0",
-    "mockstar-client": "^0.4.0",
+    "mockstar-client": "^1.0.0",
     "superagent": "^3.8.3"
   }
 }

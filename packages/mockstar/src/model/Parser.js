@@ -4,9 +4,10 @@ import path from 'path';
 import _ from 'lodash';
 import marked from 'marked';
 import fsHandler from 'fs-handler';
-
 import { getDB } from '../store';
 import { LOCAL_STORE_FILE, MOCK_MODULES, MS_TARGET } from '../config';
+
+import { requireModule } from '../file';
 
 export default class Parser {
     /**
@@ -15,11 +16,15 @@ export default class Parser {
      * @param {Object} opts 参数
      * @param {String} opts.basePath mocker的根目录，绝对路径
      * @param {String} [opts.buildPath] 构建之后的目录，也是数据存储的根目录，绝对路径
+     * @param {Boolean} [opts.watch] 当前是否支持 watch
      * @param {Array} [opts.definedMockers] 预定义的 Mocker 列表
      */
     constructor(opts) {
         this.basePath = opts.basePath;
         this.definedMockers = Array.isArray(opts.definedMockers) ? [...opts.definedMockers] : [];
+
+        // 当前是否支持 watch
+        this.watch = !!opts.watch;
 
         // 只有传递了 opts.buildPath，才处理 db
         if (opts.buildPath) {
@@ -42,6 +47,12 @@ export default class Parser {
     getAllMocker(isReset) {
         let mockerList = [];
 
+        // 每次获取数据的时候，重新加载db文件，
+        // 否则加载出来的信息就是原来cache的数据
+        if (this.db) {
+            this.db = getDB(path.join(this.buildPath, LOCAL_STORE_FILE));
+        }
+
         // 1. 获取所有的 mocker，约定：this.basePath 的每个子目录都是一个独立的 mocker
         fsHandler.search.getAll(this.basePath, { globs: ['*'] }).forEach((item) => {
             // 限制只处理文件夹类型的，不允许在 basePath 目录下有非文件夹的存在
@@ -56,11 +67,16 @@ export default class Parser {
             // console.log('\n找到 mocker ：', name, item);
 
             // 获得 require 这个模块的相对路径
-            let requirePath = getRequirePath(path.join(this.basePath, item.relativePath));
+            // let requirePath = getRequirePath(path.join(this.basePath, item.relativePath));
             // console.log('requirePath ：', requirePath);
 
             // 引入这个模块
-            let mockerItem = require(requirePath);
+            let mockerItem = requireModule(path.join(this.basePath, item.relativePath));
+
+            // 记得初始化
+            mockerItem.init({
+                watch: this.watch
+            });
 
             // 更新用户操作历史记录
             if (this.db) {
