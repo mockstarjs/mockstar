@@ -12,7 +12,7 @@ const mockstarLocalServer = require('mockstar-local-server');
  * @param {String} [args.config] 自定义配置文件，使用方式: --config=mockstar.config.js
  * @param {Number} [args.port] 自定义服务启动端口，使用方式: --port=9527
  * @param {Number} [args.p] 自定义服务启动端口，使用方式: -p 9527
- * @param {String} [args.name] 自定义的pm2服务名称，使用方式: --name=mockstar_9527
+ * @param {String} [args.name] 自定义的服务名称，使用方式: --name=mockstar_9527
  * @param {Boolean} [args.watch] 是否监听文件变化，只有在 pm2 场景下才有效，使用方式: --watch
  */
 module.exports = function (args) {
@@ -33,7 +33,7 @@ module.exports = function (args) {
     // mockstar start --name=mockstar_9527
     const name = args.name;
 
-    // 是否监听文件变化，只有在 pm2 场景下才有效
+    // 是否监听文件变化
     const watch = args.watch;
 
     // 传递进来的文件，或者默认的 mockstar.config.js 文件
