@@ -33,10 +33,7 @@ function entry(args) {
     return mockstar.init([
         internalPluginConsole,
         internalPluginStart,
-        internalPluginStop,
-        internalPluginPm2,
-        internalPluginInit,
-        internalPluginBuild
+        internalPluginInit
     ])
         .then(function () {
             let cmd = args._.shift();
