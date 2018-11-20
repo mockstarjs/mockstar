@@ -20,12 +20,6 @@ global.attentionLogger = attentionLogger;
 class RunServer {
     /**
      * @param {Object} localServerConfig 配置项参数
-     * @param {String} localServerConfig.rootPath 项目根目录
-     * @param {String} [localServerConfig.buildPath] 构建之后的目录
-     * @param {String} [localServerConfig.logPath] 日志目录
-     * @param {String} [localServerConfig.mockServerPath]  mock server 根目录
-     * @param {Number} [localServerConfig.port] 端口号
-     * @param {String} [localServerConfig.name] 应用的名字
      */
     constructor(localServerConfig) {
         if (!localServerConfig) {
@@ -268,12 +262,6 @@ class RunServer {
  * 启动服务
  *
  * @param {LocalServerConfig} localServerConfig 配置项参数
- * @param {String} localServerConfig.rootPath 项目根目录
- * @param {String} [localServerConfig.buildPath] 构建之后的目录
- * @param {String} [localServerConfig.logPath] 日志目录
- * @param {String} [localServerConfig.mockServerPath]  mock server 根目录
- * @param {Number} [localServerConfig.port] 端口号
- * @param {String} [localServerConfig.name] 应用的名字
  * @param {Function} callback 回调函数
  */
 module.exports = (localServerConfig, callback) => {
