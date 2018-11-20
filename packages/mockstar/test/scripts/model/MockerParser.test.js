@@ -23,7 +23,7 @@ describe('./mocker/Parser.js', () => {
         });
 
         it('should contain some fields', () => {
-            expect(mockerParser).to.have.all.keys('basePath', 'definedMockers');
+            expect(mockerParser).to.have.all.keys('basePath', 'definedMockers', 'watch');
         });
     });
 

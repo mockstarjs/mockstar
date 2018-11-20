@@ -11,7 +11,8 @@ module.exports = (router, localServerConfig) => {
     // 创建 Parser 对象
     const mockerParser = new mockstar.Parser({
         basePath: localServerConfig.mockServerPath,
-        buildPath: localServerConfig.buildPath
+        buildPath: localServerConfig.buildPath,
+        watch: localServerConfig.watch,
     });
 
     const adminCGIBase = localServerConfig.getAdminCGIBase();

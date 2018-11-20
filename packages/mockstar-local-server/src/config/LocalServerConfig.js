@@ -5,15 +5,15 @@ class LocalServerConfig {
     /**
      * 获取最终的配置数据
      *
-     * @param {Object} configOpts mockstar.config.js中的配置项
+     * @param {Object} configOpts 配置项
      * @param {String} [configOpts.rootPath] 项目根目录
      * @param {String} [configOpts.buildPath] 构建之后的目录
      * @param {String} [configOpts.logPath] 日志目录
      * @param {String} [configOpts.mockServerPath]  mock server 根目录
      * @param {Number} [configOpts.port] 端口号
-     * @param {String} [configOpts.name] pm2 应用的名字
+     * @param {String} [configOpts.name] 应用的名字，用于标识一个服务，停止服务或者 pm2 启动的时候来命名
      * @param {Boolean} [configOpts.isDev] 当前是否为开发模式
-     * @param {Boolean} [configOpts.watch] 是否监听文件变化，只有在 pm2 场景下才有效
+     * @param {Boolean} [configOpts.watch] 是否监听文件变化，推荐本地开发模式下使用
      * @param {String} [configOpts.namespace] 命名空间
      * @returns {Object}
      */
@@ -33,13 +33,13 @@ class LocalServerConfig {
         // mockstar 启动之后的服务端口号，默认为 9527
         this.port = configOpts.port || 9527;
 
-        // pm2 应用的名字
+        // 应用的名字，用于标识一个服务，停止服务或者 pm2 启动的时候来命名
         this.name = configOpts.name || `mockstar_${this.port}`;
 
         // 当前是否为开发模式
         this.isDev = configOpts.isDev || false;
 
-        // 是否监听文件变化，只有在 pm2 场景下才有效
+        // 是否监听文件变化，推荐本地开发模式下使用
         this.watch = configOpts.watch || false;
 
         // 命名空间

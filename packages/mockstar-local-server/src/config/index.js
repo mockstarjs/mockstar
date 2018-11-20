@@ -10,16 +10,16 @@ const LocalServerConfig = require('./LocalServerConfig');
  * @param {String} [configOpts.logPath] 日志目录
  * @param {String} [configOpts.mockServerPath]  mock server 根目录
  * @param {Number} [configOpts.port] 端口号
- * @param {String} [configOpts.name] pm2 应用的名字
+ * @param {String} [configOpts.name] 应用的名字
  * @param {Boolean} [configOpts.isDev] 当前是否为开发模式
- * @param {Boolean} [configOpts.watch] 是否监听文件变化，只有在 pm2 场景下才有效
+ * @param {Boolean} [configOpts.watch] 是否监听文件变化
  * @param {String} [configOpts.namespace] 命名空间
  * @param {Object} opts 额外的一些参数
  * @param {String} [opts.cwd] 当前执行node的路径
  * @param {Number} [opts.port] 端口号
- * @param {String} [opts.name] pm2 应用的名字
+ * @param {String} [opts.name] 应用的名字
  * @param {Boolean} [opts.isDev] 当前是否为开发模式
- * @param {Boolean} [opts.watch] 是否监听文件变化，只有在 pm2 场景下才有效
+ * @param {Boolean} [opts.watch] 是否监听文件变化
  * @returns {LocalServerConfig}
  */
 function getLocalServerConfig(configOpts = {}, opts = {}) {

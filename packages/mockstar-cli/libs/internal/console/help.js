@@ -10,19 +10,20 @@ module.exports = function (args) {
         arr.push('\n');
     }
 
-    arr.push('    Usage: mockstar [options] [command]');
+    arr.push('    Usage: mockstar <command> [options] ');
     arr.push('\n');
     arr.push('    Commands:');
-    arr.push('        start                                    Start local server.');
-    arr.push('        init                                     Initialize project.');
-    arr.push('        stop                                     Stop local server.');
-    arr.push('        pm2                                      Commands pass to pm2.');
+    arr.push('        start    Start local server.');
+    arr.push('        init     Initialize project.');
     arr.push('\n');
     arr.push('    Options:');
-    arr.push('        --version, -[v]           Print version and exit successfully.');
-    arr.push('        --help, -[h]              Print this help and exit successfully.');
+    arr.push('        -v, --version          Print mockstar version.');
+    arr.push('        -h, --help             Print help information.');
+    arr.push('        -w, --watch            Enter watch mode, which rebuilds or restart server on file change.');
+    arr.push('        --dev                  Debug for development.');
     arr.push('\n');
     arr.push('    Report bugs to https://github.com/mockstarjs/mockstar/issues.');
+    arr.push('\n');
 
     // https://www.npmjs.com/package/meow
     return meow({
