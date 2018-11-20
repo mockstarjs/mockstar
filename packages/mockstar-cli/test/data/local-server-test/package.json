@@ -6,14 +6,7 @@
     "start-dev-watch": "node ../../../bin/mockstar start --dev --watch",
     "start-port9528": "node ../../../bin/mockstar start --port=9528",
     "start-port-name": "node ../../../bin/mockstar start --port=9529 --name=myname",
-    "build": "node ../../../bin/mockstar build",
-    "build-watch": "node ../../../bin/mockstar build --watch",
-    "start-by-node-dev": "node-dev ../../../bin/mockstar start",
-    "stop": "node ../../../bin/mockstar stop",
-    "stop2": "node ../../../bin/mockstar stop mockstar_9528",
-    "stop3": "node ../../../bin/mockstar stop myname",
-    "logs": "node ../../../bin/mockstar pm2 logs",
-    "list": "node ../../../bin/mockstar pm2 list"
+    "start-by-node-dev": "node-dev ../../../bin/mockstar start"
   },
   "author": "helinjiang",
   "license": "MIT"

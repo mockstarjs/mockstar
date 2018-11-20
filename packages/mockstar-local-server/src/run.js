@@ -25,7 +25,7 @@ class RunServer {
      * @param {String} [localServerConfig.logPath] 日志目录
      * @param {String} [localServerConfig.mockServerPath]  mock server 根目录
      * @param {Number} [localServerConfig.port] 端口号
-     * @param {String} [localServerConfig.name] pm2 应用的名字
+     * @param {String} [localServerConfig.name] 应用的名字
      */
     constructor(localServerConfig) {
         if (!localServerConfig) {
@@ -273,7 +273,7 @@ class RunServer {
  * @param {String} [localServerConfig.logPath] 日志目录
  * @param {String} [localServerConfig.mockServerPath]  mock server 根目录
  * @param {Number} [localServerConfig.port] 端口号
- * @param {String} [localServerConfig.name] pm2 应用的名字
+ * @param {String} [localServerConfig.name] 应用的名字
  * @param {Function} callback 回调函数
  */
 module.exports = (localServerConfig, callback) => {
