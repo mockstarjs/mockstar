@@ -10,7 +10,7 @@ import Mockers from './pages/mockers';
 
 import './App.less';
 
-import { getSitePath, getSiteRoot } from './custom';
+import { getSiteBase, getSiteRoot } from './custom';
 
 const App = () => (
     <Router>
@@ -21,8 +21,8 @@ const App = () => (
 
             <Layout.Content>
                 <Route exact path={`${getSiteRoot()}`} component={Home} />
-                <Route path={`${getSitePath()}/dashboard`} component={Home} />
-                <Route path={`${getSitePath()}/mockers`} component={Mockers} />
+                <Route path={`${getSiteBase()}/dashboard`} component={Home} />
+                <Route path={`${getSiteBase()}/mockers`} component={Mockers} />
             </Layout.Content>
         </Layout>
 
