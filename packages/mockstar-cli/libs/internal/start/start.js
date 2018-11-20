@@ -20,7 +20,10 @@ module.exports = function (args) {
     }
 
     // 启动本地服务
-    console.log('Ready to start local server!', configOpts);
+    if (configOpts.isDev) {
+        console.log('Ready to start local server!', configOpts);
+    }
+
     return new Promise((resolve, reject) => {
         localServer.startServer(configOpts, () => {
             resolve();

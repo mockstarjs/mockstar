@@ -1,5 +1,4 @@
 const mockstarLocalServer = require('mockstar-local-server');
-const runByPm2 = require('./run-by-pm2');
 
 /**
  * 启动服务
@@ -17,26 +16,8 @@ const runByPm2 = require('./run-by-pm2');
  */
 function startServer(configOpts = {}, callback) {
     return mockstarLocalServer.startServer(configOpts, callback);
-
-    // if (configOpts.isDev) {
-    //     return mockstarLocalServer.startServer(configOpts, callback);
-    // } else {
-    //     runByPm2.start(configOpts, callback);
-    // }
-}
-
-/**
- * 停止服务
- *
- * @param {String} [name] 自定义的pm2服务名称
- * @param {Function} callback 回调函数
- */
-function stopServer(name, callback) {
-    runByPm2.stop(name, callback);
 }
 
 module.exports = {
-    startServer: startServer,
-    stopServer: stopServer,
-    buildPm2: runByPm2.build
+    startServer: startServer
 };
