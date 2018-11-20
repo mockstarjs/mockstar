@@ -12,6 +12,7 @@ describe('./mocker/Mocker.js', () => {
 
         before(() => {
             mocker = new Mocker(path.resolve(__dirname, '../../data/fixtures/mock_server/mockers/demo_01'));
+            mocker.init();
             // console.log(mocker);
         });
 
@@ -20,7 +21,7 @@ describe('./mocker/Mocker.js', () => {
         });
 
         it('should contain some fields', () => {
-            expect(mocker).to.have.all.keys('basePath', 'name', 'mockModuleList', 'config');
+            expect(mocker).to.have.all.keys('basePath', 'name', 'mockModuleList', 'config', 'watch');
         });
 
         it('mocker.basePath should not empty ', () => {
@@ -56,6 +57,7 @@ describe('./mocker/Mocker.js', () => {
 
         before(() => {
             mocker = new Mocker(path.resolve(__dirname, '../../data/fixtures/mock_server/mockers/demo_02'));
+            mocker.init();
             // console.log(mocker);
         });
 
