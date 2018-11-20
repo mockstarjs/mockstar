@@ -47,6 +47,12 @@ export default class Parser {
     getAllMocker(isReset) {
         let mockerList = [];
 
+        // 每次获取数据的时候，重新加载db文件，
+        // 否则加载出来的信息就是原来cache的数据
+        if (this.db) {
+            this.db = getDB(path.join(this.buildPath, LOCAL_STORE_FILE));
+        }
+
         // 1. 获取所有的 mocker，约定：this.basePath 的每个子目录都是一个独立的 mocker
         fsHandler.search.getAll(this.basePath, { globs: ['*'] }).forEach((item) => {
             // 限制只处理文件夹类型的，不允许在 basePath 目录下有非文件夹的存在
