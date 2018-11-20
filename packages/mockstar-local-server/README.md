@@ -20,8 +20,9 @@ $ npm install mockstar-local-server --save
   - `configOpts.logPath`，`String`， 日志目录
   - `configOpts.mockServerPath`，`String`， mock server 根目录
   - `configOpts.port`，`Number`， 本地服务的端口号
-  - `configOpts.name`，`String`， pm2 应用的名字
-  - `configOpts.isDev`，`Boolean`， 前是否为开发模式
+  - `configOpts.name`，`String`， 应用的名字
+  - `configOpts.isDev`，`Boolean`， 是否为开发模式
+  - `configOpts.watch`，`Boolean`， 是否支持watch
 - `callback`，`Function`， 回调函数，接受两个参数 `isSuccess` 和 `localServerConfig`
 
 该方法会返回一个 http server 对象，可以调用 `runServer.stop()` 方法来停止服务。

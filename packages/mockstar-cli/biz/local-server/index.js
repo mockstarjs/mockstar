@@ -9,7 +9,7 @@ const mockstarLocalServer = require('mockstar-local-server');
  * @param {String} [configOpts.logPath] 日志目录
  * @param {String} [configOpts.mockServerPath]  mock server 根目录
  * @param {Number} [configOpts.port] 本地服务的端口号
- * @param {String} [configOpts.name] pm2 应用的名字
+ * @param {String} [configOpts.name] 应用的名字
  * @param {Boolean} [configOpts.isDev] 当前是否为开发模式
  * @param {Boolean} [configOpts.watch] 是否启用监听
  * @param {Function} callback 回调函数，接受两个参数 isSuccess 和 localServerConfig

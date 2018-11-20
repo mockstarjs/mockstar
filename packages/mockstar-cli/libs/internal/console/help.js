@@ -15,8 +15,6 @@ module.exports = function (args) {
     arr.push('    Commands:');
     arr.push('        start    Start local server.');
     arr.push('        init     Initialize project.');
-    // arr.push('        stop     Stop local server.');
-    // arr.push('        pm2      Commands pass to pm2.');
     arr.push('\n');
     arr.push('    Options:');
     arr.push('        -v, --version          Print mockstar version.');
