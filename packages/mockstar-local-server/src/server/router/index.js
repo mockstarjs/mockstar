@@ -5,7 +5,7 @@ const request = require('request');
 const bodyParser = require('../body-parser');
 const initPlugins = require('../../plugins');
 
-module.exports = (entry) => {
+module.exports = (localServerConfig) => {
     // Create router
     // http://expressjs.com/en/4x/api.html#router
     const router = express.Router();
@@ -22,7 +22,7 @@ module.exports = (entry) => {
     });
 
     // 初始化插件
-    initPlugins(router, entry);
+    initPlugins(router, localServerConfig);
 
     router.use((req, res) => {
         // get 请求
@@ -103,7 +103,7 @@ module.exports = (entry) => {
                 params: req.params,
                 query: req.query,
                 path: req.path,
-                config: entry
+                config: localServerConfig
             });
         }
     });
