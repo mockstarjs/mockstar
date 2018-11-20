@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/mockstarjs/mockstar#readme",
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "commitizen": "^3.0.2",
     "eslint": "^5.7.0",
     "husky": "^1.1.2",
