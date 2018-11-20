@@ -29,6 +29,12 @@ function portIsOccupied(port, callback) {
     });
 }
 
+/**
+ * 找到当前未被占用的端口号
+ *
+ * @param {Number} [port] 查找的起始端口号
+ * @return {Promise}
+ */
 function findAvailablePort(port = 9528) {
     return new Promise((resolve, reject) => {
         const check = () => {
