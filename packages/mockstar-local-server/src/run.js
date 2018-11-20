@@ -68,6 +68,18 @@ class RunServer {
     }
 
     /**
+     * 重启服务
+     * @param {Function} callback 回调函数
+     */
+    restart(callback) {
+        // 先停止
+        this.stop(() => {
+            // 再重新启动
+            this.start(callback);
+        });
+    }
+
+    /**
      * babel 编译等预处理
      * @private
      */
@@ -268,6 +280,57 @@ module.exports = (localServerConfig, callback) => {
     let runServer = new RunServer(localServerConfig);
 
     runServer.start(callback);
+
+    // 需要监听文件的变化自动重启
+    if (localServerConfig.watch) {
+        console.log('watching...');
+
+        // 文件变化之后延时重启的时间，单位 ms
+        const delayRestart = 100;
+
+        // 当前是否正在重启中
+        let isRestarting = false;
+
+        // 请求重启的队列
+        let queue = [];
+
+        let delayT;
+
+        function restart() {
+            if (delayT) {
+                clearTimeout(delayT);
+            }
+
+            delayT = setTimeout(() => {
+                // 如果当时正在重启中，则先放入到缓存队列中
+                if (isRestarting) {
+                    queue.push(Date.now());
+                    return;
+                }
+
+                isRestarting = true;
+
+                // 重新启动
+                runServer.restart(() => {
+                    // 如果重启的过程中还有变化，则继续重新启动
+                    if (queue.length) {
+                        queue = [];
+                        restart();
+                    } else {
+                        isRestarting = false;
+                    }
+                });
+            }, delayRestart);
+        }
+
+        fs.watch(localServerConfig.mockServerPath, { recursive: true }, (event, filename) => {
+            console.log('watch testFolder event', event);
+            console.log('watch testFolder filename', filename);
+
+            restart();
+
+        });
+    }
 
     return runServer;
 };

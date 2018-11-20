@@ -22,6 +22,7 @@ module.exports = function (args) {
     arr.push('        -v, --version          Print mockstar version.');
     arr.push('        -h, --help             Print help information.');
     arr.push('        -w, --watch            Enter watch mode, which rebuilds or restart server on file change.');
+    arr.push('        --dev                  Debug for development.');
     arr.push('\n');
     arr.push('    Report bugs to https://github.com/mockstarjs/mockstar/issues.');
     arr.push('\n');
