@@ -19,13 +19,6 @@ module.exports = function (args) {
         return Promise.reject();
     }
 
-    // mockstar start 命令时默认强制使用 --watch，除非使用 --ignore-watch
-    if (args['ignore-watch']) {
-        configOpts.watch = false;
-    } else {
-        configOpts.watch = true;
-    }
-
     // 启动本地服务
     console.log('Ready to start local server!', configOpts);
     return new Promise((resolve, reject) => {
