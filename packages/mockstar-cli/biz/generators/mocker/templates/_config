@@ -1,7 +1,8 @@
 {
   "description": "description for <%= mockConfig.mockerName %>",
-  "route": "/cgi-bin/a/b/<%= mockConfig.mockerName %>",
+  "route": "<%= mockConfig.route %>",
   "defaultModule": "success_type_1",
+  "method": "<%= mockConfig.method %>",
   "tags": [
     "tag1",
     "tag2"
