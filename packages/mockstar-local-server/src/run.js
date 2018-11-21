@@ -175,6 +175,10 @@ class RunServer {
             if (req.method === 'POST') {
                 req.body.createdAt = Date.now();
             }
+
+            // 每次请求都将本地的配置信息透传到前端页面
+            // res.locals.localServerConfig = this.localServerConfig.getShowDataInWeb();
+
             // Continue to JSON Server router
             next();
         });

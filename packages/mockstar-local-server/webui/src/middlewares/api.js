@@ -68,10 +68,10 @@ export default store => next => action => {
         data
     }));
 
-    // TODO 开发模式下暂时写死端口
+    // 开发模式下需要先写定固定端口号，因为默认启动的时3000端口
     let requestURL = opts.url;
     if (process.env.NODE_ENV !== 'production') {
-        requestURL = 'http://localhost:9527' + requestURL;
+        requestURL = 'http://127.0.0.1:9527' + requestURL;
     }
 
     // 发送 ajax 请求
