@@ -1,4 +1,4 @@
-# <%= projectName %>
+# <%= projectConfig.projectName %>
 
 本项目用于处理数据打桩。
 
