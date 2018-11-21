@@ -1,4 +1,3 @@
-'use strict';
 const meow = require('meow');
 
 module.exports = function (args) {
