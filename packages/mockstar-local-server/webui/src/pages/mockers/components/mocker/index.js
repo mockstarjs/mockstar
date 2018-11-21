@@ -45,15 +45,14 @@ class Mocker extends Component {
     }
 
     getMockServerHost() {
-        // 在预览的情况下，host 的值应该是与当前页面一致的
-        let host = window.location.host;
+        const { hostname, localServerConfig } = this.props;
 
-        // 开发模式下切换这个，主要是为了方便调试，因为 websocket 默认启动的时9527端口，而ui项目则默认为3000
-        if (process.env.NODE_ENV !== 'production') {
-            host = '127.0.0.1:9527';
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            // 如果是本地启动服务，则设置端口
+            return `${hostname}:${localServerConfig.port}`;
+        } else {
+            return hostname;
         }
-
-        return host;
     }
 
     handlePreviewResult = (query) => {
@@ -125,13 +124,8 @@ class Mocker extends Component {
         console.log('--push---', data);
         const { mockerItem } = this.props;
 
-        // 在预览的情况下，host 的值应该是与当前页面一致的
-        let host = window.location.host;
-
-        // 开发模式下切换这个，主要是为了方便调试，因为 websocket 默认启动的时9527端口，而ui项目则默认为3000
-        if (process.env.NODE_ENV !== 'production') {
-            host = '127.0.0.1:9527';
-        }
+        // 获得 host
+        let host = this.getMockServerHost();
 
         let asyncClient = new AsyncClient(`http://${host}`);
 
@@ -156,6 +150,7 @@ class Mocker extends Component {
     render() {
         const { isLoaded, mockerItem, readme, match, mockerListInfo } = this.props;
         const { modalShowData } = this.state;
+        const mockServerHost = this.getMockServerHost()
 
         return (
             <Layout className="mockers-mocker">
@@ -179,6 +174,7 @@ class Mocker extends Component {
                                 <MockerProxyTips
                                     isDisabled={mockerItem.config.disable}
                                     mockerItem={mockerItem}
+                                    mockServerHost={mockServerHost}
                                 />
 
                                 <MockerDetail
@@ -213,13 +209,15 @@ class Mocker extends Component {
 }
 
 function mapStateToProps(state) {
-    const { mockerInfo, mockerListInfo } = state;
+    const { mockerInfo, mockerListInfo, detailInfo } = state;
 
     return {
         isLoaded: mockerInfo.isLoaded,
         mockerItem: mockerInfo.data,
         readme: mockerInfo.readme,
-        mockerListInfo: mockerListInfo
+        mockerListInfo: mockerListInfo,
+        localServerConfig: detailInfo.config,
+        hostname: detailInfo.hostname
     };
 }
 

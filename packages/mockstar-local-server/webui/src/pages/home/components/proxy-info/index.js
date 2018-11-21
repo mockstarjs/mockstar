@@ -5,6 +5,7 @@ import { getPort, getSiteRoot } from '../../../../custom';
 import './index.less';
 
 export default function ProxyInfo(props) {
+    let mockStarHost = window.location.hostname + (window.location.port ? `:${window.location.port}` : '') + getSiteRoot().slice(0, -1);
 
     return (
         <div className="proxy-info">
@@ -15,9 +16,16 @@ export default function ProxyInfo(props) {
 
             <pre>
                 <code>
-                    youdomain.com {window.location.hostname + (window.location.port ? `:${window.location.port}` : '') + getSiteRoot().slice(0, -1)}
+                    youdomain.com {mockStarHost}
+
+                    # 或者
+                    youdomain.com/cgi-bin/a/b/demo_01 {mockStarHost}
+
+                    # 或者
+                    youdomain.com/cgi-bin {mockStarHost}
                 </code>
             </pre>
+
             {
                 (getSiteRoot().length > 1) ? (
                     <div>
