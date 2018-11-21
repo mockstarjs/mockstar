@@ -11,18 +11,19 @@ export default function ProxyInfo(props) {
         <div className="proxy-info">
             <h2>代理设置</h2>
 
-            <blockquote>强烈推荐使用 <a href="https://avwo.github.io/whistle/" target="_blank">whistle</a> 来做代理服务器。</blockquote>
+            <blockquote>强烈推荐使用 <a href="https://avwo.github.io/whistle/" target="_blank">whistle</a> 来做代理服务器。
+            </blockquote>
             <p>假设真实的CGI请求为 <code>http://youdomain.com/cgi-bin/a/b/demo_01</code>，则请设置代理如下：</p>
 
             <pre>
                 <code>
-                    youdomain.com {mockStarHost}
-
-                    # 或者
-                    youdomain.com/cgi-bin/a/b/demo_01 {mockStarHost}
-
-                    # 或者
-                    youdomain.com/cgi-bin {mockStarHost}
+                    <p>youdomain.com {mockStarHost}</p>
+                    <p> </p>
+                    <p># 或者</p>
+                    <p>youdomain.com/cgi-bin/a/b/demo_01 {mockStarHost}</p>
+                    <p> </p>
+                    <p># 或者</p>
+                    <p>youdomain.com/cgi-bin {mockStarHost}</p>
                 </code>
             </pre>
 
