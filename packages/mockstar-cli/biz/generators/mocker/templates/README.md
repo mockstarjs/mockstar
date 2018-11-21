@@ -1,4 +1,4 @@
-# demo_cgi 查询人员身份接口
+# <%= mockConfig.mockerName %> 查询人员身份接口
 
 该接口用于查询人员的身份信息。
 

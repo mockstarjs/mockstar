@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const fsHandler = require('fs-handler');
+const urlParse = require('url-parse');
 
 function readFiles(root, filter, files, prefix) {
     prefix = prefix || '';
@@ -71,8 +72,16 @@ function formatDate(fmt, date) {
     return fmt;
 }
 
+function getMockerNameFromURL(url) {
+    const urlParseResult = urlParse(url);
+
+    // return urlParseResult.pathname.replace(/[\/|.]/g,'_');
+    return urlParseResult.pathname.split('/').pop().replace(/[\/|.]/g, '_');
+}
+
 module.exports = {
     readFiles: readFiles,
     formatDate: formatDate,
-    getMockServerPathList: getMockServerPathList
+    getMockServerPathList: getMockServerPathList,
+    getMockerNameFromURL: getMockerNameFromURL
 };

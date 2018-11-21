@@ -58,8 +58,28 @@ module.exports = class extends Generator {
             }
         }, {
             type: 'input',
+            name: 'reqURL',
+            message: '请输入CGI请求，例如： http://domain.com/a/b/c',
+            validate: function (reqURL) {
+                if (!reqURL) {
+                    return '请输入CGI请求';
+                }
+
+                return true;
+            }
+        }, {
+            type: 'list',
+            name: 'method',
+            message: '请求类型',
+            choices: ['get', 'post'],
+            default: 'get'
+        }, {
+            type: 'input',
             name: 'mockerName',
             message: '请输入mocker名称，只能够输入英文、数字和、- 及 _ ',
+            default: function (answers) {
+                return utils.getMockerNameFromURL(answers.reqURL);
+            },
             validate: function (mockerName) {
                 if (!mockerName) {
                     return 'mocker名称不能为空';
@@ -101,7 +121,15 @@ module.exports = class extends Generator {
                 }
             );
 
-            ['base.js', 'index.js', 'README.md', 'mock_modules', 'static'].forEach((curFile) => {
+            this.fs.copyTpl(
+                this.templatePath('README.md'),
+                this.destinationPath('README.md'),
+                {
+                    mockConfig: this.mockConfig
+                }
+            );
+
+            ['base.js', 'index.js', 'mock_modules', 'static'].forEach((curFile) => {
                 this.fs.copy(
                     this.templatePath(curFile),
                     this.destinationPath(curFile)

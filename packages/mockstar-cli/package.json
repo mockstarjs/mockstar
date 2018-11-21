@@ -48,6 +48,7 @@
     "osenv": "^0.1.4",
     "request-promise": "^4.2.1",
     "semver": "^5.4.1",
+    "url-parse": "^1.4.4",
     "yeoman-environment": "^1.6.6",
     "yeoman-generator": "^2.0.3"
   },
