@@ -1,4 +1,4 @@
-const { Mocker } = require('../../../../../../mockstar/lib');
+const { Mocker } = require('mockstar');
 
 module.exports = new Mocker(__dirname);
 

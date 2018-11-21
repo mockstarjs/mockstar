@@ -1,4 +1,4 @@
-const baseCgi = require('../mock_server/lib/base-cgi');
+const baseCgi = require('../../lib/base-cgi');
 
 /**
  * 默认值
