@@ -2,7 +2,7 @@
   "name": "mockstar",
   "private": true,
   "scripts": {
-    "publish": "git pull && lerna publish major",
+    "publish": "git pull && lerna publish patch",
     "force-publish": "lerna publish patch --force-publish=*",
     "precommit": "lint-staged",
     "commitmsg": "validate-commit-msg",
