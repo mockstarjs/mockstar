@@ -6,7 +6,7 @@
     "antd": "^3.6.2",
     "classnames": "^2.2.6",
     "lodash": "^4.17.10",
-    "mockstar-client": "^0.2.8",
+    "mockstar-client": "^1.0.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-redux": "^5.0.7",

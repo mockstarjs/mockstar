@@ -5,19 +5,28 @@ import { getPort, getSiteRoot } from '../../../../custom';
 import './index.less';
 
 export default function ProxyInfo(props) {
+    let mockStarHost = window.location.hostname + (window.location.port ? `:${window.location.port}` : '') + getSiteRoot().slice(0, -1);
 
     return (
         <div className="proxy-info">
             <h2>代理设置</h2>
 
-            <blockquote>强烈推荐使用 <a href="https://avwo.github.io/whistle/" target="_blank">whistle</a> 来做代理服务器。</blockquote>
+            <blockquote>强烈推荐使用 <a href="https://avwo.github.io/whistle/" target="_blank">whistle</a> 来做代理服务器。
+            </blockquote>
             <p>假设真实的CGI请求为 <code>http://youdomain.com/cgi-bin/a/b/demo_01</code>，则请设置代理如下：</p>
 
             <pre>
                 <code>
-                    youdomain.com {window.location.hostname + (window.location.port ? `:${window.location.port}` : '') + getSiteRoot().slice(0, -1)}
+                    <p>youdomain.com {mockStarHost}</p>
+                    <p> </p>
+                    <p># 或者</p>
+                    <p>youdomain.com/cgi-bin/a/b/demo_01 {mockStarHost}</p>
+                    <p> </p>
+                    <p># 或者</p>
+                    <p>youdomain.com/cgi-bin {mockStarHost}</p>
                 </code>
             </pre>
+
             {
                 (getSiteRoot().length > 1) ? (
                     <div>
