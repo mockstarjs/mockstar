@@ -8,7 +8,7 @@ const defaultData = {
     uid: 0,
     type: 0,
     description: '',
-    other_msg: 'other msg'
+    other_msg: '初始信息'
 };
 
 /**
