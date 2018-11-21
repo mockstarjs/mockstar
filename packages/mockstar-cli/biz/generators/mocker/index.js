@@ -80,14 +80,14 @@ module.exports = class extends Generator {
             default: function (answers) {
                 return utils.getMockerNameFromURL(answers.reqURL);
             },
-            validate: function (mockerName) {
+            validate: function (mockerName, answers) {
                 if (!mockerName) {
                     return 'mocker名称不能为空';
                 }
 
                 // 默认情况下是在当前路径下新建以 projectName 为名字的文件夹，然后再进入其中生成代码。
                 // 但如果当前路径下已经存在了，则需要进行提示，避免覆盖
-                if (!isDev && fse.pathExistsSync(mockerName)) {
+                if (!isDev && fse.pathExistsSync(path.join(answers.mockerParentPath, mockerName))) {
                     return `当前目录下已经存在名字为 ${mockerName} 的文件夹了`;
                 }
 
@@ -146,6 +146,6 @@ module.exports = class extends Generator {
     }
 
     end() {
-        logger.info(`本次初始化过程结束。接下来请继续执行以下命令完成安装：\n\t cd ${this.answers.projectName} && npm install。`);
+        logger.info(`本次初始化过程结束。`);
     }
 };
