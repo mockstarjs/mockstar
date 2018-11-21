@@ -1,15 +1,16 @@
 const urlParse = require('url-parse');
 
 module.exports = class MockerConfig {
-    constructor() {
-        this.mockerParentPath = '';
-        this.mockerName = '';
-        this.route = '';
+    constructor(opts = {}) {
+        this.mockerParentPath = opts.mockerParentPath || '';
+        this.mockerName = opts.mockerName || '';
+        this.method = opts.method || 'get';
+
+        this.route = opts.route || '';
         this.host = '';
-        this.method = 'get';
     }
 
-    updateByAnswer(opts) {
+    updateByAnswer(opts = {}) {
         this.mockerParentPath = opts.mockerParentPath;
         this.mockerName = opts.mockerName;
         this.method = opts.method;

@@ -1,6 +1,7 @@
 const meow = require('meow');
 
-const initMocker = require('./init-mocker')
+const initProject = require('./init-project');
+const initMocker = require('./init-mocker');
 
 /**
  *
@@ -23,6 +24,8 @@ module.exports = function (args) {
     const command = args._[0];
 
     switch (command) {
+        case 'project':
+            return initProject(args);
         case 'mocker':
             return initMocker(args);
         default:
