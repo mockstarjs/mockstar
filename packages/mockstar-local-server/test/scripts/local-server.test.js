@@ -43,22 +43,22 @@ describe('local server for mockstar', () => {
             expect(data).to.be.a('array').and.have.lengthOf(4);
         });
 
-        it('should exist demo_03', () => {
-            let filterResult = data.filter(item => item.name === 'demo_03');
+        it('should exist demo_03_post', () => {
+            let filterResult = data.filter(item => item.name === 'demo_03_post');
             let target = filterResult[0];
 
             expect(filterResult).to.be.a('array').and.have.lengthOf(1);
             expect(target.mockModuleList).to.be.a('array').and.have.lengthOf(3);
             expect(target.config).to.eql({
-                name: 'demo_03',
-                route: '/cgi-bin/a/b/demo_03',
+                name: 'demo_03_post',
+                route: '/cgi-bin/a/b/demo_03_post',
                 routeExtra: {},
-                description: 'description for demo_03',
+                description: 'description for demo_03_post',
                 plugin: 'xhr',
                 disable: false,
                 defaultModule: 'success_1',
                 activeModule: 'success_1',
-                method: 'get',
+                method: 'post',
                 priority: 0,
                 tags: ['全部', 'tag1', 'tag2']
             });
@@ -70,7 +70,7 @@ describe('local server for mockstar', () => {
 
         before(function () {
             return request
-                .get(cgiBase + '/mockstar-cgi/mocker/demo_03')
+                .get(cgiBase + '/mockstar-cgi/mocker/demo_03_post')
                 .then((response) => {
                     data = JSON.parse(response.res.text);
                     // console.log(data);
@@ -87,15 +87,15 @@ describe('local server for mockstar', () => {
 
         it('should exist target.config', () => {
             expect(data.config).to.eql({
-                name: 'demo_03',
-                route: '/cgi-bin/a/b/demo_03',
+                name: 'demo_03_post',
+                route: '/cgi-bin/a/b/demo_03_post',
                 routeExtra: {},
-                description: 'description for demo_03',
+                description: 'description for demo_03_post',
                 plugin: 'xhr',
                 disable: false,
                 defaultModule: 'success_1',
                 activeModule: 'success_1',
-                method: 'get',
+                method: 'post',
                 priority: 0,
                 tags: ['全部', 'tag1', 'tag2']
             });
@@ -105,7 +105,7 @@ describe('local server for mockstar', () => {
     describe('get /mockstar-cgi/mocker/:mockerName/readme', () => {
         it('should exist content', () => {
             return request
-                .get(cgiBase + '/mockstar-cgi/mocker/demo_03/readme')
+                .get(cgiBase + '/mockstar-cgi/mocker/demo_03_post/readme')
                 .then((response) => {
                     let data = JSON.parse(response.res.text);
                     expect(data.html).to.have.lengthOf.at.least(100);
@@ -125,7 +125,7 @@ describe('local server for mockstar', () => {
     describe('get /mockstar-admin/mockers/:name/static/*', () => {
         it('should support jpg ', () => {
             return request
-                .get(cgiBase + '/mockstar-admin/mockers/demo_03/static/logo.jpg')
+                .get(cgiBase + '/mockstar-admin/mockers/demo_03_post/static/logo.jpg')
                 .then((response) => {
 
                     expect(response.status).to.equal(200);
@@ -136,7 +136,7 @@ describe('local server for mockstar', () => {
 
         it('should support subdir and png', () => {
             return request
-                .get(cgiBase + '/mockstar-admin/mockers/demo_03/static/sub/workflow.png')
+                .get(cgiBase + '/mockstar-admin/mockers/demo_03_post/static/sub/workflow.png')
                 .then((response) => {
 
                     expect(response.status).to.equal(200);
@@ -149,7 +149,7 @@ describe('local server for mockstar', () => {
     describe('post /mockstar-cgi/mocker/:mockerName', () => {
         it('change config.activeModule', () => {
             return request
-                .post(cgiBase + '/mockstar-cgi/mocker/demo_03', {
+                .post(cgiBase + '/mockstar-cgi/mocker/demo_03_post', {
                     config: {
                         activeModule: 'success_2'
                     }
@@ -161,7 +161,7 @@ describe('local server for mockstar', () => {
                     expect(data.config.activeModule).to.equal('success_2');
 
                     return request
-                        .get(cgiBase + '/mockstar-cgi/mocker/demo_03')
+                        .get(cgiBase + '/mockstar-cgi/mocker/demo_03_post')
                         .then((response) => {
                             let data = JSON.parse(response.res.text);
 
@@ -169,7 +169,7 @@ describe('local server for mockstar', () => {
                             expect(data.config.activeModule).to.equal('success_2');
 
                             return request
-                                .post(cgiBase + '/mockstar-cgi/mocker/demo_03', {
+                                .post(cgiBase + '/mockstar-cgi/mocker/demo_03_post', {
                                     config: {
                                         activeModule: 'success_1'
                                     }
