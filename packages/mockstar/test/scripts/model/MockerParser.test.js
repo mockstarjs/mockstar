@@ -39,7 +39,7 @@ describe('./mocker/Parser.js', () => {
         });
 
         it('should contain correct mocker', () => {
-            expect(allMocker.map(item => item.name)).to.have.members(['demo_01', 'demo_02_renamed', 'demo_03', 'async_01']);
+            expect(allMocker.map(item => item.name)).to.have.members(['demo_01', 'demo_02_renamed', 'demo_03_post', 'async_01']);
         });
     });
 
@@ -214,9 +214,9 @@ describe('./mocker/Parser.js', () => {
 
     describe('check getReadMeContent', () => {
         it('should return correct', () => {
-            let content = mockerParser.getReadMeContent('demo_03');
+            let content = mockerParser.getReadMeContent('demo_03_post');
 
-            expect(content).to.equal('<h1 id="demo_03-">demo_03 用户信息查询接口</h1>\n<p>该接口用于查询用户的信息。</p>\n<p><img src="demo_03/static/logo.jpg" alt=""></p>\n<h2 id="-">接口说明</h2>\n<blockquote>\n<p>详见 xxx 地址。目前该接口由 xxx 同学维护。</p>\n</blockquote>\n<h3 id="-">入参格式</h3>\n<table>\n<thead>\n<tr>\n<th>参数名称</th>\n<th>类型</th>\n<th>是否必须</th>\n<th>默认值</th>\n<th>说明</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>uid</td>\n<td>int</td>\n<td>true</td>\n<td>| 用户ID</td>\n<td></td>\n</tr>\n<tr>\n<td>type</td>\n<td>int</td>\n<td>false</td>\n<td>0</td>\n<td>0=简单信息，1=丰富数据</td>\n</tr>\n</tbody></table>\n<h3 id="-">返回格式</h3>\n<p>略</p>\n<h3 id="-">流程图</h3>\n<p><img src="demo_03/static/sub/workflow.png" alt=""></p>\n');
+            expect(content).to.equal('<h1 id="demo_03_post-">demo_03_post 用户信息查询接口</h1>\n<p>该接口用于查询用户的信息。</p>\n<p><img src="demo_03_post/static/logo.jpg" alt=""></p>\n<h2 id="-">接口说明</h2>\n<blockquote>\n<p>详见 xxx 地址。目前该接口由 xxx 同学维护。</p>\n</blockquote>\n<h3 id="-">入参格式</h3>\n<table>\n<thead>\n<tr>\n<th>参数名称</th>\n<th>类型</th>\n<th>是否必须</th>\n<th>默认值</th>\n<th>说明</th>\n</tr>\n</thead>\n<tbody><tr>\n<td>uid</td>\n<td>int</td>\n<td>true</td>\n<td>| 用户ID</td>\n<td></td>\n</tr>\n<tr>\n<td>type</td>\n<td>int</td>\n<td>false</td>\n<td>0</td>\n<td>0=简单信息，1=丰富数据</td>\n</tr>\n</tbody></table>\n<h3 id="-">返回格式</h3>\n<p>略</p>\n<h3 id="-">流程图</h3>\n<p><img src="demo_03_post/static/sub/workflow.png" alt=""></p>\n');
         });
     });
 });
