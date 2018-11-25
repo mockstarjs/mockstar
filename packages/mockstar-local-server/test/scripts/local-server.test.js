@@ -141,7 +141,7 @@ describe('local server for mockstar', () => {
 
                     expect(response.status).to.equal(200);
                     expect(response.type).to.equal('image/png');
-                    expect(response.body.length).to.equal(21869);
+                    expect(response.body.length).to.equal(3837);
                 });
         });
     });
