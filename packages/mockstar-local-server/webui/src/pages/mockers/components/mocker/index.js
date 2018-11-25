@@ -154,7 +154,7 @@ class Mocker extends Component {
 
         return (
             <Layout className="mockers-mocker">
-                <Layout.Sider className="mocker-sider">
+                <Layout.Sider className="mocker-sider" width="300">
                     <MockerMenu mockerListInfo={mockerListInfo} match={match} refresh={this.handleRefresh} />
                 </Layout.Sider>
 
