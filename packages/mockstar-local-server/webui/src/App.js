@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
 import { Layout } from 'antd';
 
@@ -8,7 +8,7 @@ import LayoutHeader from './components/layout-header';
 import Home from './pages/home';
 import Mockers from './pages/mockers';
 
-import { getSiteBase, getSiteRoot } from './custom';
+import { getSiteBase } from './custom';
 import { loadDetail } from './datas/data-detail';
 
 import './App.less';
@@ -28,9 +28,12 @@ export default class App extends Component {
                     <LayoutHeader />
 
                     <Layout.Content>
-                        <Route exact path={`${getSiteRoot()}`} component={Home} />
-                        <Route path={`${getSiteBase()}/dashboard`} component={Home} />
-                        <Route path={`${getSiteBase()}/mockers`} component={Mockers} />
+                        <Switch>
+                            <Redirect exact from="/" to={`${getSiteBase()}/dashboard`} />
+                            <Redirect exact from={`${getSiteBase()}`} to={`${getSiteBase()}/dashboard`} />
+                            <Route path={`${getSiteBase()}/dashboard`} component={Home} />
+                            <Route path={`${getSiteBase()}/mockers`} component={Mockers} />
+                        </Switch>
                     </Layout.Content>
                 </Layout>
 

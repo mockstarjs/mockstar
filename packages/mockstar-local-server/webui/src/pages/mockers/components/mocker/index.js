@@ -150,11 +150,11 @@ class Mocker extends Component {
     render() {
         const { isLoaded, mockerItem, readme, match, mockerListInfo } = this.props;
         const { modalShowData } = this.state;
-        const mockServerHost = this.getMockServerHost()
+        const mockServerHost = this.getMockServerHost();
 
         return (
             <Layout className="mockers-mocker">
-                <Layout.Sider className="mocker-sider">
+                <Layout.Sider className="mocker-sider" width="300">
                     <MockerMenu mockerListInfo={mockerListInfo} match={match} refresh={this.handleRefresh} />
                 </Layout.Sider>
 
