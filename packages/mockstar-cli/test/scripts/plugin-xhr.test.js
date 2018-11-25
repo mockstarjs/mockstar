@@ -35,7 +35,7 @@ describe('plugin of xhr', () => {
 
         before(function () {
             return request
-                .get(cgiBase + '/cgi-bin/a/b/demo_03')
+                .post(cgiBase + '/cgi-bin/a/b/demo_03_post')
                 .then((response) => {
                     data = JSON.parse(response.res.text);
                     // console.log(data);
@@ -47,7 +47,7 @@ describe('plugin of xhr', () => {
                 'retcode': 0,
                 'result': {
                     'result': 1,
-                    'other': 'demo_03_other'
+                    'other': 'demo_03_post_other'
                 }
             });
         });
@@ -58,7 +58,10 @@ describe('plugin of xhr', () => {
 
         before(function () {
             return request
-                .get(cgiBase + '/cgi-bin/a/b/demo_03?_ms_target=success_2')
+                .post(cgiBase + '/cgi-bin/a/b/demo_03_post')
+                .send({
+                    _ms_target: 'success_2'
+                })
                 .then((response) => {
                     data = JSON.parse(response.res.text);
                     // console.log(data);
@@ -70,7 +73,7 @@ describe('plugin of xhr', () => {
                 'retcode': 0,
                 'result': {
                     'result': 2,
-                    'other': 'demo_03_other'
+                    'other': 'demo_03_post_other'
                 }
             });
         });
