@@ -45,14 +45,17 @@ class Mocker extends Component {
     }
 
     getMockServerHost() {
-        const { hostname, localServerConfig } = this.props;
+        const { localServerConfig } = this.props;
 
-        if (hostname === 'localhost' || hostname === '127.0.0.1') {
-            // 如果是本地启动服务，则设置端口
-            return `${hostname}:${localServerConfig.port}`;
-        } else {
-            return hostname;
-        }
+        // hostname 应该与页面一致
+        const hostname = window.location.hostname;
+
+        // 如果是本地服务，则需要更换端口号为服务端返回的端口号。
+        // 例如本地调试的页面是 127.0.0.1:3000 而 mock server 是 127.0.0.1:9527
+        const port = (hostname === 'localhost' || hostname === '127.0.0.1') ? localServerConfig.port : window.location.port;
+
+        // 有端口的时候一定要记得设置端口
+        return hostname + (port ? `:${port}` : '');
     }
 
     handlePreviewResult = (query) => {
