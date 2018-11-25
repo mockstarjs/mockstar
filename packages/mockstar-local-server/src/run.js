@@ -205,6 +205,13 @@ class RunServer {
                     // 替换内容
                     this.html = content.replace('</head>', injectInHead + '</head>');
 
+                    // 如果需要自定义静态资源的根路径，则还需要进行替换
+                    const { staticBasePath } = this.localServerConfig;
+                    if (staticBasePath && staticBasePath !== '/') {
+                        this.html = this.html.replace('/static/css/', staticBasePath + 'static/css/');
+                        this.html = this.html.replace('/static/js/', staticBasePath + 'static/js/');
+                    }
+
                     resolve(this.html);
                 }
             });
