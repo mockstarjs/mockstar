@@ -1,6 +1,7 @@
 {
   "description": "description for demo_03",
   "route": "/cgi-bin/a/b/demo_03",
+  "method": "post",
   "defaultModule": "success_1",
   "tags": [
     "tag1",
