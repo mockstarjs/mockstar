@@ -15,6 +15,7 @@ class LocalServerConfig {
      * @param {Boolean} [configOpts.isDev] 当前是否为开发模式
      * @param {Boolean} [configOpts.watch] 是否监听文件变化，推荐本地开发模式下使用
      * @param {String} [configOpts.namespace] 命名空间
+     * @param {String} [configOpts.staticBasePath] 静态资源的基础路径，默认为 /
      * @returns {Object}
      */
     constructor(configOpts = {}) {
@@ -44,6 +45,9 @@ class LocalServerConfig {
 
         // 命名空间
         this.namespace = configOpts.namespace || '';
+
+        // 静态资源的基础路径，例如 /s/ ，或者 /s/t/ ，默认为 /
+        this.staticBasePath = configOpts.staticBasePath || '/';
 
         // 管理后台页面的路由名，实际访问时路径为 yourdomain/{this.namespace}/{this.adminSiteRouteName}
         this.adminSiteRouteName = `mockstar-admin`;
