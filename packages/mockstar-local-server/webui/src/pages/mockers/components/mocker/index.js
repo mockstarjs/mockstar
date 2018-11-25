@@ -150,7 +150,7 @@ class Mocker extends Component {
     render() {
         const { isLoaded, mockerItem, readme, match, mockerListInfo } = this.props;
         const { modalShowData } = this.state;
-        const mockServerHost = this.getMockServerHost()
+        const mockServerHost = this.getMockServerHost();
 
         return (
             <Layout className="mockers-mocker">
