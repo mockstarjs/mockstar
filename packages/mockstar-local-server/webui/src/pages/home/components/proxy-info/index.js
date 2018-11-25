@@ -45,7 +45,7 @@ class ProxyInfo extends Component {
                             注意，由于您启用了 <code>namespace</code> 参数，因此，需要在 nginx 的配置中增加如下配置，否则代理将无法生效！
                             <pre>
                             <code>
-                                <p>location {getSiteRoot()} {'{'}</p>
+                                <p>location ^~ {getSiteRoot()} {'{'}</p>
                                 <p>    rewrite {getSiteRoot()}(.*) /$1 break;</p>
                                 <p>    proxy_pass http://127.0.0.1:{getPort()}/;</p>
                                 <p>{'}'}</p>
