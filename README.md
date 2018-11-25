@@ -10,7 +10,7 @@
 ## 安装
 
 ```bash
-$ npm install mockstar-cli --save
+$ npm install mockstar-cli -g
 ```
 
 ## 使用
