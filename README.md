@@ -1,18 +1,33 @@
 # MockStar
 
-MockStar 是一个用于构造及管理桩数据（模拟数据）的工具。
+[MockStar](https://github.com/mockstarjs/mockstar) 是一个专注数据模拟的工具，可以更容易编写、管理和使用模拟数据。更多文档请参考 https://mockstarjs.gitbook.io/cookbook/
 
 ## 特性
 
-- 支持多种方式灵活构造桩数据
-- 支持独立的管理端自由切换不同桩数据
-- 支持基于 XHR 场景的数据打桩
-- 支持异步调用场景（例如 jsbridge 异步回调等）的数据打桩
-- 支持 E2E（端对端）测试等场景
+- 支持传统的 XHR 请求
+- 支持对 websocket 或者 jsbridge 回调等异步数据
 
 ## 安装
 
-```
-$ npm install mockstar --save
+```bash
+$ npm install mockstar-cli --save
 ```
 
+## 使用
+
+### 命令行
+
+```bash
+# 初始化一个项目
+$ mockstar init project
+
+# 初始化一个 mocker
+$ mockstar init mocker
+
+# 启动 mockstar 服务
+$ mockstar start --watch
+```
+
+### 管理后台
+
+启动 mockstar 服务之后，会自动生成一个管理后台页面，默认为 http://127.0.0.1:9527 。在管理后台，可以非常方便的切换不同的桩数据返回。
