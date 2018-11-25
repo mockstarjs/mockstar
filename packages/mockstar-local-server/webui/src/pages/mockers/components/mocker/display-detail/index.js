@@ -17,6 +17,7 @@ export default function MockerDetail(props) {
 
     return (
         <Card className="mocker-detail">
+            <div className={mockerItem.config.plugin + ' ' + mockerItem.config.method} />
             <Row>
                 <Col span={12}>
                     <h2>{mockerItem.name}</h2>
@@ -30,18 +31,18 @@ export default function MockerDetail(props) {
                 <Col span={12}>
                     <table>
                         <tbody>
-                            <tr>
-                              <td>数据类型:</td>
-                              <td>{mockerItem.config.plugin}</td>
-                            </tr>
-                            <tr>
-                                <td style={{ width: '100px' }}>配置的路由:</td>
-                                <td>{mockerItem.config.route}</td>
-                            </tr>
-                            <tr>
-                                <td>已激活数据:</td>
-                                <td>{mockerItem.config.activeModule}</td>
-                            </tr>
+                        <tr>
+                            <td>数据类型:</td>
+                            <td>{mockerItem.config.plugin}</td>
+                        </tr>
+                        <tr>
+                            <td style={{ width: '100px' }}>配置的路由:</td>
+                            <td>{mockerItem.config.route}</td>
+                        </tr>
+                        <tr>
+                            <td>已激活数据:</td>
+                            <td>{mockerItem.config.activeModule}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </Col>
