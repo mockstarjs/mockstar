@@ -36,6 +36,19 @@ export default class Parser {
             fse.ensureDirSync(this.buildPath);
 
             this.db = getDB(path.join(this.buildPath, LOCAL_STORE_FILE));
+
+            fse.ensureDirSync(path.join(this.rootPath, '/namespace'));
+            const that = this;
+            fs.readdir(path.join(this.rootPath, '/namespace'), (err, files) => {
+                if (err) {
+                    console.error(err);
+                }
+
+                files.forEach(function (filename) {
+                    const dbname = filename + '_' + LOCAL_STORE_FILE;
+                    that[dbname] = getDB(path.join(that.buildPath, dbname));
+                });
+            })
         }
     }
 
@@ -116,11 +129,13 @@ export default class Parser {
      */
     getNamespaceAllMocker(isReset, namespace = '') {
         let mockerList = [];
+        let pmMockerList = [];
+        const dbname = namespace + '_' + LOCAL_STORE_FILE;
 
         // 每次获取数据的时候，重新加载db文件，
         // 否则加载出来的信息就是原来cache的数据
-        if (this.db) {
-            this.db = getDB(path.join(this.buildPath, LOCAL_STORE_FILE));
+        if (this[dbname]) {
+            this[dbname] = getDB(path.join(this.buildPath, dbname));
         }
         const namespacePath = namespace ? `${this.rootPath}/namespace/${namespace}/mock_server/mockers` : `${this.rootPath}/namespace/common/mock_server/mockers`
         // 1. 获取所有的 mocker，约定：this.rootPath 的每个子目录都是一个独立的 mocker
@@ -149,9 +164,9 @@ export default class Parser {
             });
 
             // 更新用户操作历史记录
-            if (this.db) {
+            if (this[dbname]) {
                 // 更新数据
-                let cacheMockerItem = this.db.get('data').find({ name: mockerItem.name }).value();
+                let cacheMockerItem = this[dbname].get('data').find({ name: mockerItem.name }).value();
 
                 // 如果存在记录，则更新两个字段即可
                 if (cacheMockerItem) {
@@ -165,16 +180,67 @@ export default class Parser {
             mockerList.push(mockerItem);
         });
 
-        if (this.db) {
+        if (fs.existsSync(`${this.rootPath}/namespace/${namespace}/pm.json`)) {
+            fsHandler.search.getAll(`${this.rootPath}/namespace/common/mock_server/mockers`, { globs: ['*'] }).forEach((item) => {
+                // 限制只处理文件夹类型的，不允许在 rootPath 目录下有非文件夹的存在
+                if (!item.isDirectory()) {
+                    console.error(`${path.join(namespacePath, item.relativePath)} SHOULD BE Directory!`);
+                    return;
+                }
+    
+                // 模块名字，默认取文件名，
+                // 在根目录下，每个子文件夹就是一个 mocker 单位，其名字即为文件夹名字
+                // let name = path.basename(item.relativePath);
+                // console.log('\n找到 mocker ：', name, item);
+    
+                // 获得 require 这个模块的相对路径
+                // let requirePath = getRequirePath(path.join(namespacePath, item.relativePath));
+                // console.log('requirePath ：', requirePath);
+    
+                // 引入这个模块
+                let mockerItem = requireModule(path.join(`${this.rootPath}/namespace/common/mock_server/mockers`, item.relativePath));
+    
+                // 记得初始化
+                mockerItem.init({
+                    watch: this.watch
+                });
+    
+                // 更新用户操作历史记录
+                if (this[dbname]) {
+                    // 更新数据
+                    let cacheMockerItem = this[dbname].get('data').find({ name: mockerItem.name }).value();
+    
+                    // 如果存在记录，则更新两个字段即可
+                    if (cacheMockerItem) {
+                        mockerItem.updateConfig({
+                            disable: cacheMockerItem.config.disable,
+                            activeModule: cacheMockerItem.config.activeModule
+                        });
+                    }
+                }
+                pmMockerList.push(mockerItem);
+            });
+        }
+
+        pmMockerList = mockerList.map((mocker) => {
+            let pmMocker = pmMockerList.filter((item) => {
+                return item.name === mocker.name;
+            })[0];
+            pmMocker = pmMocker ? pmMocker : {};
+            mocker.mockModuleList = updateMockMoudles(mocker.mockModuleList, pmMocker.mockModuleList);
+            return mocker;
+        })
+
+        if (this[dbname]) {
             // 存储到本地缓存数据文件内，以便下次启动时能够记录上一次的操作
-            this.db.setState({
+            this[dbname].setState({
                 mockServerPath: this.basePath,
                 buildPath: this.buildPath,
-                data: mockerList
+                data: pmMockerList
             }).write();
         }
         // console.log(mockerList)
-        return mockerList;
+        return pmMockerList;
     }
 
     /**
@@ -398,10 +464,11 @@ export default class Parser {
         let oldMockerItem = this.getNamespaceMockerByName(mockerName, false, namespace);
 
         let newMockerItem = _.merge({}, oldMockerItem, updateData);
+        const dbname = namespace + '_' + LOCAL_STORE_FILE;
 
         // 更新数据
-        if (this.db) {
-            this.db.get('data')
+        if (this[dbname]) {
+            this[dbname].get('data')
                 .find({ name: mockerName })
                 .assign(newMockerItem)
                 .write();
@@ -516,4 +583,22 @@ function getRequirePath(absolutePath) {
 
     // 需要将“\”替换为“/”，因为 require 语法中模块的路径是以 "/" 来分目录层级的
     return relativePath.replace(/\\/gi, '/');
+}
+
+function updateMockMoudles(oldList, newList = []) {
+    let result = [];
+    oldList.forEach((mocker) => {
+        let newMocker = getExistItem(mocker, newList)[0];
+        result.push(newMocker ? newMocker : mocker);
+    })
+    result = result.concat(newList.filter((mocker) => {
+        return getExistItem(mocker, result).length === 0;
+    }))
+    return result;
+}
+
+function getExistItem(item, arr = []) {
+    return arr.filter((it) => {
+        return it.name === item.name;
+    })
 }

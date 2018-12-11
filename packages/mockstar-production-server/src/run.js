@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+const child_process = require('child_process');
 
 //rewrite promise, bluebird is more faster
 // require('babel-runtime/core-js/promise').default = require('bluebird');
@@ -147,6 +148,7 @@ class RunServer {
                     let result = {
                         namespaces: namespacearr
                     };
+                    self.namespaces = namespacearr;
                     res.end(JSON.stringify(result))
                 })
             } else {
@@ -173,6 +175,8 @@ class RunServer {
                             msg: JSON.stringify(err)
                         }));
                     }
+                    fs.writeFile(path.join(rootPath, `./namespace/${query.name}/pm.json`), JSON.stringify({ispm: true}))
+                    child_process.spawn('cp', ['-r', path.join(rootPath, './namespace/common/'), path.join(rootPath, './namespace/' + query.name)]); 
                     fs.readdir(path.join(rootPath, './namespace'), (err, files) => {
                         if (err) {
                             console.error(err);
