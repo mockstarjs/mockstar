@@ -1,0 +1,30 @@
+.mocker-menu {
+    .xhr {
+        position: relative;
+
+        &::before {
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            content: ' ';
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        &.post {
+            &::before {
+                background-image: url('../../../../../asserts/img/post.png');
+            }
+        }
+
+        &.get {
+            &::before {
+                background-image: url('../../../../../asserts/img/get.png');
+            }
+        }
+    }
+
+
+}
