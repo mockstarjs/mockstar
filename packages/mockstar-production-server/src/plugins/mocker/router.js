@@ -13,7 +13,7 @@ module.exports = (router, localServerConfig) => {
         basePath: localServerConfig.mockServerPath,
         rootPath: localServerConfig.rootPath,
         buildPath: localServerConfig.buildPath,
-        watch: localServerConfig.watch,
+        watch: localServerConfig.watch
     });
 
     const adminCGIBase = localServerConfig.getAdminCGIBase();

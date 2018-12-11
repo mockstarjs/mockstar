@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.0",
+    "child_process": "^1.0.2",
     "compression": "^1.7.2",
     "cors": "^2.8.4",
     "errorhandler": "^1.5.0",
