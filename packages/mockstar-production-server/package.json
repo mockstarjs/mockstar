@@ -1,7 +1,7 @@
 {
-  "name": "mockstar-local-server",
-  "version": "1.0.3",
-  "description": "Local server for MockStar",
+  "name": "mockstar-production-server",
+  "version": "1.0.0",
+  "description": "Production server for MockStar",
   "main": "lib/index.js",
   "scripts": {
     "prepublishOnly": "npm run build && npm run build-ui",
@@ -19,7 +19,7 @@
     "mock",
     "server"
   ],
-  "author": "helinjiang",
+  "author": "michealfeng",
   "license": "MIT",
   "repository": {
     "type": "git",
