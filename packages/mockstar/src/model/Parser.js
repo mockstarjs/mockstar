@@ -21,6 +21,7 @@ export default class Parser {
      */
     constructor(opts) {
         this.basePath = opts.basePath;
+        this.rootPath = opts.rootPath;
         this.definedMockers = Array.isArray(opts.definedMockers) ? [...opts.definedMockers] : [];
 
         // 当前是否支持 watch
@@ -103,7 +104,76 @@ export default class Parser {
                 data: mockerList
             }).write();
         }
+        // console.log(mockerList)
+        return mockerList;
+    }
 
+    /**
+     * 获取所有的 mocker 信息
+     *
+     * @param {Boolean} [isReset] 是否为重置，如果为 true，则将忽略缓存数据
+     * @return {Array}
+     */
+    getNamespaceAllMocker(isReset, namespace = '') {
+        let mockerList = [];
+
+        // 每次获取数据的时候，重新加载db文件，
+        // 否则加载出来的信息就是原来cache的数据
+        if (this.db) {
+            this.db = getDB(path.join(this.buildPath, LOCAL_STORE_FILE));
+        }
+        const namespacePath = namespace ? `${this.rootPath}/namespace/${namespace}/mock_server/mockers` : `${this.rootPath}/namespace/common/mock_server/mockers`
+        // 1. 获取所有的 mocker，约定：this.rootPath 的每个子目录都是一个独立的 mocker
+        fsHandler.search.getAll(namespacePath, { globs: ['*'] }).forEach((item) => {
+            // 限制只处理文件夹类型的，不允许在 rootPath 目录下有非文件夹的存在
+            if (!item.isDirectory()) {
+                console.error(`${path.join(namespacePath, item.relativePath)} SHOULD BE Directory!`);
+                return;
+            }
+
+            // 模块名字，默认取文件名，
+            // 在根目录下，每个子文件夹就是一个 mocker 单位，其名字即为文件夹名字
+            // let name = path.basename(item.relativePath);
+            // console.log('\n找到 mocker ：', name, item);
+
+            // 获得 require 这个模块的相对路径
+            // let requirePath = getRequirePath(path.join(namespacePath, item.relativePath));
+            // console.log('requirePath ：', requirePath);
+
+            // 引入这个模块
+            let mockerItem = requireModule(path.join(namespacePath, item.relativePath));
+
+            // 记得初始化
+            mockerItem.init({
+                watch: this.watch
+            });
+
+            // 更新用户操作历史记录
+            if (this.db) {
+                // 更新数据
+                let cacheMockerItem = this.db.get('data').find({ name: mockerItem.name }).value();
+
+                // 如果存在记录，则更新两个字段即可
+                if (cacheMockerItem) {
+                    mockerItem.updateConfig({
+                        disable: cacheMockerItem.config.disable,
+                        activeModule: cacheMockerItem.config.activeModule
+                    });
+                }
+            }
+
+            mockerList.push(mockerItem);
+        });
+
+        if (this.db) {
+            // 存储到本地缓存数据文件内，以便下次启动时能够记录上一次的操作
+            this.db.setState({
+                mockServerPath: this.basePath,
+                buildPath: this.buildPath,
+                data: mockerList
+            }).write();
+        }
+        // console.log(mockerList)
         return mockerList;
     }
 
@@ -116,6 +186,21 @@ export default class Parser {
      */
     getMockerByName(mockerName, isReset) {
         let mockerList = this.getAllMocker(isReset);
+
+        return mockerList.filter((item) => {
+            return item.name === mockerName;
+        })[0];
+    }
+
+    /**
+     * 通过名字获取指定的 mocker
+     *
+     * @param {String} mockerName 名字
+     * @param {Boolean} [isReset] 是否为重置，如果为 true，则将忽略缓存数据
+     * @return {Object} MatmanMocker 对象
+     */
+    getNamespaceMockerByName(mockerName, isReset, namespace = '') {
+        let mockerList = this.getNamespaceAllMocker(isReset, namespace);
 
         return mockerList.filter((item) => {
             return item.name === mockerName;
@@ -304,12 +389,74 @@ export default class Parser {
     }
 
     /**
+     * 更新 mocker 的 信息
+     *
+     * @param {String} mockerName handler 名字
+     * @param {Object} [updateData] 要更新的数据
+     */
+    updateNamespaceMocker(mockerName, updateData, namespace = '') {
+        let oldMockerItem = this.getNamespaceMockerByName(mockerName, false, namespace);
+
+        let newMockerItem = _.merge({}, oldMockerItem, updateData);
+
+        // 更新数据
+        if (this.db) {
+            this.db.get('data')
+                .find({ name: mockerName })
+                .assign(newMockerItem)
+                .write();
+        }
+
+        // 返回新的结果
+        return newMockerItem;
+    }
+
+    /**
      * 获取指定 mocker 的 README 信息
      *
      * @param {String} mockerName
      */
     getReadMeContent(mockerName) {
         let mockerItem = this.getMockerByName(mockerName);
+        if (!mockerItem) {
+            return '异常错误，找不到对应信息！handlerName=' + mockerName;
+        }
+
+        // README.md 的绝对路径
+        let mockerReadMeFile = path.join(mockerItem.basePath, 'README.md');
+        if (!fs.existsSync(mockerReadMeFile)) {
+            return '';
+        }
+
+        marked.setOptions({
+            renderer: new marked.Renderer(),
+            gfm: true,
+            tables: true,
+            breaks: false,
+            pedantic: false,
+            sanitize: false,
+            smartLists: true,
+            smartypants: false
+        });
+
+        try {
+            let content = fs.readFileSync(mockerReadMeFile, 'utf8');
+
+            content = content.replace(/__STATIC_PATH__/g, mockerName + '/static');
+
+            return marked(content);
+        } catch (e) {
+            return e.stack;
+        }
+    }
+
+    /**
+     * 获取指定 mocker 的 README 信息
+     *
+     * @param {String} mockerName
+     */
+    getNamespaceReadMeContent(mockerName, namespace = '') {
+        let mockerItem = this.getNamespaceMockerByName(mockerName, false, namespace);
         if (!mockerItem) {
             return '异常错误，找不到对应信息！handlerName=' + mockerName;
         }
