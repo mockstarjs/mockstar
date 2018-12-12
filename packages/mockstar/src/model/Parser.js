@@ -222,7 +222,9 @@ export default class Parser {
             });
         }
 
-        pmMockerList = mockerList.map((mocker) => {
+        let result = [];
+
+        result = mockerList.map((mocker) => {
             let pmMocker = pmMockerList.filter((item) => {
                 return item.name === mocker.name;
             })[0];
@@ -231,16 +233,22 @@ export default class Parser {
             return mocker;
         })
 
+        result = result.concat(pmMockerList.filter((mocker) => {
+            return result.filter((item) => {
+                return mocker.name === item.name;
+            }).length === 0;
+        }))
+
         if (this[dbname]) {
             // 存储到本地缓存数据文件内，以便下次启动时能够记录上一次的操作
             this[dbname].setState({
                 mockServerPath: this.basePath,
                 buildPath: this.buildPath,
-                data: pmMockerList
+                data: result
             }).write();
         }
         // console.log(mockerList)
-        return pmMockerList;
+        return result;
     }
 
     /**

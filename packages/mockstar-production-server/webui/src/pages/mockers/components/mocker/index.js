@@ -153,6 +153,12 @@ class Mocker extends Component {
         this.props.loadMockerReadme(mockerName, namespace);
     };
 
+    handleAddMocker = (mockerName) => {
+        let { namespace } = this.props.match.params;
+        let content = {};
+        this.props.addMocker(mockerName, namespace, content)
+    }
+
     render() {
         const { isLoaded, mockerItem, readme, match, mockerListInfo } = this.props;
         const { modalShowData } = this.state;
@@ -175,6 +181,7 @@ class Mocker extends Component {
                                     activeModule={mockerItem.config.activeModule}
                                     previewResult={this.handlePreviewResult.bind(this, null)}
                                     updateDisable={this.handleDisable}
+                                    addMockers={this.handleAddMocker}
                                 />
 
                                 <MockerProxyTips
@@ -247,6 +254,10 @@ function mapDispatchToProps(dispatch) {
 
         setMockerDisable(mockerName, value, namespace) {
             return dispatch(setMockerDisable(mockerName, value, namespace));
+        },
+
+        addMocker(mockerName, namespace, content) {
+            return 123;
         }
     };
 }
