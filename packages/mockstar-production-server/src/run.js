@@ -45,14 +45,41 @@ class RunServer {
      * @param {Function} callback 回调函数
      */
     start(callback) {
-        this._initBabel();
-        this._initLog();
+        const self = this;
 
-        this._createRouter();
-        this._createMiddleware();
-        this._createApp();
-        this._createServer();
-        this._startServer(callback);
+        if (fs.existsSync(path.join(self.localServerConfig.rootPath, './namespace'))) {
+            fs.readdir(path.join(self.localServerConfig.rootPath, './namespace'), (err, files) => {
+                if (err) {
+                    console.error(err);
+                    self.localServerConfig.namespaceList = [];
+                }
+                let namespacearr = [];
+
+                files.forEach(function (filename) {
+                    namespacearr.push(filename);
+                });
+
+                self.localServerConfig.namespaceList = namespacearr;
+                self._initBabel();
+                self._initLog();
+
+                self._createRouter();
+                self._createMiddleware();
+                self._createApp();
+                self._createServer();
+                self._startServer(callback);
+            })
+        } else {
+            self.localServerConfig.namespaceList = [];
+            self._initBabel();
+            self._initLog();
+
+            self._createRouter();
+            self._createMiddleware();
+            self._createApp();
+            self._createServer();
+            self._startServer(callback);
+        }
     }
 
     /**
@@ -132,28 +159,9 @@ class RunServer {
         });
 
         app.get('/getnamespace', function (req, res) {
-            if (fs.existsSync(path.join(rootPath, './namespace'))) {
-                fs.readdir(path.join(rootPath, './namespace'), (err, files) => {
-                    if (err) {
-                        console.error(err);
-                        res.end([]);
-                    }
-    
-                    let namespacearr = [];
-    
-                    files.forEach(function (filename) {
-                        namespacearr.push(filename);
-                    });
-    
-                    let result = {
-                        namespaces: namespacearr
-                    };
-                    self.namespaces = namespacearr;
-                    res.end(JSON.stringify(result))
-                })
-            } else {
-                res.end([]);
-            }
+            res.end(JSON.stringify({
+                namespaces: self.localServerConfig.namespaceList
+            }))
         });
 
         app.get('/createnamespace', function (req, res) {

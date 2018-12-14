@@ -8,53 +8,58 @@ export default class MockerShowResult extends Component {
     super(props, context);
 
     this.state = {
-      showData: ''
+      showData: '',
+      mockerName: '',
     };
+
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleDataChange = this.handleDataChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.data !== nextProps.data) {
-      this.setState({
-        showData: JSON.stringify(nextProps.data, null, 2)
-      });
-    }
-  }
+  handleNameChange = (event) => {
+    this.setState({
+      mockerName: event.target.value
+    });
+  };
 
-  handleOnChange = (event) => {
+  handleDataChange = (event) => {
     this.setState({
       showData: event.target.value
     });
   };
 
   render() {
-    const { data, mockerItem, onHide, onEmitPush } = this.props;
-    const { showData } = this.state;
+    const { data, onHide, onSubmit, namespace, mockerItem } = this.props;
+    const { showData, mockerName } = this.state;
 
     const isShow = !!data;
-    const isShowEmitButton = (mockerItem.config.plugin === 'async');
 
     return (
       <div className="mocker-show-result">
 
         <Modal
-          title="结果"
+          title="添加"
           visible={isShow}
           onCancel={onHide}
           onOk={onHide}
           footer={[
-            <Button key="cancel" type="primary" size="large" onClick={onHide}>
+            <Button key="push" type="primary" size="large" onClick={onSubmit.bind(this, mockerItem.name, mockerName, namespace, showData)}>
               添加
+            </Button>,
+            <Button key="cancel" type="primary" size="large" onClick={onHide}>
+              关闭
             </Button>
           ]}
         >
 
-                <textarea
-                  name="cgidata"
-                  id="cgidata"
-                  style={{ width: '100%', minHeight: '600px' }}
-                  value={showData}
-                  onChange={this.handleOnChange}
-                />
+            <label>mocker 姓名：</label><input type="text" placeholder="请输入 mocker 名字" value={mockerName} onChange={this.handleNameChange}></input>
+            <textarea
+              name="cgidata"
+              id="cgidata"
+              style={{ width: '100%', minHeight: '600px' }}
+              value={showData}
+              onChange={this.handleDataChange}
+            ></textarea>
 
         </Modal>
 

@@ -6,7 +6,7 @@ import { AsyncClient } from 'mockstar-client';
 
 import { ajax } from '../../../../business/db';
 
-import { loadMocker, loadMockerReadme, setMockerActiveModule, setMockerDisable } from '../../data/data-mocker';
+import { loadMocker, loadMockerReadme, setMockerActiveModule, setMockerDisable, addMocker } from '../../data/data-mocker';
 import { loadMockerList } from '../../data/data-mocker-list';
 
 import MockerBreadcrumb from './display-breadcrumb';
@@ -17,6 +17,7 @@ import MockerProxyTips from './display-proxy-tips';
 import MockModuleList from './display-mock-module-list';
 import MockerReadme from './display-readme';
 import MockerMenu from './display-menu';
+import AddMocker from './display-add-mocker';
 
 import { getNamespace } from '../../../../custom';
 
@@ -27,7 +28,8 @@ class Mocker extends Component {
         super(props, context);
 
         this.state = {
-            modalShowData: null
+            modalShowData: null,
+            isShowAdd: false
         };
     }
 
@@ -153,15 +155,19 @@ class Mocker extends Component {
         this.props.loadMockerReadme(mockerName, namespace);
     };
 
-    handleAddMocker = (mockerName) => {
-        let { namespace } = this.props.match.params;
-        let content = {};
-        this.props.addMocker(mockerName, namespace, content)
-    }
+    handlerShowAddMocker = (isShowAdd) => {
+        this.setState({
+            isShowAdd
+        })
+    };
+
+    handleAddMocker = (cgiName, mockerName, namespace, content) => {
+        this.props.addMocker(cgiName, mockerName, namespace, content)
+    };
 
     render() {
         const { isLoaded, mockerItem, readme, match, mockerListInfo } = this.props;
-        const { modalShowData } = this.state;
+        const { modalShowData, isShowAdd } = this.state;
         const mockServerHost = this.getMockServerHost();
 
         return (
@@ -181,7 +187,7 @@ class Mocker extends Component {
                                     activeModule={mockerItem.config.activeModule}
                                     previewResult={this.handlePreviewResult.bind(this, null)}
                                     updateDisable={this.handleDisable}
-                                    addMockers={this.handleAddMocker}
+                                    addMockers={this.handlerShowAddMocker.bind(this, true)}
                                 />
 
                                 <MockerProxyTips
@@ -206,6 +212,14 @@ class Mocker extends Component {
                                     mockerItem={mockerItem}
                                     onHide={this.handleModalHide}
                                     onEmitPush={this.handleModalEmitPush}
+                                />
+
+                                <AddMocker
+                                    data={isShowAdd}
+                                    mockerItem={mockerItem}
+                                    onHide={this.handlerShowAddMocker.bind(this, false)}
+                                    namespace={this.props.match.params.namespace}
+                                    onSubmit={this.handleAddMocker}
                                 />
 
                                 <MockerReadme htmlContent={readme} />
@@ -256,8 +270,8 @@ function mapDispatchToProps(dispatch) {
             return dispatch(setMockerDisable(mockerName, value, namespace));
         },
 
-        addMocker(mockerName, namespace, content) {
-            return 123;
+        addMocker(cgiName, mockerName, namespace, content) {
+            return dispatch(addMocker(cgiName, mockerName, namespace, content));
         }
     };
 }

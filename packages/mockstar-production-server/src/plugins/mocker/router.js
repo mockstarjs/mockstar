@@ -97,8 +97,15 @@ module.exports = (router, localServerConfig) => {
         });
     });
 
+    baseRouter.addMocker(router, adminCGIBase, (req, res) => {
+        let result = mockerParser.addNamespaceMocker(req.body);
+        
+        res.jsonp(result);
+    })
+    
+
     // 处理 plugin=xhr 的场景
-    handleXhr(router, mockerList, mockerParser, localServerConfig);
+    handleXhr(router, mockerParser, localServerConfig);
 
     // 携带变量出去
     router._mockerParser = mockerParser;
