@@ -180,60 +180,58 @@ export default class Parser {
             mockerList.push(mockerItem);
         });
 
-        if (fs.existsSync(`${this.rootPath}/namespace/${namespace}/pm.json`)) {
-            fsHandler.search.getAll(`${this.rootPath}/namespace/common/mock_server/mockers`, { globs: ['*'] }).forEach((item) => {
-                // 限制只处理文件夹类型的，不允许在 rootPath 目录下有非文件夹的存在
-                if (!item.isDirectory()) {
-                    console.error(`${path.join(namespacePath, item.relativePath)} SHOULD BE Directory!`);
-                    return;
-                }
-    
-                // 模块名字，默认取文件名，
-                // 在根目录下，每个子文件夹就是一个 mocker 单位，其名字即为文件夹名字
-                // let name = path.basename(item.relativePath);
-                // console.log('\n找到 mocker ：', name, item);
-    
-                // 获得 require 这个模块的相对路径
-                // let requirePath = getRequirePath(path.join(namespacePath, item.relativePath));
-                // console.log('requirePath ：', requirePath);
-    
-                // 引入这个模块
-                let mockerItem = requireModule(path.join(`${this.rootPath}/namespace/common/mock_server/mockers`, item.relativePath));
-    
-                // 记得初始化
-                mockerItem.init({
-                    watch: this.watch
-                });
-    
-                // 更新用户操作历史记录
-                if (this[dbname]) {
-                    // 更新数据
-                    let cacheMockerItem = this[dbname].get('data').find({ name: mockerItem.name }).value();
-    
-                    // 如果存在记录，则更新两个字段即可
-                    if (cacheMockerItem) {
-                        mockerItem.updateConfig({
-                            disable: cacheMockerItem.config.disable,
-                            activeModule: cacheMockerItem.config.activeModule
-                        });
-                    }
-                }
-                pmMockerList.push(mockerItem);
+        fsHandler.search.getAll(`${this.rootPath}/namespace/common/mock_server/mockers`, { globs: ['*'] }).forEach((item) => {
+            // 限制只处理文件夹类型的，不允许在 rootPath 目录下有非文件夹的存在
+            if (!item.isDirectory()) {
+                console.error(`${path.join(namespacePath, item.relativePath)} SHOULD BE Directory!`);
+                return;
+            }
+
+            // 模块名字，默认取文件名，
+            // 在根目录下，每个子文件夹就是一个 mocker 单位，其名字即为文件夹名字
+            // let name = path.basename(item.relativePath);
+            // console.log('\n找到 mocker ：', name, item);
+
+            // 获得 require 这个模块的相对路径
+            // let requirePath = getRequirePath(path.join(namespacePath, item.relativePath));
+            // console.log('requirePath ：', requirePath);
+
+            // 引入这个模块
+            let mockerItem = requireModule(path.join(`${this.rootPath}/namespace/common/mock_server/mockers`, item.relativePath));
+
+            // 记得初始化
+            mockerItem.init({
+                watch: this.watch
             });
-        }
+
+            // 更新用户操作历史记录
+            if (this[dbname]) {
+                // 更新数据
+                let cacheMockerItem = this[dbname].get('data').find({ name: mockerItem.name }).value();
+
+                // 如果存在记录，则更新两个字段即可
+                if (cacheMockerItem) {
+                    mockerItem.updateConfig({
+                        disable: cacheMockerItem.config.disable,
+                        activeModule: cacheMockerItem.config.activeModule
+                    });
+                }
+            }
+            pmMockerList.push(mockerItem);
+        });
 
         let result = [];
-
-        result = mockerList.map((mocker) => {
-            let pmMocker = pmMockerList.filter((item) => {
+        // 把 common 和自己共有的 mocker 进行数据更新结合
+        result = pmMockerList.map((mocker) => {
+            let pmMocker = mockerList.filter((item) => {
                 return item.name === mocker.name;
             })[0];
             pmMocker = pmMocker ? pmMocker : {};
             mocker.mockModuleList = updateMockMoudles(mocker.mockModuleList, pmMocker.mockModuleList);
             return mocker;
         })
-
-        result = result.concat(pmMockerList.filter((mocker) => {
+        // 添加自定义的一些 mocker
+        result = result.concat(mockerList.filter((mocker) => {
             return result.filter((item) => {
                 return mocker.name === item.name;
             }).length === 0;

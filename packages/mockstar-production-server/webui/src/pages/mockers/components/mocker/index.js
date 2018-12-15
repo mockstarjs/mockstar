@@ -159,6 +159,11 @@ class Mocker extends Component {
         this.setState({
             isShowAdd
         })
+        if (!isShowAdd) {
+            let { mockerName } = this.props.match.params;
+            // 加载所有的 mocker，主要是为了菜单展示
+            this.handleRefresh(mockerName);
+        }
     };
 
     handleAddMocker = (cgiName, mockerName, namespace, content) => {
