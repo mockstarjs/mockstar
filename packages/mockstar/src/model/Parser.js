@@ -709,17 +709,13 @@ export default class Parser {
     addNamespaceMocker(mockerData) {
         const { namespace, cgiName, mockerName, content } = mockerData;
         const mockerPath = `${this.rootPath}/namespace/${namespace}/mock_server/mockers/${cgiName}`
-        if (fs.existsSync(mockerPath)) {
-            fs.writeFile(path.join(mockerPath, `/mock_modules/${mockerName}.json`), content)
-            return {
-                ret: 0,
-                msg: 'ok',
-            }
-        } else {
-            return {
-                ret: 100,
-                msg: 'no such mocker'
-            }
+        if (!fs.existsSync(mockerPath)) {
+            fse.copySync(`${this.rootPath}/namespace/common/mock_server/mockers/${cgiName}`, `${this.rootPath}/namespace/${namespace}/mock_server/mockers/${cgiName}`)
+        }
+        fs.writeFile(path.join(mockerPath, `/mock_modules/${mockerName}.json`), content)
+        return {
+            ret: 0,
+            msg: 'ok',
         }
     }
 }
