@@ -38,6 +38,14 @@ module.exports = (router, mockerParser, localServerConfig) => {
                     namespaceItem: namespaceItem
                 });
             });
+            router[METHOD](`/${namespaceItem}${ROUTE_PATH}`, function (req, res, next) {
+                handleCallback(req, res, next, {
+                    routePath: ROUTE_PATH,
+                    mockerItem: mockerItem,
+                    mockerParser: mockerParser,
+                    namespaceItem: namespaceItem
+                });
+            });
     
             // 如果有定义 namespace，则需要额外支持有 namespace 的场景
             // if (namespace) {
