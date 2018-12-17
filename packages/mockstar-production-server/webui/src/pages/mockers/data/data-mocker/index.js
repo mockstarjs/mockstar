@@ -5,6 +5,7 @@ export {
     loadMockerReadme,
     setMockerActiveModule,
     setMockerDisable,
+    addMocker,
     SET_ACTIVE_MODULE_REQUEST_SUCCESS
 } from './action';
 

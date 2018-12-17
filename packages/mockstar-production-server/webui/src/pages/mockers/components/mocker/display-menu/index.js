@@ -12,7 +12,7 @@ class MockerMenu extends Component {
 
     handleClick = ({ item, key }) => {
         if (this.props.match.params.mockerName !== key) {
-            this.props.history.push(this.props.match.path.replace(/:mockerName/gi, key));
+            this.props.history.push(this.props.match.path.replace(/:mockerName/gi, key).replace(/:namespace/gi, this.props.match.params.namespace));
 
             // 通知右侧重新刷新
             this.props.refresh(key);

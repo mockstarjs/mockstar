@@ -76,6 +76,18 @@ function initPostOne(router, adminCGIBase, pluginName, handlerNameField, callbac
  * @param handlerNameField
  * @param callback
  */
+function addMocker(router, adminCGIBase, callback) {
+    router.post(`${adminCGIBase}/addMocker`, callback);
+}
+
+/**
+ * 更新指定的 handler 信息
+ * @param router
+ * @param adminCGIBase
+ * @param pluginName
+ * @param handlerNameField
+ * @param callback
+ */
 function initPostNamespaceOne(router, adminCGIBase, pluginName, handlerNameField, callback) {
     router.post(`${adminCGIBase}/${pluginName}/:namespace/:${handlerNameField}`, callback);
 }
@@ -114,4 +126,5 @@ module.exports = {
     initGetNamespaceOne: initGetNamespaceOne,
     initPostNamespaceOne: initPostNamespaceOne,
     initGetNamespaceOneReadMe: initGetNamespaceOneReadMe,
+    addMocker: addMocker,
 };

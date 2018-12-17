@@ -13,6 +13,10 @@ export const SET_ACTIVE_MODULE_REQUEST = 'SET_ACTIVE_MODULE_REQUEST';
 export const SET_ACTIVE_MODULE_REQUEST_SUCCESS = 'SET_ACTIVE_MODULE_REQUEST_SUCCESS';
 export const SET_ACTIVE_MODULE_REQUEST_FAIL = 'SET_ACTIVE_MODULE_REQUEST_FAIL';
 
+export const ADD_MOCKER_REQUEST = 'ADD_MOCKER_REQUEST';
+export const ADD_MOCKER_REQUEST_SUCCESS = 'ADD_MOCKER_REQUEST_SUCCESS';
+export const ADD_MOCKER_REQUEST_FAIL = 'ADD_MOCKER_REQUEST_FAIL';
+
 function fetchMocker(mockerName, namespace) {
     return {
         [CALL_API]: {
@@ -72,4 +76,26 @@ export function setMockerDisable(mockerName, value, namespace) {
             }
         }, namespace));
     };
+}
+
+function requestAddMocker(cgiName, mockerName, namespace, content) {
+    return {
+        [CALL_API]: {
+            types: [ADD_MOCKER_REQUEST, ADD_MOCKER_REQUEST_SUCCESS, ADD_MOCKER_REQUEST_FAIL],
+            url: `${getCGIBase()}/addMocker/`,
+            type: 'POST',
+            data: {
+                cgiName,
+                namespace,
+                mockerName,
+                content
+            }
+        }
+    };
+}
+
+export function addMocker(cgiName, mockerName, namespace, content) {
+    return (dispatch, getState) => {
+        return dispatch(requestAddMocker(cgiName, mockerName, namespace, content));
+    }
 }

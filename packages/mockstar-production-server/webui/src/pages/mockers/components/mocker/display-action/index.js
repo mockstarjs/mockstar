@@ -4,7 +4,7 @@ import { Alert, Button } from 'antd';
 import './index.less';
 
 export default function MockerSwitcher(props) {
-  const { isDisabled, activeModule, previewResult, updateDisable } = props;
+  const { isDisabled, activeModule, previewResult, updateDisable, addMockers } = props;
 
   return (
     <div className="mocker-action">
@@ -31,6 +31,10 @@ export default function MockerSwitcher(props) {
 
       <Button type={isDisabled ? 'primary' : 'default'} icon="setting" onClick={updateDisable}>
         {isDisabled ? '启用' : '禁用'} mock 服务
+      </Button>
+
+      <Button type="dashed" icon="plus" onClick={addMockers}>
+        添加 mocker 桩数据
       </Button>
 
     </div>
