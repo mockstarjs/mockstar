@@ -7,7 +7,7 @@ const shell = require('shelljs');
 const fse = require('fs-extra');
 
 const ProjectConfig = require('./ProjectConfig');
-const MockerConfig = require('../../mocker/generator/MockerConfig');
+const initMocker = require('../../mocker');
 
 module.exports = class extends Generator {
 
@@ -88,10 +88,11 @@ module.exports = class extends Generator {
                 this.destinationPath('src')
             );
 
+            // 增加一个简单的 mocker 即可
             const demoMockerName = 'demo_cgi';
 
-            const mockerConfig = new MockerConfig({
-                isDev: false,
+            initMocker({
+                isDev: this.projectConfig.isDev,
                 parentPath: path.join(this.destinationPath(), './src/mockers'),
                 config: {
                     description: '我是' + demoMockerName,
@@ -99,34 +100,6 @@ module.exports = class extends Generator {
                     route: '/cgi-bin/a/b/' + demoMockerName
                 }
             });
-
-            const MOCKER_TEMPLATES_PATH = path.join(this.templatePath(), '../../../mocker/generator/templates');
-
-            console.log('---MOCKER_TEMPLATES_PATH---', MOCKER_TEMPLATES_PATH);
-
-            // 初始化一个 demo mocker
-            ['base.js', 'index.js', 'mock_modules', 'static'].forEach((curFile) => {
-                this.fs.copy(
-                    path.join(MOCKER_TEMPLATES_PATH, curFile),
-                    path.join(mockerConfig.parentPath, demoMockerName, curFile)
-                );
-            });
-
-            this.fs.copyTpl(
-                path.join(MOCKER_TEMPLATES_PATH, '_config'),
-                path.join(mockerConfig.parentPath, demoMockerName, 'config.json'),
-                {
-                    mockerConfig: mockerConfig
-                }
-            );
-
-            this.fs.copyTpl(
-                path.join(MOCKER_TEMPLATES_PATH, 'README.md'),
-                path.join(mockerConfig.parentPath, demoMockerName, 'README.md'),
-                {
-                    mockerConfig: mockerConfig
-                }
-            );
         };
 
         _copyTemplates();
