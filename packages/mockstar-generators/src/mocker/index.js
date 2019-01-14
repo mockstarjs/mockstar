@@ -22,7 +22,6 @@ function initMocker(opts = {}) {
     return new Promise((resolve, reject) => {
         // 可以通过透传额外参数到 generator 中，然后通过 this.options 就能够取到传递过去的值
         let yeoResult = yeomanEnv.run(name, {
-            'force-install': true,
             mockerOpts: opts
         }, err => {
             // console.log('=====end===', err);
@@ -38,19 +37,3 @@ function initMocker(opts = {}) {
 }
 
 module.exports = initMocker;
-
-// initMocker({
-//     isDev: false,
-//     parentPath: '/Users/helinjiang/gitprojects-fis/mockstar/packages/mockstar-generators/test/tmp',
-//     config: {
-//         description: '我是一句话描述',
-//         disable: false,
-//         method: 'get',
-//         name: 'getName',
-//         plugin: 'xhr',
-//         priority: 1,
-//         route: '/cgi-bin/getName',
-//         routeExtra: '',
-//         tags: []
-//     }
-// });
