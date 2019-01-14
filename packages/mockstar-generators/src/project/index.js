@@ -7,16 +7,17 @@ const Promise = require('bluebird');
 
 const mockstarPkg = require('mockstar/package');
 
-const pkgVersion = {
-    'mockstar': mockstarPkg.version
-};
-
 /**
  * 初始化一个 mocker
  */
 function initProject(opts = {}) {
     // generator 的名字
     const name = 'project';
+
+    // 依赖包的版本号
+    opts.pkgVersion = {
+        'mockstar': mockstarPkg.version
+    };
 
     // generator 的目录
     const generatorPath = path.join(__dirname, './generator');
@@ -42,10 +43,11 @@ function initProject(opts = {}) {
     });
 }
 
-initProject({
-    isDev: false,
-    parentPath: '/Users/helinjiang/gitprojects-fis/mockstar/packages/mockstar-generators/test/tmp',
-    name: 'mockstar-app',
-    port: 9527,
-    pkgVersion: pkgVersion
-});
+module.exports = initProject;
+
+// initProject({
+//     isDev: false,
+//     parentPath: '/Users/helinjiang/gitprojects-fis/mockstar/packages/mockstar-generators/test/tmp',
+//     name: 'mockstar-app',
+//     port: 9527,
+// });

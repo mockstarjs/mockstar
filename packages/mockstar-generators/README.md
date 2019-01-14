@@ -1,6 +1,6 @@
-# mockstar-client
+# mockstar-generators
 
-MockStar 的 client 组件。
+MockStar 的脚手架代码。
 
 ## 特性
 
@@ -9,6 +9,6 @@ MockStar 的 client 组件。
 ## 安装
 
 ```
-$ npm install mockstar-client --save
+$ npm install mockstar-generators --save
 ```
 
