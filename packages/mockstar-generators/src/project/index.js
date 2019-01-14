@@ -44,10 +44,3 @@ function initProject(opts = {}) {
 }
 
 module.exports = initProject;
-
-// initProject({
-//     isDev: false,
-//     parentPath: '/Users/helinjiang/gitprojects-fis/mockstar/packages/mockstar-generators/test/tmp',
-//     name: 'mockstar-app',
-//     port: 9527,
-// });
