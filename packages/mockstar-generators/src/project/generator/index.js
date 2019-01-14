@@ -94,6 +94,7 @@ module.exports = class extends Generator {
             initMocker({
                 isDev: this.projectConfig.isDev,
                 parentPath: path.join(this.destinationPath(), './src/mockers'),
+                isInitReadme: true,
                 config: {
                     description: '我是' + demoMockerName,
                     name: demoMockerName,
