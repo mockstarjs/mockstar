@@ -44,7 +44,7 @@ module.exports = class extends Generator {
      * Generator project files.
      */
     writing() {
-        const { parentPath, config } = this.mockerConfig;
+        const { parentPath, config, isInitReadme } = this.mockerConfig;
 
         const _copyTemplates = () => {
             const folderPath = path.join(parentPath, config.name);
@@ -62,20 +62,27 @@ module.exports = class extends Generator {
                 }
             );
 
-            this.fs.copyTpl(
-                this.templatePath('README.md'),
-                this.destinationPath('README.md'),
-                {
-                    mockerConfig: this.mockerConfig
-                }
-            );
-
-            ['base.js', 'index.js', 'mock_modules', 'static'].forEach((curFile) => {
+            ['base.js', 'index.js', 'mock_modules'].forEach((curFile) => {
                 this.fs.copy(
                     this.templatePath(curFile),
                     this.destinationPath(curFile)
                 );
             });
+
+            if (isInitReadme) {
+                this.fs.copyTpl(
+                    this.templatePath('README.md'),
+                    this.destinationPath('README.md'),
+                    {
+                        mockerConfig: this.mockerConfig
+                    }
+                );
+
+                this.fs.copy(
+                    this.templatePath('static'),
+                    this.destinationPath('static')
+                );
+            }
 
         };
 

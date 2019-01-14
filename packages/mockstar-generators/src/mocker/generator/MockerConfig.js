@@ -3,6 +3,8 @@ module.exports = class MockerConfig {
         this.isDev = opts.isDev || false;
         this.parentPath = opts.parentPath || '';
 
+        this.isInitReadme = !!opts.isInitReadme;
+
         this.config = opts.config || {};
     }
 };

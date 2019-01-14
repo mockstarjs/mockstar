@@ -4,6 +4,7 @@ const { initMocker } = require('../src');
 initMocker({
     isDev: false,
     parentPath: path.join(__dirname, '../test/tmp'),
+    isInitReadme: true,
     config: {
         description: '我是一句话描述',
         disable: false,
