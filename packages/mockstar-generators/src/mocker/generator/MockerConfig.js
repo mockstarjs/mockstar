@@ -6,19 +6,3 @@ module.exports = class MockerConfig {
         this.config = opts.config || {};
     }
 };
-
-let a = {
-    isDev: true,
-    mockerParentPath: '/Users/helinjiang/gitprojects-fis/mockstar/packages/mockstar-generators/test/tmp',
-    mockerConfig: {
-        description: '我是一句话描述',
-        disable: false,
-        method: 'get',
-        name: 'getName',
-        plugin: 'xhr',
-        priority: 1,
-        route: '/cgi-bin/getName',
-        routeExtra: '',
-        tags: []
-    }
-};
