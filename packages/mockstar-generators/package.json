@@ -2,12 +2,8 @@
   "name": "mockstar-generators",
   "version": "1.0.3",
   "description": "generators for mockstar",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "scripts": {
-    "prepublishOnly": "npm run build",
-    "build": "babel --presets env,stage-0 src/ --out-dir lib/ --source-maps",
-    "watch-compile": "npm run build -- --watch",
-    "watch": "npm run watch-compile",
     "test-mocha": "node ./node_modules/mocha/bin/_mocha",
     "test": "npm run eslint && npm run test-cov",
     "eslint": "eslint src/",
