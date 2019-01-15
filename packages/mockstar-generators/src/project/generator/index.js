@@ -78,9 +78,12 @@ module.exports = class extends Generator {
                 }
             );
 
-            this.fs.copy(
-                this.templatePath('mockstar.config.js'),
-                this.destinationPath('mockstar.config.js')
+            this.fs.copyTpl(
+                this.templatePath('mockstar.config'),
+                this.destinationPath('mockstar.config.js'),
+                {
+                    projectConfig: this.projectConfig
+                }
             );
 
             this.fs.copy(
