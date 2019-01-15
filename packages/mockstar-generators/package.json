@@ -1,0 +1,45 @@
+{
+  "name": "mockstar-generators",
+  "version": "1.0.4",
+  "description": "generators for mockstar",
+  "main": "src/index.js",
+  "scripts": {
+    "test-mocha": "node ./node_modules/mocha/bin/_mocha",
+    "test": "npm run eslint && npm run test-cov",
+    "eslint": "eslint src/",
+    "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha"
+  },
+  "keywords": [
+    "mock",
+    "server"
+  ],
+  "author": "helinjiang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mockstarjs/mockstar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mockstarjs/mockstar/issues"
+  },
+  "homepage": "https://github.com/mockstarjs/mockstar#readme",
+  "dependencies": {
+    "bluebird": "^3.5.3",
+    "fs-extra": "^7.0.1",
+    "mkdirp": "^0.5.1",
+    "mockstar": "^1.0.4",
+    "shelljs": "^0.8.3",
+    "url-parse": "^1.4.4",
+    "yeoman-environment": "^2.3.4",
+    "yeoman-generator": "^3.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "chai": "^4.2.0",
+    "eslint": "^5.7.0",
+    "mocha": "^5.2.0"
+  }
+}
