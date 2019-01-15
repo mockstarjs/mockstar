@@ -2,7 +2,6 @@
 
 const path = require('path');
 const yeoman = require('yeoman-environment');
-const yeomanEnv = yeoman.createEnv();
 const Promise = require('bluebird');
 
 const mockstarPkg = require('mockstar/package');
@@ -21,6 +20,10 @@ function initProject(opts = {}) {
 
     // generator 的目录
     const generatorPath = path.join(__dirname, './generator');
+
+    // 创建一个新的环境
+    // 注意必须在这里每次都创建，否则会在某些情况下validate失败之后，无法重现执行脚手架的问题
+    const yeomanEnv = yeoman.createEnv();
 
     // 注册 yeoman 插件
     yeomanEnv.register(require.resolve(generatorPath), name);
