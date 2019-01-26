@@ -5,8 +5,7 @@ const os = require('os');
 const util = require('util');
 const fse = require('fs-extra');
 const cp = require('child_process');
-const colors = require('colors/safe');
-const yaml = require('../../utils/yaml');
+const yaml = require('./yaml');
 
 // 数据缓存的根目录
 const DATA_DIR = path.join(osenv.home(), './.mockstar', '.startingAppData');
@@ -62,18 +61,6 @@ function isRunning(pid, callback) {
         function (err, stdout, stderr) {
             callback(!err && !!stdout.toString().trim());
         });
-}
-
-function error(msg) {
-    console.log(colors.red(msg));
-}
-
-function warn(msg) {
-    console.log(colors.yellow(msg));
-}
-
-function info(msg) {
-    console.log(colors.green(msg));
 }
 
 function execCmd(configOpts, options) {
@@ -191,21 +178,7 @@ module.exports = {
     saveStartCache,
     isRunning,
     getErrorCachePath,
-    error,
-    warn,
-    info,
     execCmd,
     start,
     getIpList
 };
-
-// let main =
-//
-// // 执行启动命令
-// let child = execCmd(main, options, {
-//     detached: true,
-//     stdio: ['ignore', 'ignore', fs.openSync(errorFile, 'a+')]
-// });
-//
-// config._pid = child.pid;
-// config.main = main;
