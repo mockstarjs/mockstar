@@ -15,6 +15,7 @@ module.exports = function (args) {
     arr.push('        start    Start a background service.');
     arr.push('        run      Start a front service.');
     arr.push('        status   Show the running status of MockStar.');
+    arr.push('        stop   Stop current background service.');
     arr.push('        init     Initialize project.');
     arr.push('\n');
     arr.push('    Options:');

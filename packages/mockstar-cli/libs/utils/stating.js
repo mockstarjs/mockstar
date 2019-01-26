@@ -15,9 +15,6 @@ fse.ensureDirSync(DATA_DIR);
 const START_CACHE_PATH = path.join(DATA_DIR, '.start.yml');
 fse.ensureFileSync(START_CACHE_PATH);
 
-// 启动脚本路径
-const BOOTSTRAP_PATH = path.join(__dirname, 'start-by-cp.js');
-
 /**
  * 获得启动命令执行的缓存数据
  * @return {{}}
@@ -63,8 +60,8 @@ function isRunning(pid, callback) {
         });
 }
 
-function execCmd(configOpts, options) {
-    let args = [BOOTSTRAP_PATH];
+function execCmd(argsOpts, configOpts, options) {
+    let args = argsOpts || [];
 
     if (configOpts) {
         args.push('--data');
@@ -74,7 +71,7 @@ function execCmd(configOpts, options) {
     return cp.spawn('node', args, options);
 }
 
-function start(configOpts, callback) {
+function start(configOpts, argsOpts, callback) {
     // 获得启动的缓存数据
     let config = getStartCache() || {};
 
@@ -107,7 +104,7 @@ function start(configOpts, callback) {
             }
 
             // 执行启动命令
-            let child = execCmd(configOpts, {
+            let child = execCmd(argsOpts, configOpts, {
                 detached: true,
                 stdio: ['ignore', 'ignore', fs.openSync(errorFile, 'a+')]
             });
@@ -182,13 +179,28 @@ function getStatus(callback) {
     });
 }
 
+function stop(callback) {
+    // 获得启动的缓存数据
+    let config = getStartCache() || {};
+
+    // 检查缓存的进程是否在启动中
+    isRunning(config.pid, function (isPidRunning) {
+        try {
+            config.pid && process.kill(config.pid);
+            isPidRunning = false;
+
+            saveStartCache({});
+        } catch (err) {
+            isPidRunning = isPidRunning && err;
+        }
+
+        callback(isPidRunning, config);
+    });
+}
+
 module.exports = {
-    getStartCache,
-    saveStartCache,
-    isRunning,
-    getErrorCachePath,
-    execCmd,
     start,
     getIpList,
-    getStatus
+    getStatus,
+    stop
 };

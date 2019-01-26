@@ -10,7 +10,8 @@
     "run": "node ../../../bin/mockstar run",
     "run-dev": "node ../../../bin/mockstar run --dev",
     "run-dev-watch": "node ../../../bin/mockstar run --dev --watch",
-    "status": "node ../../../bin/mockstar status"
+    "status": "node ../../../bin/mockstar status",
+    "stop": "node ../../../bin/mockstar stop"
   },
   "author": "helinjiang",
   "license": "MIT"
