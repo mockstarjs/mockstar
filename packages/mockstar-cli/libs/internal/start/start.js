@@ -34,15 +34,7 @@ module.exports = function (args) {
         stating.start(configOpts, [BOOTSTRAP_PATH], function (err, config) {
             // 启动成功
             if (!err || err === true) {
-                colorsLog.info(`[i] MockStar@${self.version} is running for ${configOpts.rootPath}`);
-
-                colorsLog.info(stating.getIpList().map(function (ip) {
-                    return '       http://' + colorsLog.colors.bold(ip) + (configOpts.port ? ':' + configOpts.port : '');
-                }).join('\n'));
-
-                if (configOpts.isDev) {
-                    colorsLog.info('[i] pid=' + config.pid);
-                }
+                stating.showRunningStatus(self.version, config, configOpts.isDev);
 
                 return resolve();
             }
