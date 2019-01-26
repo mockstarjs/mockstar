@@ -4,5 +4,5 @@ module.exports = function (ctx) {
 
   const cmd = ctx.cmd;
 
-  cmd.register('start', 'Start a front service', {}, require('./start'));
+  cmd.register('run', 'Start a front service', {}, require('./run'));
 };
