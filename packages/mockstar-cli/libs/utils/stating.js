@@ -7,6 +7,7 @@ const fse = require('fs-extra');
 const cp = require('child_process');
 const yaml = require('./yaml');
 const colorsLog = require('./colorsLog');
+const _ = require('lodash');
 
 // 数据缓存的根目录
 const DATA_DIR = path.join(osenv.home(), './.mockstar', '.startingAppData');
@@ -73,82 +74,84 @@ function execCmd(argsOpts, configOpts, options) {
 }
 
 function start(configOpts, argsOpts, callback) {
-    // 获得启动的缓存数据
-    let config = getStartCache() || {};
-
-    // 将mockstar启动数据缓存起来
-    config.options = configOpts;
+    // 这里需要复制一份新的，因为 configOpts 此时为 LocalServerConfig 的对象，在调用_.isEqual对比时会有问题，需要复制为常规
+    configOpts = Object.assign({}, configOpts);
 
     // 检查缓存的进程是否在启动中
-    isRunning(config.pid, function (isPidRunning) {
-        // 如果在启动中，则直接返回成功
+    getStatus(function (isPidRunning, config) {
+        // 如果 MockStar 服务正在启动中
         if (isPidRunning) {
-            return callback(true, config);
+            if (_.isEqual(configOpts, config.options)) {
+                // 如果启动的 mockstar 配置参数没有变化，则无需额外处理，直接返回运行中
+                return callback(true, config);
+            } else {
+                // 否则就需要杀掉原来的进程
+                try {
+                    config.pid && process.kill(config.pid);
+                    saveStartCache({});
+                } catch (err) {
+                }
+            }
         }
 
-        // 如果没在启动中，则检查内存中的 _pid 是否在启动中
-        isRunning(config._pid, function (isPidRunning) {
-            // 如果也在启动中，则直接返回成功
-            if (isPidRunning) {
-                return callback(true, config);
+        // 否则先移除错误文件，因为后续使用 child_process 执行了命令之后会将错误记录在这个错误文件内
+        let errorFile = getErrorCachePath(configOpts.rootPath);
+        try {
+            // 移除文件
+            if (fs.existsSync(errorFile)) {
+                fs.unlinkSync(errorFile);
             }
+        } catch (e) {
+            return callback(e, config);
+        }
 
-            // 否则先检查是否有一些启动错误
-            let errorFile = getErrorCachePath(configOpts.rootPath);
-            try {
-                // 移除文件
-                if (fs.existsSync(errorFile)) {
-                    fs.unlinkSync(errorFile);
-                }
-            } catch (e) {
-                return callback(e, config);
-            }
-
-            // 执行启动命令
-            let child = execCmd(argsOpts, configOpts, {
-                detached: true,
-                stdio: ['ignore', 'ignore', fs.openSync(errorFile, 'a+')]
-            });
-
-            config._pid = child.pid;
-
-            // 记录到缓存中
-            try {
-                saveStartCache(config);
-            } catch (e) {
-                return callback(e, config);
-            }
-
-            // 接下来的3秒内，每隔600ms检查进程是否已真正成功启动
-            let startTime = Date.now();
-            (function execCallback() {
-                let error;
-                try {
-                    error = fs.readFileSync(errorFile, { encoding: 'utf8' });
-                } catch (e) {
-                }
-
-                // 如果遇到错误，则不再进行处理，直接
-                if (error) {
-                    callback(null, config);
-                    console.error(error);
-                    return;
-                }
-
-                // 3s 内会一直轮询
-                if (Date.now() - startTime < 3000) {
-                    return setTimeout(execCallback, 600);
-                }
-
-                // 记录缓存
-                delete config._pid;
-                config.pid = child.pid;
-                saveStartCache(config);
-                child.unref();
-
-                callback(null, config);
-            })();
+        // 执行启动命令
+        let child = execCmd(argsOpts, configOpts, {
+            detached: true,
+            stdio: ['ignore', 'ignore', fs.openSync(errorFile, 'a+')]
         });
+
+        config._pid = child.pid;
+
+        // 将mockstar启动数据缓存起来
+        config.options = configOpts;
+
+        // 记录数据到缓存中
+        try {
+            saveStartCache(config);
+        } catch (e) {
+            return callback(e, config);
+        }
+
+        // 接下来的3秒内，每隔600ms检查是否有错误文件，如果没有错误文件，则可以认为是成功启动了
+        let startTime = Date.now();
+        (function execCallback() {
+            let error;
+            try {
+                error = fs.readFileSync(errorFile, { encoding: 'utf8' });
+            } catch (e) {
+            }
+
+            // 如果遇到错误，则不再进行处理，直接
+            if (error) {
+                callback(null, config);
+                console.error(error);
+                return;
+            }
+
+            // 3s 内会一直轮询
+            if (Date.now() - startTime < 3000) {
+                return setTimeout(execCallback, 600);
+            }
+
+            // 记录缓存
+            delete config._pid;
+            config.pid = child.pid;
+            saveStartCache(config);
+            child.unref();
+
+            callback(null, config);
+        })();
     });
 }
 
@@ -221,7 +224,6 @@ function showRunningStatus(version, config, isShowDevInfo) {
 
 module.exports = {
     start,
-    getIpList,
     getStatus,
     stop,
     showRunningStatus
