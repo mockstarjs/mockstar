@@ -7,6 +7,7 @@ const semver = require('semver');
 
 const internalPluginConsole = require('./internal/console');
 const internalPluginStart = require('./internal/start');
+const internalPluginRun = require('./internal/run');
 const internalPluginInit = require('./internal/init');
 
 /**
@@ -33,6 +34,7 @@ function entry(args) {
     return mockstar.init([
         internalPluginConsole,
         internalPluginStart,
+        internalPluginRun,
         internalPluginInit
     ])
         .then(function () {

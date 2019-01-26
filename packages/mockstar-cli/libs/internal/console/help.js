@@ -12,7 +12,8 @@ module.exports = function (args) {
     arr.push('    Usage: mockstar <command> [options] ');
     arr.push('\n');
     arr.push('    Commands:');
-    arr.push('        start    Start local server.');
+    arr.push('        start    Start a background service.');
+    arr.push('        run      Start a front service.');
     arr.push('        init     Initialize project.');
     arr.push('\n');
     arr.push('    Options:');
