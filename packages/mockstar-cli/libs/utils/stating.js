@@ -82,16 +82,16 @@ function start(configOpts, callback) {
     config.options = configOpts;
 
     // 检查缓存的进程是否在启动中
-    isRunning(config.pid, function (isrunning) {
+    isRunning(config.pid, function (isPidRunning) {
         // 如果在启动中，则直接返回成功
-        if (isrunning) {
+        if (isPidRunning) {
             return callback(true, config);
         }
 
         // 如果没在启动中，则检查内存中的 _pid 是否在启动中
-        isRunning(config._pid, function (isrunning) {
+        isRunning(config._pid, function (isPidRunning) {
             // 如果也在启动中，则直接返回成功
-            if (isrunning) {
+            if (isPidRunning) {
                 return callback(true, config);
             }
 
@@ -154,11 +154,10 @@ function start(configOpts, callback) {
     });
 }
 
-
 function getIpList() {
     let ipList = [];
     let ifaces = os.networkInterfaces();
-    Object.keys(ifaces).forEach(function(ifname) {
+    Object.keys(ifaces).forEach(function (ifname) {
         ifaces[ifname].forEach(function (iface) {
             if (iface.family == 'IPv4') {
                 ipList.push(iface.address);
@@ -173,6 +172,16 @@ function getIpList() {
     return ipList;
 }
 
+function getStatus(callback) {
+    // 获得启动的缓存数据
+    let config = getStartCache() || {};
+
+    // 检查缓存的进程是否在启动中
+    isRunning(config.pid, function (isPidRunning) {
+        callback(isPidRunning, config);
+    });
+}
+
 module.exports = {
     getStartCache,
     saveStartCache,
@@ -180,5 +189,6 @@ module.exports = {
     getErrorCachePath,
     execCmd,
     start,
-    getIpList
+    getIpList,
+    getStatus
 };
