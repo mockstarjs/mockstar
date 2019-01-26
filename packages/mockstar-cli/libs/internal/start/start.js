@@ -1,10 +1,14 @@
 'use strict';
 
+const path = require('path');
 const Promise = require('bluebird');
 const colorsLog = require('../../utils/colorsLog');
 const stating = require('../../utils/stating');
 
 const getStartArgs = require('./get-start-args');
+
+// 启动脚本路径
+const BOOTSTRAP_PATH = path.join(__dirname, 'start-by-cp.js');
 
 /**
  *
@@ -27,7 +31,7 @@ module.exports = function (args) {
     }
 
     return new Promise((resolve, reject) => {
-        stating.start(configOpts, function (err, config) {
+        stating.start(configOpts, [BOOTSTRAP_PATH], function (err, config) {
             // 启动成功
             if (!err || err === true) {
                 colorsLog.info(`[i] MockStar@${self.version} is running for ${configOpts.rootPath}`);
