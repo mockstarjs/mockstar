@@ -8,6 +8,7 @@ const semver = require('semver');
 const internalPluginConsole = require('./internal/console');
 const internalPluginStart = require('./internal/start');
 const internalPluginRun = require('./internal/run');
+const internalPluginStatus = require('./internal/status');
 const internalPluginInit = require('./internal/init');
 
 /**
@@ -35,6 +36,7 @@ function entry(args) {
         internalPluginConsole,
         internalPluginStart,
         internalPluginRun,
+        internalPluginStatus,
         internalPluginInit
     ])
         .then(function () {
