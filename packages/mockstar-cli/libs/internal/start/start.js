@@ -1,10 +1,10 @@
 'use strict';
 
 const Promise = require('bluebird');
-const colors = require('colors/safe');
+const colorsLog = require('../../utils/colorsLog');
+const stating = require('../../utils/stating');
 
 const getStartArgs = require('./get-start-args');
-const util = require('./util');
 
 /**
  *
@@ -12,6 +12,7 @@ const util = require('./util');
  */
 module.exports = function (args) {
     // console.log(args);
+    const self = this;
 
     // 获取参数
     let configOpts = getStartArgs(args);
@@ -26,32 +27,32 @@ module.exports = function (args) {
     }
 
     return new Promise((resolve, reject) => {
-        util.start(configOpts, function (err, config) {
+        stating.start(configOpts, function (err, config) {
             // 启动成功
             if (!err || err === true) {
-                util.info('[i] MockStar start success!');
+                colorsLog.info(`[i] MockStar@${self.version} is running for ${configOpts.rootPath}`);
 
-                util.info(util.getIpList().map(function (ip) {
-                    return '       http://' + colors.bold(ip) + (configOpts.port ? ':' + configOpts.port : '');
+                colorsLog.info(stating.getIpList().map(function (ip) {
+                    return '       http://' + colorsLog.colors.bold(ip) + (configOpts.port ? ':' + configOpts.port : '');
                 }).join('\n'));
 
                 if (configOpts.isDev) {
-                    util.info('[i] pid=' + config.pid);
+                    colorsLog.info('[i] pid=' + config.pid);
                 }
 
                 return resolve();
             }
 
             if (/listen EADDRINUSE/.test(err)) {
-                util.error('[!] Failed to bind proxy port ' + (configOpts.port) + ': The port is already in use');
-                util.info('[i] Please check if ' + configOpts.rootPath + ' is already running');
-                util.info('    or if another application is using the port, you can change the port with mockstar start -p newPort\n');
+                colorsLog.error('[!] Failed to bind proxy port ' + (configOpts.port) + ': The port is already in use');
+                colorsLog.info('[i] Please check if ' + configOpts.rootPath + ' is already running');
+                colorsLog.info('    or if another application is using the port, you can change the port with mockstar start -p newPort\n');
             } else if (err.code == 'EACCES' || err.code == 'EPERM') {
-                util.error('[!] Cannot start ' + configOpts.rootPath + ' owned by root');
-                util.info('[i] Try to run command with `sudo`\n');
+                colorsLog.error('[!] Cannot start ' + configOpts.rootPath + ' owned by root');
+                colorsLog.info('[i] Try to run command with `sudo`\n');
             }
 
-            util.error(err.stack ? 'Date: ' + new Date().toLocaleString() + '\n' + err.stack : err);
+            colorsLog.error(err.stack ? 'Date: ' + new Date().toLocaleString() + '\n' + err.stack : err);
 
             reject();
         });

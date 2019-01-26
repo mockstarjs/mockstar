@@ -9,7 +9,8 @@
     "start-by-node-dev": "node-dev ../../../bin/mockstar start",
     "run": "node ../../../bin/mockstar run",
     "run-dev": "node ../../../bin/mockstar run --dev",
-    "run-dev-watch": "node ../../../bin/mockstar run --dev --watch"
+    "run-dev-watch": "node ../../../bin/mockstar run --dev --watch",
+    "status": "node ../../../bin/mockstar status"
   },
   "author": "helinjiang",
   "license": "MIT"
