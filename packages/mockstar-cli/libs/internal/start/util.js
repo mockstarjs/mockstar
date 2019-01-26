@@ -1,6 +1,8 @@
 const path = require('path');
 const osenv = require('osenv');
 const fs = require('fs');
+const os = require('os');
+const util = require('util');
 const fse = require('fs-extra');
 const cp = require('child_process');
 const colors = require('colors/safe');
@@ -54,7 +56,7 @@ function isRunning(pid, callback) {
         return callback(false);
     }
 
-    cp.exec(format(process.platform === 'win32' ?
+    cp.exec(util.format(process.platform === 'win32' ?
         'tasklist /fi "PID eq %s" | findstr /i "node.exe"'
         : 'ps -f -p %s | grep "node"', pid),
         function (err, stdout, stderr) {
@@ -165,6 +167,25 @@ function start(configOpts, callback) {
     });
 }
 
+
+function getIpList() {
+    let ipList = [];
+    let ifaces = os.networkInterfaces();
+    Object.keys(ifaces).forEach(function(ifname) {
+        ifaces[ifname].forEach(function (iface) {
+            if (iface.family == 'IPv4') {
+                ipList.push(iface.address);
+            }
+        });
+    });
+    let index = ipList.indexOf('127.0.0.1');
+    if (index !== -1) {
+        ipList.splice(index, 1);
+    }
+    ipList.unshift('127.0.0.1');
+    return ipList;
+}
+
 module.exports = {
     getStartCache,
     saveStartCache,
@@ -174,7 +195,8 @@ module.exports = {
     warn,
     info,
     execCmd,
-    start
+    start,
+    getIpList
 };
 
 // let main =

@@ -1,6 +1,7 @@
 'use strict';
 
 const Promise = require('bluebird');
+const colors = require('colors/safe');
 
 const getStartArgs = require('./get-start-args');
 const util = require('./util');
@@ -28,6 +29,12 @@ module.exports = function (args) {
         util.start(configOpts, function (err, config) {
             // 启动成功
             if (!err || err === true) {
+                util.info('[i] MockStar start success!');
+
+                util.info(util.getIpList().map(function (ip) {
+                    return '       http://' + colors.bold(ip) + (configOpts.port ? ':' + configOpts.port : '');
+                }).join('\n'));
+
                 return resolve();
             }
 
