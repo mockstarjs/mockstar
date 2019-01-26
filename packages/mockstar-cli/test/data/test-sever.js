@@ -8,7 +8,7 @@ function start(cmder, nodeArgs) {
             .then((port) => {
                 const run = spawn('node', [
                     cmder,
-                    'start',
+                    'run',
                     '--dev',
                     `--port=${port}`
                 ].concat(nodeArgs || []));
