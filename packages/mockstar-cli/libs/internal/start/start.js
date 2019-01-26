@@ -35,6 +35,10 @@ module.exports = function (args) {
                     return '       http://' + colors.bold(ip) + (configOpts.port ? ':' + configOpts.port : '');
                 }).join('\n'));
 
+                if (configOpts.isDev) {
+                    util.info('[i] pid=' + config.pid);
+                }
+
                 return resolve();
             }
 
