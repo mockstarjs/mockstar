@@ -7,7 +7,8 @@
     "start-port9528-dev-watch": "node ../../../bin/mockstar start --port=9528 --dev --watch",
     "start-port-name": "node ../../../bin/mockstar start --port=9529 --name=myname",
     "start-by-node-dev": "node-dev ../../../bin/mockstar start",
-    "run": "node ../../../bin/mockstar run"
+    "run": "node ../../../bin/mockstar run",
+    "run-dev": "node ../../../bin/mockstar run --dev"
   },
   "author": "helinjiang",
   "license": "MIT"
