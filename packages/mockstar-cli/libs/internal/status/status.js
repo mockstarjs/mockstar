@@ -15,15 +15,8 @@ module.exports = function (args) {
 
     return new Promise((resolve, reject) => {
         stating.getStatus(function (isPidRunning, config) {
-            // 启动成功
             if (isPidRunning) {
-                colorsLog.info(`[i] MockStar@${self.version} is running for ${config.options.rootPath}`);
-
-                colorsLog.info(stating.getIpList().map(function (ip) {
-                    return '       http://' + colorsLog.colors.bold(ip) + (config.options.port ? ':' + config.options.port : '');
-                }).join('\n'));
-
-                colorsLog.info('\n' + JSON.stringify(config, null, 2));
+                stating.showRunningStatus(self.version, config, true);
             } else {
                 colorsLog.info(`[i] MockStar@${self.version} is not running!`);
             }

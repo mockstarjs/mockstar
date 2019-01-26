@@ -6,6 +6,7 @@ const util = require('util');
 const fse = require('fs-extra');
 const cp = require('child_process');
 const yaml = require('./yaml');
+const colorsLog = require('./colorsLog');
 
 // 数据缓存的根目录
 const DATA_DIR = path.join(osenv.home(), './.mockstar', '.startingAppData');
@@ -198,9 +199,30 @@ function stop(callback) {
     });
 }
 
+/**
+ * 展示 MockStar 当前运行时状态
+ *
+ * @param {String} version MockStar 当前的版本号
+ * @param {Object} config 缓存的数据
+ * @param {Boolean} isShowDevInfo 是否展示一些开发调试信息
+ */
+function showRunningStatus(version, config, isShowDevInfo) {
+    colorsLog.info(`[i] MockStar@${version} is running for ${config.options.rootPath}`);
+
+    colorsLog.info(getIpList().map(function (ip) {
+        return '       http://' + colorsLog.colors.bold(ip) + (config.options.port ? ':' + config.options.port : '');
+    }).join('\n'));
+
+    if (isShowDevInfo) {
+        colorsLog.info('[i] pid=' + config.pid);
+        colorsLog.info('\n' + JSON.stringify(config, null, 2));
+    }
+}
+
 module.exports = {
     start,
     getIpList,
     getStatus,
-    stop
+    stop,
+    showRunningStatus
 };
