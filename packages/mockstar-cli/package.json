@@ -42,6 +42,7 @@
     "fs-handler": "^0.1.2",
     "hexo-fs": "^0.2.3",
     "js-yaml": "^3.12.1",
+    "lodash": "^4.17.11",
     "meow": "^3.7.0",
     "minimist": "^1.2.0",
     "mockstar": "^1.0.4",
