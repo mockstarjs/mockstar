@@ -47,7 +47,7 @@ module.exports = class extends Generator {
         const _copyTemplates = () => {
             const folderPath = path.join(parentPath, name);
 
-            mkdirp(folderPath);
+            mkdirp.sync(folderPath);
             shell.cd(folderPath);
 
             this.destinationRoot(this.destinationPath(folderPath));
