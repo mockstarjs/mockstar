@@ -6,7 +6,7 @@ const initProject = require('../../../biz/generators/project');
 module.exports = function (args) {
     let options = {
         isDev: !!args.dev,
-        parentPath: process.cwd()
+        cwd: process.cwd()
     };
 
     return new Promise((resolve, reject) => {
