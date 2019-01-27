@@ -1,0 +1,10 @@
+{
+  "name": "demo_01",
+  "version": "1.0.0",
+  "scripts": {
+    "init-project": "node ../../../bin/mockstar init project",
+    "init-mocker": "node ../../../bin/mockstar init mocker"
+  },
+  "author": "helinjiang",
+  "license": "MIT"
+}

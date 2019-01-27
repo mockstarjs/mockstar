@@ -38,7 +38,7 @@ function getMockServerPathList(rootPath) {
     fsHandler.search.getAll(rootPath, { globs: ['**/mockstar.config.js'] }).forEach((item) => {
         let opts = require(path.join(item.basePath, item.relativePath));
 
-        list.push(opts.mockServerPath || path.join(opts.rootPath, 'mock_server'));
+        list.push(opts.mockServerPath || path.join(opts.rootPath, 'src'));
     });
 
     return list;

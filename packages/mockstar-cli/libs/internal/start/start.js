@@ -1,9 +1,14 @@
 'use strict';
 
+const path = require('path');
 const Promise = require('bluebird');
+const colorsLog = require('../../utils/colorsLog');
+const stating = require('../../utils/stating');
 
-const localServer = require('../../../biz/local-server');
 const getStartArgs = require('./get-start-args');
+
+// 启动脚本路径
+const BOOTSTRAP_PATH = path.join(__dirname, 'start-by-cp.js');
 
 /**
  *
@@ -11,12 +16,13 @@ const getStartArgs = require('./get-start-args');
  */
 module.exports = function (args) {
     // console.log(args);
+    const self = this;
 
     // 获取参数
     let configOpts = getStartArgs(args);
 
     if (!configOpts) {
-        return Promise.reject();
+        return Promise.reject('configOpts is null');
     }
 
     // 启动本地服务
@@ -25,8 +31,26 @@ module.exports = function (args) {
     }
 
     return new Promise((resolve, reject) => {
-        localServer.startServer(configOpts, () => {
-            resolve();
+        stating.start(configOpts, [BOOTSTRAP_PATH], function (err, config) {
+            // 启动成功
+            if (!err || err === true) {
+                stating.showRunningStatus(self.version, config, configOpts.isDev);
+
+                return resolve();
+            }
+
+            if (/listen EADDRINUSE/.test(err)) {
+                colorsLog.error('[!] Failed to bind proxy port ' + (configOpts.port) + ': The port is already in use');
+                colorsLog.info('[i] Please check if ' + configOpts.rootPath + ' is already running');
+                colorsLog.info('    or if another application is using the port, you can change the port with mockstar start -p newPort\n');
+            } else if (err.code == 'EACCES' || err.code == 'EPERM') {
+                colorsLog.error('[!] Cannot start ' + configOpts.rootPath + ' owned by root');
+                colorsLog.info('[i] Try to run command with `sudo`\n');
+            }
+
+            colorsLog.error(err.stack ? 'Date: ' + new Date().toLocaleString() + '\n' + err.stack : err);
+
+            reject();
         });
     });
 };
