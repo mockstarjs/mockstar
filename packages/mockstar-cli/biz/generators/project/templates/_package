@@ -1,9 +1,0 @@
-{
-  "name": "<%= projectConfig.projectName %>",
-  "scripts": {
-    "start": "mockstar start --dev --watch"
-  },
-  "dependencies": {
-    "mockstar": "^<%= projectConfig.pkgVersion['mockstar'] %>"
-  }
-}
