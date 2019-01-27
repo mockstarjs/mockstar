@@ -1,53 +1,25 @@
-'use strict';
-
 const path = require('path');
-const chalk = require('chalk');
-const mkdirp = require('mkdirp');
-const Generator = require('yeoman-generator');
-const shell = require('shelljs');
+const mockstarGenerators = require('mockstar-generators');
+const inquirer = require('inquirer');
 const fse = require('fs-extra');
+const urlParse = require('url-parse');
 
 const utils = require('../utils');
 
-const MockConfig = require('./MockerConfig');
-
-const logger = utils.createLogger({});
-
-module.exports = class extends Generator {
-
-    constructor(...args) {
-        super(...args);
-
-        this.answers = {};
-
-        this.mockConfig = new MockConfig();
-    }
-
-    /**
-     * Show template basic message.
-     */
-    initializing() {
-        this.log(
-            chalk.magenta(
-                `\n欢迎使用 MockStar 脚手架来创建 mocker！\n`
-            )
-        );
-    }
-
-    /**
-     * Interact with developer.
-     */
-    prompting() {
-        let isDev = this.options.isDev;
-        let cwd = this.options.env.cwd;
-
-        return this.prompt([{
+module.exports = function (opts, callback) {
+    inquirer
+        .prompt([{
             type: 'list',
             name: 'mockerParentPath',
             message: '请选择 mocker 放置的根目录',
             choices: function () {
-                // 获取可选择的路径
-                return utils.getMockServerPathList(cwd) || [];
+                let list = utils.getMockServerPathList(opts.cwd) || [];
+                return list.map((item) => {
+                    return {
+                        name: path.relative(opts.cwd, item),
+                        value: item
+                    };
+                });
             },
             validate: function (mockerParentPath) {
                 if (!mockerParentPath) {
@@ -68,12 +40,6 @@ module.exports = class extends Generator {
                 return true;
             }
         }, {
-            type: 'list',
-            name: 'method',
-            message: '请求类型',
-            choices: ['get', 'post'],
-            default: 'get'
-        }, {
             type: 'input',
             name: 'mockerName',
             message: '请输入mocker名称，只能够输入英文、数字和、- 及 _ ',
@@ -87,65 +53,48 @@ module.exports = class extends Generator {
 
                 // 默认情况下是在当前路径下新建以 projectName 为名字的文件夹，然后再进入其中生成代码。
                 // 但如果当前路径下已经存在了，则需要进行提示，避免覆盖
-                if (!isDev && fse.pathExistsSync(path.join(answers.mockerParentPath, mockerName))) {
+                if (!opts.isDev && fse.pathExistsSync(path.join(answers.mockerParentPath, mockerName))) {
                     return `当前目录下已经存在名字为 ${mockerName} 的文件夹了`;
                 }
 
                 return true;
             }
-        }]).then((answers) => {
-            this.answers = answers;
-            this.mockConfig.updateByAnswer(this.answers);
-        });
-    }
+        }, {
+            type: 'list',
+            name: 'method',
+            message: '请求类型',
+            choices: ['get', 'post'],
+            default: 'get'
+        }, {
+            type: 'confirm',
+            name: 'isInitReadme',
+            message: '是否初始化 README 文件',
+            default: true
+        }])
+        .then(answers => {
+            // console.log('--answers--', answers);
 
-    /**
-     * Generator project files.
-     */
-    writing() {
-        const { mockerParentPath, mockerName } = this.mockConfig;
+            const urlParseResult = urlParse(answers.reqURL.trim());
 
-        const _copyTemplates = () => {
-            const folderPath = path.join(mockerParentPath, mockerName);
-
-            mkdirp(folderPath);
-            shell.cd(folderPath);
-
-            this.destinationRoot(this.destinationPath(folderPath));
-
-            this.fs.copyTpl(
-                this.templatePath('_config'),
-                this.destinationPath('config.json'),
-                {
-                    mockConfig: this.mockConfig
+            let params = Object.assign({}, opts, {
+                parentPath: answers.mockerParentPath,
+                isInitReadme: answers.isInitReadme,
+                config: {
+                    method: answers.method,
+                    name: answers.mockerName,
+                    route: urlParseResult.pathname,
+                    host: urlParseResult.host
                 }
-            );
-
-            this.fs.copyTpl(
-                this.templatePath('README.md'),
-                this.destinationPath('README.md'),
-                {
-                    mockConfig: this.mockConfig
-                }
-            );
-
-            ['base.js', 'index.js', 'mock_modules', 'static'].forEach((curFile) => {
-                this.fs.copy(
-                    this.templatePath(curFile),
-                    this.destinationPath(curFile)
-                );
             });
 
-        };
+            // console.log('--params--', params);
 
-        _copyTemplates();
-    }
-
-    install() {
-        logger.info('项目初始化完成');
-    }
-
-    end() {
-        logger.info(`本次初始化过程结束。`);
-    }
+            mockstarGenerators.initMocker(params)
+                .then(() => {
+                    callback(true);
+                })
+                .catch((err) => {
+                    callback(false, err);
+                });
+        });
 };
