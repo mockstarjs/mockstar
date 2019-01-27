@@ -94,7 +94,7 @@ module.exports = class extends Generator {
             // 增加一个简单的 mocker 即可
             const demoMockerName = 'demo_cgi';
 
-            initMocker({
+            return initMocker({
                 isDev: this.projectConfig.isDev,
                 parentPath: path.join(this.destinationPath(), './src/mockers'),
                 isInitReadme: true,
@@ -106,12 +106,20 @@ module.exports = class extends Generator {
             });
         };
 
-        _copyTemplates();
+        return _copyTemplates();
     }
 
     install() {
         if (this.projectConfig.isDev) {
             console.log('--install--');
+        }
+
+        if (this.projectConfig.autoInstall) {
+            console.log('正在安装 npm 包，如果安装缓慢，亦可手动执行 npm install 命令...');
+
+            shell.exec('npm install', { silent: true });
+
+            console.log('安装完成!');
         }
     }
 

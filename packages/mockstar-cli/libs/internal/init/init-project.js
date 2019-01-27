@@ -6,6 +6,7 @@ const initProject = require('../../../biz/generators/project');
 module.exports = function (args) {
     let options = {
         isDev: !!args.dev,
+        autoInstall: true,
         cwd: process.cwd()
     };
 
