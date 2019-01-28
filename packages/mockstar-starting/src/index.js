@@ -181,16 +181,18 @@ function getStatus(callback) {
 
     // 检查缓存的进程是否在启动中
     isRunning(config.pid, function (isPidRunning) {
+        // 如果正在启动中，则附带下 IP 信息
+        if (isPidRunning) {
+            config.ipList = getIpList();
+        }
+
         callback(isPidRunning, config);
     });
 }
 
 function stop(callback) {
-    // 获得启动的缓存数据
-    let config = getStartCache() || {};
-
     // 检查缓存的进程是否在启动中
-    isRunning(config.pid, function (isPidRunning) {
+    getStatus(function (isPidRunning, config) {
         try {
             config.pid && process.kill(config.pid);
             isPidRunning = false;
@@ -228,5 +230,6 @@ module.exports = {
     start,
     getStatus,
     stop,
-    showRunningStatus
+    showRunningStatus,
+    getIpList
 };
