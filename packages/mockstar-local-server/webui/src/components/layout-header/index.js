@@ -44,6 +44,11 @@ class LayoutHeader extends Component {
     render() {
         let { activeMenu } = this.state;
 
+        // 如果被嵌套在 iframe 中，则不展示导航
+        if (window.self !== window.top) {
+            return null;
+        }
+
         return (
             <Layout.Header className="layout-header header">
                 <Menu
