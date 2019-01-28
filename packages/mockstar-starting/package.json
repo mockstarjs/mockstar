@@ -1,0 +1,47 @@
+{
+  "name": "mockstar-starting",
+  "version": "1.0.5",
+  "description": "mockstar starting",
+  "main": "lib/index.js",
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "babel --presets env,stage-0 src/ --out-dir lib/ --source-maps",
+    "watch-compile": "npm run build -- --watch",
+    "watch": "npm run watch-compile",
+    "test-mocha": "node ./node_modules/mocha/bin/_mocha",
+    "test": "npm run eslint && npm run test-cov",
+    "eslint": "eslint src/",
+    "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha"
+  },
+  "keywords": [
+    "mock",
+    "server"
+  ],
+  "author": "helinjiang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mockstarjs/mockstar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mockstarjs/mockstar/issues"
+  },
+  "homepage": "https://github.com/mockstarjs/mockstar#readme",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "colors": "^1.3.3",
+    "fs-extra": "^5.0.0",
+    "js-yaml": "^3.12.1",
+    "lodash": "^4.17.11",
+    "osenv": "^0.1.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "chai": "^4.2.0",
+    "eslint": "^5.7.0",
+    "mocha": "^5.2.0"
+  }
+}
