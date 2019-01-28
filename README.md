@@ -26,8 +26,11 @@ $ mockstar init project
 # 初始化一个 mocker
 $ mockstar init mocker
 
-# 启动 mockstar 服务
+# 启动 mockstar 服务（后台运行）
 $ mockstar start --watch
+
+# 启动 mockstar 服务（前台运行）
+$ mockstar run
 
 # 停止 mockstar 服务
 $ mockstar stop
