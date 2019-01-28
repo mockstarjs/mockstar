@@ -3,7 +3,7 @@
 const Promise = require('bluebird');
 
 const colorsLog = require('../../utils/colorsLog');
-const stating = require('../../utils/stating');
+const starting = require('mockstar-starting');
 
 /**
  *
@@ -14,7 +14,7 @@ module.exports = function (args) {
     const self = this;
 
     return new Promise((resolve, reject) => {
-        stating.stop(function (isPidRunning, config) {
+        starting.stop(function (isPidRunning, config) {
             if (isPidRunning) {
                 colorsLog.info(`[i] MockStar@${self.version} is stop failed!`);
                 colorsLog.info('\n' + JSON.stringify(config, null, 2));
