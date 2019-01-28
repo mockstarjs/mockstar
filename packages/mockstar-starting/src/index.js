@@ -141,8 +141,8 @@ function start(configOpts, argsOpts, callback) {
                 return;
             }
 
-            // 3s 内会一直轮询
-            if (Date.now() - startTime < 3000) {
+            // 2s 内会一直轮询
+            if (Date.now() - startTime < 2000) {
                 return setTimeout(execCallback, 600);
             }
 
