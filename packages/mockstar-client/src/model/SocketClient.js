@@ -6,7 +6,7 @@ class SocketClient {
      * @param {String} [url] socket启动地址，例如 http://10.66.95.54:3000'，如果是移动端代理，记得要写IP，而不能够使用 localhost 或者 127.0.0.1 这种
      */
     constructor(url) {
-        this.url = url || 'http://local.matmanjs.org';
+        this.url = url || 'http://local.mockstarjs.org';
 
         this.socket = io(this.url);
 
