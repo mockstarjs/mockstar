@@ -7,5 +7,7 @@ module.exports = class ProjectConfig {
 
         this.name = opts.name || '';
         this.port = opts.port || 9527;
+
+        this.cmder = opts.cmder || 'npm';
     }
 };

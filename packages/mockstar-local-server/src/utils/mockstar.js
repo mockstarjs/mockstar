@@ -8,7 +8,7 @@ const path = require('path');
  * @returns {String}
  */
 function getMockServerPath(rootPath, mockServerPath) {
-    let result = mockServerPath || './mock_server';
+    let result = mockServerPath || './src';
 
     if (!path.isAbsolute(result)) {
         result = path.resolve(rootPath, result);
