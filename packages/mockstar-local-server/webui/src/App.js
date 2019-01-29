@@ -29,8 +29,8 @@ export default class App extends Component {
 
                     <Layout.Content>
                         <Switch>
-                            <Redirect exact from="/" to={`${getSiteBase()}/dashboard`} />
-                            <Redirect exact from={`${getSiteBase()}`} to={`${getSiteBase()}/dashboard`} />
+                            <Redirect exact from="/" to={`${getSiteBase()}/mockers`} />
+                            <Redirect exact from={`${getSiteBase()}`} to={`${getSiteBase()}/mockers`} />
                             <Route path={`${getSiteBase()}/dashboard`} component={Home} />
                             <Route path={`${getSiteBase()}/mockers`} component={Mockers} />
                         </Switch>

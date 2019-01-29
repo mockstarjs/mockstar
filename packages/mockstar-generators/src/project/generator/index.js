@@ -115,9 +115,9 @@ module.exports = class extends Generator {
         }
 
         if (this.projectConfig.autoInstall) {
-            console.log('正在安装 npm 包，如果安装缓慢，亦可手动执行 npm install 命令...');
+            console.log('正在安装 npm 包，如果安装缓慢，亦可手动执行 ' + this.projectConfig.cmder + ' install 命令...');
 
-            shell.exec('npm install', { silent: true });
+            shell.exec(this.projectConfig.cmder + ' install', { silent: true });
 
             console.log('安装完成!');
         }

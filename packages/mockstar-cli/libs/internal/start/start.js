@@ -3,7 +3,7 @@
 const path = require('path');
 const Promise = require('bluebird');
 const colorsLog = require('../../utils/colorsLog');
-const stating = require('../../utils/stating');
+const starting = require('mockstar-starting');
 
 const getStartArgs = require('./get-start-args');
 
@@ -31,10 +31,10 @@ module.exports = function (args) {
     }
 
     return new Promise((resolve, reject) => {
-        stating.start(configOpts, [BOOTSTRAP_PATH], function (err, config) {
+        starting.start(configOpts, [BOOTSTRAP_PATH], function (err, config) {
             // 启动成功
             if (!err || err === true) {
-                stating.showRunningStatus(self.version, config, configOpts.isDev);
+                starting.showRunningStatus(self.version, config, configOpts.isDev);
 
                 return resolve();
             }
