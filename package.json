@@ -4,6 +4,7 @@
   "scripts": {
     "publish": "git pull && lerna publish minor",
     "force-publish": "lerna publish patch --force-publish=*",
+    "bootstrap": "lerna bootstrap",
     "precommit": "lint-staged",
     "commitmsg": "validate-commit-msg",
     "commit": "git-cz "
