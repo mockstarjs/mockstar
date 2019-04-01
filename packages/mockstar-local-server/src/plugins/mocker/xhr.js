@@ -86,6 +86,11 @@ function handleCallback(req, res, next, opts = {}) {
     // req.params.id = "1"
 
     // console.log(req.headers.referer)
+    // console.log('req.headers.cookie:', req.headers.cookie);
+
+    // 由于使用了 cookie-parser 插件，因此可以直接使用req.cookies.xxx 来获取cookie值
+    // console.log('req.cookies:', req.cookies);
+
     // res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Origin', req.get('Origin'));
 
