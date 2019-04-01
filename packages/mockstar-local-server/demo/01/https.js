@@ -32,7 +32,7 @@ httpsServer.listen(SSLPORT, function() {
 });
 
 //可以根据请求判断是http还是https
-app.get('/', function (req, res) {
+app.get('*', function (req, res) {
     if(req.protocol === 'https') {
         res.status(200).send('This is https visit!');
     }
