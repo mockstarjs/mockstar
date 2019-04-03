@@ -99,7 +99,10 @@ function handleCallback(req, res, next, opts = {}) {
     let isDisabled;
 
     // 判断该路由的名字是否在referer中
-    let mockstarQueryItem = mockstar.getQueryItem(req.headers.referer, mockerItem.name);
+    let mockstarQueryItem = mockstar.getQueryItem(mockerItem.name, {
+        referer: req.headers.referer,
+        cookies: req.cookies
+    });
 
     if (mockstarQueryItem) {
         // referer 里面的请求参数拥有最高优先级，因为这种场景比较特殊，主要用于自动化测试之用
