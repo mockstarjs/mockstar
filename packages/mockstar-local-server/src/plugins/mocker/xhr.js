@@ -86,6 +86,11 @@ function handleCallback(req, res, next, opts = {}) {
     // req.params.id = "1"
 
     // console.log(req.headers.referer)
+    // console.log('req.headers.cookie:', req.headers.cookie);
+
+    // 由于使用了 cookie-parser 插件，因此可以直接使用req.cookies.xxx 来获取cookie值
+    // console.log('req.cookies:', req.cookies);
+
     // res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Origin', req.get('Origin'));
 
@@ -94,7 +99,10 @@ function handleCallback(req, res, next, opts = {}) {
     let isDisabled;
 
     // 判断该路由的名字是否在referer中
-    let mockstarQueryItem = mockstar.getQueryItem(req.headers.referer, mockerItem.name);
+    let mockstarQueryItem = mockstar.getQueryItem(mockerItem.name, {
+        referer: req.headers.referer,
+        cookies: req.cookies
+    });
 
     if (mockstarQueryItem) {
         // referer 里面的请求参数拥有最高优先级，因为这种场景比较特殊，主要用于自动化测试之用

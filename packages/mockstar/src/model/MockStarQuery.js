@@ -33,6 +33,6 @@ export default class MockStarQuery {
      * @returns {String}
      */
     getQueryString() {
-        return MS_QUERY_KEY + '=' + JSON.stringify(this.list);
+        return MS_QUERY_KEY + '=' + encodeURIComponent(JSON.stringify(this.list));
     };
 }
