@@ -6,6 +6,7 @@ const cors = require('cors');
 const compression = require('compression');
 const errorhandler = require('errorhandler');
 const objectAssign = require('object-assign');
+const cookieParser = require('cookie-parser');
 
 module.exports = function (opts) {
   // const userDir = path.join(process.cwd(), 'public');
@@ -69,6 +70,9 @@ module.exports = function (opts) {
       }
     });
   }
+
+  // cookie
+  arr.push(cookieParser());
 
   return arr;
 };

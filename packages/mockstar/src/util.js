@@ -4,20 +4,24 @@ import MockStarQueryItem from './model/MockStarQueryItem';
 import { MS_QUERY_KEY } from './model/MockStarQuery';
 
 /**
- * 获得 req.headers.referer 中指定名字的携带的特定桩信息
+ * 从cookie或referer中获得指定名字的携带的特定桩信息
  *
- * @param {String} referer req.headers.referer
  * @param {String} name 指定的 mocker 名字
+ * @param {Object} opts 参数
+ * @param {String} opts.referer req.headers.referer
+ * @param {Object} opts.cookies cookie对象
  * @returns {Item | null}
  */
-export function getQueryItem(referer, name) {
-    let queryItemsFromReferer = getQueryItemsFromReferer(referer);
+export function getQueryItem(name, opts) {
+    let queryItemsFromReferer = getQueryItemsFromReferer(opts.referer);
+    let queryItemsFromCookie = getQueryItemsFromCookie(opts.cookies);
 
     let result = null;
+    let list = [].concat(queryItemsFromCookie, queryItemsFromReferer);
 
     // 判断该路由的名字是否在referer中
-    for (let i = 0, length = queryItemsFromReferer.length; i < length; i++) {
-        let matmanQueryItem = new MockStarQueryItem(queryItemsFromReferer[i]);
+    for (let i = 0, length = list.length; i < length; i++) {
+        let matmanQueryItem = new MockStarQueryItem(list[i]);
         if (matmanQueryItem.isMe(name)) {
             result = matmanQueryItem;
             break;
@@ -43,4 +47,22 @@ function getQueryItemsFromReferer(referer) {
     }
 
     return paramsFromReferer;
+}
+
+/**
+ * 获得 req.headers.cookie 中携带的额外参数列表
+ *
+ * @param {Object} cookies cookie对象
+ * @returns {{_ms_name:String,_ms_target:String,_ms_disable:Number}[]} 结果
+ */
+function getQueryItemsFromCookie(cookies) {
+    let paramsFromCookie;
+
+    try {
+        paramsFromCookie = JSON.parse(cookies[MS_QUERY_KEY]) || [];
+    } catch (e) {
+        paramsFromCookie = [];
+    }
+
+    return paramsFromCookie;
 }
