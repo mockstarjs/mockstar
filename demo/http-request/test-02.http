@@ -1,0 +1,6 @@
+GET http://127.0.0.1:9527/cgi-bin/a/b/demo_01
+Accept: */*
+Cache-Control: no-cache
+Referer: http://now.qq.com/inde.html?_ms_=[{"_ms_name":"demo_01","_ms_target":"success","_ms_disable":0}]
+
+### 指定返回某个mock module
