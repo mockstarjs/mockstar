@@ -13,8 +13,8 @@ import { MS_QUERY_KEY } from './config';
  * @returns {Item | null}
  */
 export function getQueryItem(name, opts) {
-    let queryItemsFromReferer = getQueryItemsFromReferer(opts.referer);
     let queryItemsFromCookie = getQueryItemsFromCookie(opts.cookies);
+    let queryItemsFromReferer = getQueryItemsFromReferer(opts.referer);
 
     let result = null;
     let list = [].concat(queryItemsFromCookie, queryItemsFromReferer);
