@@ -7,8 +7,15 @@
 export const MS_QUERY_KEY = '_ms_';
 
 /**
- * 桩数据模块用于标记唯一性的字段名字
- * 例如在请求中有 _ms_target=xyz，则将返回名字为 xyz 的 mock module
+ * 桩对象模块（mocker）用于标记唯一性的字段名字
+ *
+ * @type {String}
+ */
+export const MS_NAME = '_ms_name';
+
+/**
+ * 桩数据模块（mockModule）用于标记唯一性的字段名字
+ * 例如在请求中有 _ms_target=xyz，则将返回名字为 xyz 的 mockModule
  *
  * @type {String}
  */
