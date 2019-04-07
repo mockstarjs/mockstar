@@ -14,11 +14,11 @@ export default class MockStarQuery {
      *
      * @param {Object | String} mockerName mocker 的名字
      * @param {String} mockModuleName mock module 的名字
-     * @param {Boolean} shouldDisableMatman 是否禁用 mocker 服务
+     * @param {Boolean} shouldDisable 是否禁用 mocker 服务
      */
-    addOne(mockerName, mockModuleName, shouldDisableMatman) {
+    addOne(mockerName, mockModuleName, shouldDisable) {
         // TODO 也许这里应该要加一个去重判断
-        this.list.push(new MockStarQueryItem(mockerName, mockModuleName, shouldDisableMatman));
+        this.list.push(new MockStarQueryItem(mockerName, mockModuleName, shouldDisable));
     }
 
     /**
