@@ -21,9 +21,9 @@ export function getQueryItem(name, opts) {
 
     // 判断该路由的名字是否在referer中
     for (let i = 0, length = list.length; i < length; i++) {
-        let matmanQueryItem = new MockStarQueryItem(list[i]);
-        if (matmanQueryItem.isMe(name)) {
-            result = matmanQueryItem;
+        let mockStarQueryItem = new MockStarQueryItem(list[i]);
+        if (mockStarQueryItem.isMe(name)) {
+            result = mockStarQueryItem;
             break;
         }
     }
