@@ -30,6 +30,13 @@ export const MS_TARGET = '_ms_target';
 export const MS_DISABLE = '_ms_disable';
 
 /**
+ * 请求来源，标记来自哪的请求
+ *
+ * @type {String}
+ */
+export const MS_FROM = '_ms_from';
+
+/**
  * mock_modules 的字段名字
  *
  * @type {String}
