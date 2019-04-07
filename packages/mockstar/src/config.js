@@ -30,6 +30,13 @@ export const MS_TARGET = '_ms_target';
 export const MS_DISABLE = '_ms_disable';
 
 /**
+ * 用于传递额外的参数
+ *
+ * @type {String}
+ */
+export const MS_EXTRA = '_ms_extra';
+
+/**
  * 请求来源，标记来自哪的请求
  *
  * @type {String}
