@@ -1,7 +1,7 @@
 import urlHandle from 'url-handle';
 
 import MockStarQueryItem from './model/MockStarQueryItem';
-import { MS_QUERY_KEY } from './model/MockStarQuery';
+import { MS_QUERY_KEY } from './config';
 
 /**
  * 从cookie或referer中获得指定名字的携带的特定桩信息
@@ -13,17 +13,17 @@ import { MS_QUERY_KEY } from './model/MockStarQuery';
  * @returns {Item | null}
  */
 export function getQueryItem(name, opts) {
-    let queryItemsFromReferer = getQueryItemsFromReferer(opts.referer);
     let queryItemsFromCookie = getQueryItemsFromCookie(opts.cookies);
+    let queryItemsFromReferer = getQueryItemsFromReferer(opts.referer);
 
     let result = null;
     let list = [].concat(queryItemsFromCookie, queryItemsFromReferer);
 
     // 判断该路由的名字是否在referer中
     for (let i = 0, length = list.length; i < length; i++) {
-        let matmanQueryItem = new MockStarQueryItem(list[i]);
-        if (matmanQueryItem.isMe(name)) {
-            result = matmanQueryItem;
+        let mockStarQueryItem = new MockStarQueryItem(list[i]);
+        if (mockStarQueryItem.isMe(name)) {
+            result = mockStarQueryItem;
             break;
         }
     }

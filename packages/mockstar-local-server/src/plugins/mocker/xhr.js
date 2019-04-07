@@ -99,17 +99,17 @@ function handleCallback(req, res, next, opts = {}) {
     let isDisabled;
 
     // 判断该路由的名字是否在referer中
-    let mockstarQueryItem = mockstar.getQueryItem(mockerItem.name, {
+    let mockStarQueryItem = mockstar.getQueryItem(mockerItem.name, {
         referer: req.headers.referer,
         cookies: req.cookies
     });
 
-    if (mockstarQueryItem) {
+    if (mockStarQueryItem) {
         // referer 里面的请求参数拥有最高优先级，因为这种场景比较特殊，主要用于自动化测试之用
-        isDisabled = mockstarQueryItem.isDisabled();
+        isDisabled = mockStarQueryItem.isDisabled();
     } else {
         // 从请求 req 或者 config.json 文件中检查当前请求是否需要禁用 mock 服务
-        const QUERY_KEY = '_ms_disable';
+        const QUERY_KEY = mockstar.MS_DISABLE;
         isDisabled = req.query[QUERY_KEY] || req.body[QUERY_KEY];
         if (!isDisabled) {
             // 此处要重新获取新的数据，以便取到缓存的。
@@ -127,9 +127,9 @@ function handleCallback(req, res, next, opts = {}) {
     } else {
         let params = (req.method.toUpperCase() === 'POST') ? req.body : req.query;
 
-        // 还要合并一下来自 url path 中的参数值
-        // referer 里面的请求参数拥有最高优先级，因为这种场景比较特殊，主要用于自动化测试之用
-        params = _.merge({}, params, req.params, mockstarQueryItem);
+        // 还要合并一下来自cookie 或者 referer url path 中的参数值
+        // 因为这种场景比较特殊，主要用于自动化测试之用
+        params = _.merge({}, params, req.params, mockStarQueryItem);
 
         const resInfo = mockerParser.getResInfoByRoute(routePath, params);
 
