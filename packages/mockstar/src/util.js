@@ -1,7 +1,7 @@
 import urlHandle from 'url-handle';
 
 import MockStarQueryItem from './model/MockStarQueryItem';
-import { MS_QUERY_KEY } from './model/MockStarQuery';
+import { MS_QUERY_KEY } from './config';
 
 /**
  * 从cookie或referer中获得指定名字的携带的特定桩信息

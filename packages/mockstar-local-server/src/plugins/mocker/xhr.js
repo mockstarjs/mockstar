@@ -109,7 +109,7 @@ function handleCallback(req, res, next, opts = {}) {
         isDisabled = mockstarQueryItem.isDisabled();
     } else {
         // 从请求 req 或者 config.json 文件中检查当前请求是否需要禁用 mock 服务
-        const QUERY_KEY = '_ms_disable';
+        const QUERY_KEY = mockstar.MS_DISABLE;
         isDisabled = req.query[QUERY_KEY] || req.body[QUERY_KEY];
         if (!isDisabled) {
             // 此处要重新获取新的数据，以便取到缓存的。

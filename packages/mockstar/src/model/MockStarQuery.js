@@ -1,11 +1,5 @@
 import MockStarQueryItem from './MockStarQueryItem';
-
-/**
- * 在 url 中携带的 query 值，例如 /path/to/url?_ms_=xxx
- *
- * @type {String}
- */
-export const MS_QUERY_KEY = '_ms_';
+import { MS_QUERY_KEY } from '../config';
 
 export default class MockStarQuery {
     /**
