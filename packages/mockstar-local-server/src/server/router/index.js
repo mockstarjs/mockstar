@@ -4,6 +4,7 @@ const _ = require('lodash');
 const request = require('request');
 const bodyParser = require('../body-parser');
 const initPlugins = require('../../plugins');
+const mockstar = require('mockstar');
 
 module.exports = (localServerConfig) => {
     // Create router
@@ -51,7 +52,7 @@ module.exports = (localServerConfig) => {
 
         // 判断是否已经是第二次请求了。
         // 请求本地服务的时候，可能会陷入死循环中，因此此处校验最多只请求一次。
-        const isRequested = !!req.query._ms_from;
+        const isRequested = !!req.query[mockstar.MS_FROM];
 
         const opts = {
             url: 'http://' + req.headers.host + req.url,
@@ -59,7 +60,7 @@ module.exports = (localServerConfig) => {
             jar: true,
             // timeout: 4000,
             qs: {
-                _ms_from: 1
+                [mockstar.MS_FROM]: 1
             }
         };
 

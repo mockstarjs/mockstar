@@ -95,7 +95,7 @@ function _check(asyncClient, route) {
                     clearTimeout(checkT);
                 }
 
-                alert(`matman async 服务未启动！请检查 ${asyncClient.getURI()} 是否已启动`);
+                alert(`mockstar async 服务未启动！请检查 ${asyncClient.getURI()} 是否已启动`);
                 reject(RESULT.NOT_CONNECTED);
             } else {
                 i++;
