@@ -1,9 +1,26 @@
 /**
+ * 在 referer 中携带的 query 值，或者 cookie 中携带的值，用于指定获取哪些桩数据
+ * 例如： /path/to/url?_ms_=xxx，或者 cookie 中的 '_ms_=xxx;'
+ *
+ * @type {String}
+ */
+export const MS_QUERY_KEY = '_ms_';
+
+/**
  * 桩数据模块用于标记唯一性的字段名字
+ * 例如在请求中有 _ms_target=xyz，则将返回名字为 xyz 的 mock module
  *
  * @type {String}
  */
 export const MS_TARGET = '_ms_target';
+
+/**
+ * 用于指定桩数据是否启用的字段名
+ * 例如在请求中有 _ms_disable=1，则不再使用模拟数据
+ *
+ * @type {String}
+ */
+export const MS_DISABLE = '_ms_disable';
 
 /**
  * mock_modules 的字段名字
