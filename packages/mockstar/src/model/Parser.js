@@ -112,7 +112,7 @@ export default class Parser {
      *
      * @param {String} mockerName 名字
      * @param {Boolean} [isReset] 是否为重置，如果为 true，则将忽略缓存数据
-     * @return {Object} MatmanMocker 对象
+     * @return {Object} Mocker 对象
      */
     getMockerByName(mockerName, isReset) {
         let mockerList = this.getAllMocker(isReset);
