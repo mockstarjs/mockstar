@@ -26,7 +26,65 @@ describe('plugin of xhr', () => {
         testServer.stop();
     });
 
-    describe('return active module result', () => {
+    describe('get: return active module result', () => {
+        let data;
+
+        before(function () {
+            return request
+                .get(cgiBase + '/cgi-bin/a/b/demo_02')
+                .then((response) => {
+                    data = JSON.parse(response.res.text);
+                    // console.log(data);
+                });
+        });
+
+        it('should return correct data', () => {
+            expect(data).to.eql({
+                "retcode": 0,
+                "result": {
+                    "result": 1,
+                    "other": "other"
+                }
+            });
+        });
+    });
+
+    describe('get: return target mock module result', () => {
+        let data;
+
+        before(function () {
+            return request
+                .get(cgiBase + '/cgi-bin/a/b/demo_02?_ms_target=success_4')
+                .then((response) => {
+                    data = JSON.parse(response.res.text);
+                    // console.log(data);
+                });
+        });
+
+        it('should return correct data', () => {
+            expect(data).to.equal(4);
+        });
+    });
+
+
+    describe('get: return target mock module result with params', () => {
+        let data;
+
+        before(function () {
+            return request
+                .get(cgiBase + '/cgi-bin/a/b/demo_02?_ms_target=success_4&a=88')
+                .then((response) => {
+                    data = JSON.parse(response.res.text);
+                    // console.log(data);
+                });
+        });
+
+        it('should return correct data', () => {
+            expect(data).to.equal('from_param_88');
+        });
+    });
+
+    describe('post: return active module result', () => {
         let data;
 
         before(function () {
@@ -49,12 +107,12 @@ describe('plugin of xhr', () => {
         });
     });
 
-    describe('return target mock module result', () => {
+    describe('post: return target mock module result', () => {
         let data;
 
         before(function () {
             return request
-                .post(cgiBase + '/cgi-bin/a/b/demo_03_post?_ms_target=success_2')
+                .post(cgiBase + '/cgi-bin/a/b/demo_03_post')
                 .send({
                     _ms_target: 'success_2'
                 })
