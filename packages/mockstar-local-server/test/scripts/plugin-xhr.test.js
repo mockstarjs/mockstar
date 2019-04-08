@@ -40,10 +40,10 @@ describe('plugin of xhr', () => {
 
         it('should return correct data', () => {
             expect(data).to.eql({
-                "retcode": 0,
-                "result": {
-                    "result": 1,
-                    "other": "other"
+                'retcode': 0,
+                'result': {
+                    'result': 1,
+                    'other': 'other'
                 }
             });
         });
@@ -65,7 +65,6 @@ describe('plugin of xhr', () => {
             expect(data).to.equal(4);
         });
     });
-
 
     describe('get: return target mock module result with params', () => {
         let data;
@@ -127,6 +126,33 @@ describe('plugin of xhr', () => {
                 'retcode': 0,
                 'result': {
                     'result': 2,
+                    'other': 'demo_03_post_other'
+                }
+            });
+        });
+    });
+
+    describe('post: return target mock module result with params', () => {
+        let data;
+
+        before(function () {
+            return request
+                .post(cgiBase + '/cgi-bin/a/b/demo_03_post')
+                .send({
+                    _ms_target: 'success_2',
+                    a: 99
+                })
+                .then((response) => {
+                    data = JSON.parse(response.res.text);
+                    // console.log(data);
+                });
+        });
+
+        it('should return correct data', () => {
+            expect(data).to.eql({
+                'retcode': 0,
+                'result': {
+                    'result': 'from_param_99',
                     'other': 'demo_03_post_other'
                 }
             });
