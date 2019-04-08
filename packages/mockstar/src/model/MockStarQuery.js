@@ -14,12 +14,22 @@ export default class MockStarQuery {
      *
      * @param {Object | String} mockerName mocker 的名字
      * @param {String} mockModuleName mock module 的名字
-     * @param {Boolean} shouldDisable 是否禁用 mocker 服务
+     * @param {Boolean} [shouldDisable] 是否禁用 mocker 服务
+     * @param {*} [extra] 额外信息
      */
-    addOne(mockerName, mockModuleName, shouldDisable) {
+    addOne(mockerName, mockModuleName, shouldDisable, extra) {
         // TODO 也许这里应该要加一个去重判断
-        this.list.push(new MockStarQueryItem(mockerName, mockModuleName, shouldDisable));
+        this.list.push(new MockStarQueryItem(mockerName, mockModuleName, shouldDisable, extra));
     }
+
+    /**
+     * 获取字符串数据
+     *
+     * @returns {String}
+     */
+    getString() {
+        return JSON.stringify(this.list);
+    };
 
     /**
      * 获取附加到 url 上的 query string
@@ -27,6 +37,15 @@ export default class MockStarQuery {
      * @returns {String}
      */
     getQueryString() {
-        return MS_QUERY_KEY + '=' + encodeURIComponent(JSON.stringify(this.list));
+        return MS_QUERY_KEY + '=' + this.getString();
+    };
+
+    /**
+     * 获取附加到cookie中的信息
+     *
+     * @returns {String}
+     */
+    getCookieString() {
+        return MS_QUERY_KEY + '=' + this.getString();
     };
 }

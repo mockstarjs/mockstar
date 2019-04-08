@@ -1,9 +1,9 @@
 const { getSuccess } = require('../../base');
 
-function getResult() {
-  return getSuccess({
-    result: 2
-  });
+function getResult(params) {
+    return getSuccess({
+        result: params && params.a ? ('from_param_' + params.a) : 2
+    });
 }
 
 module.exports = getResult;
