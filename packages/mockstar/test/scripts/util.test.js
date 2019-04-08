@@ -5,7 +5,7 @@ const { getQueryItemsFromCookieMap, getQueryItemsFromReferer, getQueryItem } = r
 const MockStarQuery = require('../../lib/model/MockStarQuery').default;
 const MockStarQueryItem = require('../../lib/model/MockStarQueryItem').default;
 
-describe.only('./util.js', () => {
+describe('./util.js', () => {
     let mockStarQuery;
 
     before(() => {
