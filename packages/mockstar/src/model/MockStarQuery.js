@@ -23,12 +23,21 @@ export default class MockStarQuery {
     }
 
     /**
+     * 获取字符串数据
+     *
+     * @returns {String}
+     */
+    getString() {
+        return JSON.stringify(this.list);
+    };
+
+    /**
      * 获取附加到 url 上的 query string
      *
      * @returns {String}
      */
     getQueryString() {
-        return MS_QUERY_KEY + '=' + JSON.stringify(this.list);
+        return MS_QUERY_KEY + '=' + this.getString();
     };
 
     /**
@@ -37,6 +46,6 @@ export default class MockStarQuery {
      * @returns {String}
      */
     getCookieString() {
-        return MS_QUERY_KEY + '=' + JSON.stringify(this.list);
+        return MS_QUERY_KEY + '=' + this.getString();
     };
 }

@@ -13,7 +13,7 @@ import { MS_QUERY_KEY } from './config';
  * @returns {Item | null}
  */
 export function getQueryItem(name, opts) {
-    let queryItemsFromCookie = getQueryItemsFromCookie(opts.cookies);
+    let queryItemsFromCookie = getQueryItemsFromCookieMap(opts.cookies);
     let queryItemsFromReferer = getQueryItemsFromReferer(opts.referer);
 
     let result = null;
@@ -37,7 +37,7 @@ export function getQueryItem(name, opts) {
  * @param {String} referer req.headers.referer
  * @returns {{_ms_name:String,_ms_target:String,_ms_disable:Number}[]} 结果
  */
-function getQueryItemsFromReferer(referer) {
+export function getQueryItemsFromReferer(referer) {
     let paramsFromReferer;
 
     try {
@@ -55,11 +55,17 @@ function getQueryItemsFromReferer(referer) {
  * @param {Object} cookies cookie对象
  * @returns {{_ms_name:String,_ms_target:String,_ms_disable:Number}[]} 结果
  */
-function getQueryItemsFromCookie(cookies) {
+export function getQueryItemsFromCookieMap(cookies) {
     let paramsFromCookie;
 
     try {
         paramsFromCookie = JSON.parse(cookies[MS_QUERY_KEY]) || [];
+
+        // 初步校验一下是否为数组即可
+        if (!Array.isArray(paramsFromCookie)) {
+            paramsFromCookie = [];
+        }
+
     } catch (e) {
         paramsFromCookie = [];
     }
