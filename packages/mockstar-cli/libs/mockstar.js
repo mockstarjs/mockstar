@@ -10,6 +10,7 @@ const internalPluginStart = require('./internal/start');
 const internalPluginRun = require('./internal/run');
 const internalPluginStatus = require('./internal/status');
 const internalPluginStop = require('./internal/stop');
+const internalPluginCheck = require('./internal/check');
 const internalPluginInit = require('./internal/init');
 
 /**
@@ -39,6 +40,7 @@ function entry(args) {
         internalPluginRun,
         internalPluginStatus,
         internalPluginStop,
+        internalPluginCheck,
         internalPluginInit
     ])
         .then(function () {
