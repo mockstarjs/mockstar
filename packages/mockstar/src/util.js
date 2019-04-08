@@ -42,6 +42,12 @@ export function getQueryItemsFromReferer(referer) {
 
     try {
         paramsFromReferer = JSON.parse(urlHandle.query(MS_QUERY_KEY, referer)) || [];
+
+        // 初步校验一下是否为数组即可
+        if (!Array.isArray(paramsFromReferer)) {
+            paramsFromReferer = [];
+        }
+
     } catch (e) {
         paramsFromReferer = [];
     }

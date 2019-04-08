@@ -1,7 +1,7 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-const { getQueryItemsFromCookieMap } = require('../../lib/util');
+const { getQueryItemsFromCookieMap, getQueryItemsFromReferer } = require('../../lib/util');
 const MockStarQuery = require('../../lib/model/MockStarQuery').default;
 
 describe.only('./util.js', () => {
@@ -35,6 +35,47 @@ describe.only('./util.js', () => {
             let cookies = { _ms_: mockStarQuery.getString() };
 
             expect(getQueryItemsFromCookieMap(cookies)).to.eql([{
+                '_ms_name': 'mockerName1',
+                '_ms_target': 'mockModuleName1',
+                '_ms_disable': 0
+            }, {
+                '_ms_name': 'mockerName2',
+                '_ms_target': 'mockModuleName2',
+                '_ms_disable': 1
+            }, {
+                '_ms_name': 'mockerName3',
+                '_ms_target': 'mockModuleName3',
+                '_ms_disable': 1,
+                '_ms_extra': 1
+            }, {
+                '_ms_name': 'mockerName4',
+                '_ms_target': 'mockModuleName4',
+                '_ms_disable': 1,
+                '_ms_extra': { 'a': 1 }
+            }]);
+        });
+    });
+
+    describe('getQueryItemsFromReferer', () => {
+        it('referer is undefined should return []', () => {
+            let referer;
+            expect(getQueryItemsFromReferer(referer)).to.be.a('array').that.is.empty;
+        });
+
+        it('referer is other should return []', () => {
+            let referer = 'https://now.qq.com';
+            expect(getQueryItemsFromReferer(referer)).to.be.a('array').that.is.empty;
+        });
+
+        it('referer is error _ms_ should return []', () => {
+            let referer = 'https://now.qq.com?_ms_=1';
+            expect(getQueryItemsFromReferer(referer)).to.be.a('array').that.is.empty;
+        });
+
+        it('referer is ok should return correct', () => {
+            let referer = 'https://now.qq.com?' + mockStarQuery.getQueryString();
+
+            expect(getQueryItemsFromReferer(referer)).to.eql([{
                 '_ms_name': 'mockerName1',
                 '_ms_target': 'mockModuleName1',
                 '_ms_disable': 0
