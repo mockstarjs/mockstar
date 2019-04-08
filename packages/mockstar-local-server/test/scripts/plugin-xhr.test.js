@@ -3,6 +3,7 @@ const request = require('superagent');
 const fse = require('fs-extra');
 const { expect } = require('chai');
 const testServer = require('../data/test-sever');
+const mockstar = require('mockstar');
 
 describe('plugin of xhr', () => {
     let port;
@@ -80,6 +81,91 @@ describe('plugin of xhr', () => {
 
         it('should return correct data', () => {
             expect(data).to.equal('from_param_88');
+        });
+    });
+
+    describe('get: return target mock module result with extra of string by cookie', () => {
+        let data;
+
+        before(function () {
+            let tmpMq = new mockstar.MockStarQuery();
+            tmpMq.addOne('demo_02_renamed', 'success_4', false, 'I am extra by cookie');
+            return request
+                .get(cgiBase + '/cgi-bin/a/b/demo_02')
+                .set('cookie', tmpMq.getCookieString())
+                .then((response) => {
+                    data = JSON.parse(response.res.text);
+                    // console.log(data);
+                });
+        });
+
+        it('should return correct data', () => {
+            expect(data).to.equal('_ms_extra_I am extra by cookie');
+        });
+    });
+
+    describe('get: return target mock module result with extra of object by cookie', () => {
+        let data;
+
+        before(function () {
+            let tmpMq = new mockstar.MockStarQuery();
+            tmpMq.addOne('demo_02_renamed', 'success_4', false, { name: 'I am extra by cookie' });
+            return request
+                .get(cgiBase + '/cgi-bin/a/b/demo_02')
+                .set('cookie', tmpMq.getCookieString())
+                .then((response) => {
+                    data = JSON.parse(response.res.text);
+                    // console.log(data);
+                });
+        });
+
+        it('should return correct data', () => {
+            expect(data).to.equal('_ms_extra_{"name":"I am extra by cookie"}');
+        });
+    });
+
+    describe('get: return target mock module result with extra of string by referer', () => {
+        let data;
+
+        before(function () {
+            let tmpMq = new mockstar.MockStarQuery();
+            tmpMq.addOne('demo_02_renamed', 'success_4', false, 'I am extra by referer');
+            return request
+                .get(cgiBase + '/cgi-bin/a/b/demo_02')
+                .set('referer', 'https://now.qq.com?' + tmpMq.getQueryString())
+                .then((response) => {
+                    data = JSON.parse(response.res.text);
+                    // console.log(data);
+                });
+        });
+
+        it('should return correct data', () => {
+            expect(data).to.equal('_ms_extra_I am extra by referer');
+        });
+    });
+
+    describe('get: return target mock module result with extra of string and cookie first', () => {
+        let data;
+
+        before(function () {
+            let tmpMq1 = new mockstar.MockStarQuery();
+            tmpMq1.addOne('demo_02_renamed', 'success_4', false, 'I am extra by cookie');
+
+            let tmpMq2 = new mockstar.MockStarQuery();
+            tmpMq2.addOne('demo_02_renamed', 'success_4', false, 'I am extra by referer');
+
+            return request
+                .get(cgiBase + '/cgi-bin/a/b/demo_02')
+                .set('cookie', tmpMq1.getCookieString())
+                .set('referer', 'https://now.qq.com?' + tmpMq2.getQueryString())
+                .then((response) => {
+                    data = JSON.parse(response.res.text);
+                    // console.log(data);
+                });
+        });
+
+        it('should return correct data', () => {
+            expect(data).to.equal('_ms_extra_I am extra by cookie');
         });
     });
 
