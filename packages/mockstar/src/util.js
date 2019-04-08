@@ -12,7 +12,7 @@ import { MS_QUERY_KEY } from './config';
  * @param {Object} opts.cookies cookie对象
  * @returns {Item | null}
  */
-export function getQueryItem(name, opts) {
+export function getQueryItem(name, opts = {}) {
     let queryItemsFromCookie = getQueryItemsFromCookieMap(opts.cookies);
     let queryItemsFromReferer = getQueryItemsFromReferer(opts.referer);
 

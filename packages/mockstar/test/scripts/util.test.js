@@ -1,8 +1,9 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-const { getQueryItemsFromCookieMap, getQueryItemsFromReferer } = require('../../lib/util');
+const { getQueryItemsFromCookieMap, getQueryItemsFromReferer, getQueryItem } = require('../../lib/util');
 const MockStarQuery = require('../../lib/model/MockStarQuery').default;
+const MockStarQueryItem = require('../../lib/model/MockStarQueryItem').default;
 
 describe.only('./util.js', () => {
     let mockStarQuery;
@@ -94,6 +95,52 @@ describe.only('./util.js', () => {
                 '_ms_disable': 1,
                 '_ms_extra': { 'a': 1 }
             }]);
+        });
+    });
+
+    describe('getQueryItem', () => {
+        it('cookies and referer all none should return null', () => {
+            let opts;
+            expect(getQueryItem('mockerName1', opts)).to.be.null;
+        });
+
+        it('cookie is ok should return correct', () => {
+            let opts = {
+                cookies: { _ms_: mockStarQuery.getString() }
+            };
+
+            expect(getQueryItem('mockerName1', opts)).to.eql(new MockStarQueryItem({
+                '_ms_name': 'mockerName1',
+                '_ms_target': 'mockModuleName1',
+                '_ms_disable': 0
+            }));
+        });
+
+        it('referer is ok should return correct', () => {
+            let opts = {
+                referer: 'https://now.qq.com?' + mockStarQuery.getQueryString()
+            };
+
+            expect(getQueryItem('mockerName1', opts)).to.eql(new MockStarQueryItem({
+                '_ms_name': 'mockerName1',
+                '_ms_target': 'mockModuleName1',
+                '_ms_disable': 0
+            }));
+        });
+
+        it('cookie is first should return correct', () => {
+            let tmpMq = new MockStarQuery();
+            tmpMq.addOne('mockerName1', 'other');
+            let opts = {
+                cookies: { _ms_: tmpMq.getString() },
+                referer: 'https://now.qq.com?' + mockStarQuery.getQueryString()
+            };
+
+            expect(getQueryItem('mockerName1', opts)).to.eql(new MockStarQueryItem({
+                '_ms_name': 'mockerName1',
+                '_ms_target': 'other',
+                '_ms_disable': 0
+            }));
         });
     });
 });
