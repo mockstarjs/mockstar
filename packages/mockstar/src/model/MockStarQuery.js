@@ -14,7 +14,7 @@ export default class MockStarQuery {
      *
      * @param {Object | String} mockerName mocker 的名字
      * @param {String} mockModuleName mock module 的名字
-     * @param {Boolean} shouldDisable 是否禁用 mocker 服务
+     * @param {Boolean} [shouldDisable] 是否禁用 mocker 服务
      * @param {*} [extra] 额外信息
      */
     addOne(mockerName, mockModuleName, shouldDisable, extra) {
@@ -28,6 +28,15 @@ export default class MockStarQuery {
      * @returns {String}
      */
     getQueryString() {
-        return MS_QUERY_KEY + '=' + encodeURIComponent(JSON.stringify(this.list));
+        return MS_QUERY_KEY + '=' + JSON.stringify(this.list);
+    };
+
+    /**
+     * 获取附加到cookie中的信息
+     *
+     * @returns {String}
+     */
+    getCookieString() {
+        return MS_QUERY_KEY + '=' + JSON.stringify(this.list);
     };
 }
