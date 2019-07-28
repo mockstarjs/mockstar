@@ -4,9 +4,12 @@ import { MS_QUERY_KEY } from '../config';
 export default class MockStarQuery {
     /**
      * 构造函数
+     * @param {Object} mockerMap mocker的配置表用于快速指定桩数据，key 为 mockerName，value 为 mockModuleName
      */
-    constructor() {
+    constructor(mockerMap = {}) {
         this.list = [];
+
+        this._init(mockerMap);
     }
 
     /**
@@ -48,4 +51,18 @@ export default class MockStarQuery {
     getCookieString() {
         return MS_QUERY_KEY + '=' + this.getString();
     };
+
+    _init(mockerMap) {
+        if (!mockerMap || typeof mockerMap !== 'object') {
+            return;
+        }
+
+        // 获得 mockerName 列表
+        const mockerNameList = Object.keys(mockerMap);
+
+        // 加入到列表中
+        mockerNameList.forEach((mockerName) => {
+            this.addOne(mockerName, mockerMap[mockerName], false);
+        });
+    }
 }
