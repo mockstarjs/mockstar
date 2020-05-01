@@ -48,4 +48,17 @@ export default class MockStarQuery {
     getCookieString() {
         return MS_QUERY_KEY + '=' + this.getString();
     };
+
+    /**
+     * 追加 query 参数到 url 上
+     * @param {String} url 目标链接地址
+     * @return {String} 新的链接地址
+     */
+    appendToUrl(url) {
+        if (!url) {
+            return url;
+        }
+
+        return url + ((url.indexOf('?') > -1) ? '&' : '?') + this.getQueryString();
+    }
 }
