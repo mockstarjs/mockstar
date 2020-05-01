@@ -1,7 +1,27 @@
 import urlHandle from 'url-handle';
 
+import MockStarQuery from './model/MockStarQuery';
 import MockStarQueryItem from './model/MockStarQueryItem';
 import { MS_QUERY_KEY } from './config';
+
+/**
+ * 创建 MockStarQuery
+ *
+ * @param {Object} [queryMap] 键值对，key值为 mockerName, value值为 mockModuleName
+ * @return {MockStarQuery}
+ */
+export function createMockStarQuery(queryMap) {
+    const mockStarQuery = new MockStarQuery();
+
+    // 自动设置
+    if (queryMap && typeof queryMap === 'object') {
+        Object.keys(queryMap).forEach((mockerName) => {
+            mockStarQuery.addOne(mockerName, queryMap[mockerName], false);
+        });
+    }
+
+    return mockStarQuery;
+}
 
 /**
  * 从cookie或referer中获得指定名字的携带的特定桩信息
