@@ -29,15 +29,17 @@ export function createMockStarQuery(queryMap) {
  * @param {String} name 指定的 mocker 名字
  * @param {Object} opts 参数
  * @param {String} opts.referer req.headers.referer
+ * @param {String} opts.mockstarQueryString
  * @param {Object} opts.cookies cookie对象
  * @returns {Item | null}
  */
 export function getQueryItem(name, opts = {}) {
     let queryItemsFromCookie = getQueryItemsFromCookieMap(opts.cookies);
+    let queryItemsFromHeaders = getQueryItemsFromQueryString(opts.mockstarQueryString);
     let queryItemsFromReferer = getQueryItemsFromReferer(opts.referer);
 
     let result = null;
-    let list = [].concat(queryItemsFromCookie, queryItemsFromReferer);
+    let list = [].concat(queryItemsFromCookie, queryItemsFromHeaders, queryItemsFromReferer);
 
     // 判断该路由的名字是否在referer中
     for (let i = 0, length = list.length; i < length; i++) {
@@ -86,6 +88,30 @@ export function getQueryItemsFromCookieMap(cookies) {
 
     try {
         paramsFromCookie = JSON.parse(cookies[MS_QUERY_KEY]) || [];
+
+        // 初步校验一下是否为数组即可
+        if (!Array.isArray(paramsFromCookie)) {
+            paramsFromCookie = [];
+        }
+
+    } catch (e) {
+        paramsFromCookie = [];
+    }
+
+    return paramsFromCookie;
+}
+
+/**
+ * 从字符串解析获得对象队列
+ *
+ * @param {String} mockstarQueryString
+ * @returns {{_ms_name:String,_ms_target:String,_ms_disable:Number}[]} 结果
+ */
+export function getQueryItemsFromQueryString(mockstarQueryString) {
+    let paramsFromCookie;
+
+    try {
+        paramsFromCookie = JSON.parse(decodeURIComponent(mockstarQueryString)) || [];
 
         // 初步校验一下是否为数组即可
         if (!Array.isArray(paramsFromCookie)) {

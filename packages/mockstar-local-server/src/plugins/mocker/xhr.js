@@ -101,6 +101,7 @@ function handleCallback(req, res, next, opts = {}) {
     // 判断该路由的名字是否在referer中
     let mockStarQueryItem = mockstar.getQueryItem(mockerItem.name, {
         referer: req.headers.referer,
+        mockstarQueryString: req.headers['x-mockstar-query'],
         cookies: req.cookies
     });
 
