@@ -27,7 +27,7 @@ export default class Parser {
   // 当前是否支持 watch
   watch: boolean;
   buildPath = '';
-  db: low.LowdbAsync<any> | undefined;
+  db: low.LowdbSync<any> | undefined;
 
   /**
    * 构造函数

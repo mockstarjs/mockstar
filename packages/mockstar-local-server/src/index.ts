@@ -1,4 +1,4 @@
-import run from './run';
+import run, {RunServer} from './run';
 import {findAvailablePort} from './utils/port';
 import {getBuildPath, getLogPath, getMockServerPath} from './utils/mockstar';
 import {getLocalServerConfig} from './config';
@@ -18,10 +18,10 @@ import {LocalServerConfigOpt} from './types';
  * @param {Boolean} [configOpts.watch] 是否启用监听
  * @param {Function} callback 回调函数，接受两个参数 isSuccess 和 localServerConfig
  */
-function startServer(
+export function startServer(
   configOpts: LocalServerConfigOpt = {rootPath: ''},
   callback: (status: boolean, opt: any) => void,
-) {
+): RunServer {
   // 获取标准的参数
   const mockStarConfig = getLocalServerConfig(configOpts);
 
@@ -33,11 +33,4 @@ function startServer(
   return run(mockStarConfig, callback);
 }
 
-module.exports = {
-  startServer: startServer,
-  findAvailablePort,
-  getLocalServerConfig,
-  getMockServerPath,
-  getBuildPath,
-  getLogPath,
-};
+export {findAvailablePort, getLocalServerConfig, getMockServerPath, getBuildPath, getLogPath};

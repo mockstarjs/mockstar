@@ -6,6 +6,7 @@ import {Router} from './types';
 import * as mockstarServer from './server';
 import * as logger from './server/logger';
 import {LocalServerConfig} from './config/LocalServerConfig';
+import websocket from './plugins/mocker/websocket';
 
 const mockstarLogger = logger.mockstarLogger();
 const attentionLogger = logger.attentionLogger();
@@ -16,7 +17,7 @@ global.mockstarLogger = mockstarLogger;
 // @ts-ignore
 global.attentionLogger = attentionLogger;
 
-class RunServer {
+export class RunServer {
   localServerConfig: LocalServerConfig;
   router: Router | null;
   middleware: (express.Handler | express.ErrorRequestHandler)[] | null;
@@ -239,11 +240,7 @@ class RunServer {
     // TODO 触发 onBeforeServerListen 事件
     // 如果启动了 plugin=async 则开启 websocket
     if (this.router?._mockerParser.isSupportAsync()) {
-      require('./plugins/mocker/websocket')(
-        this.localServerConfig,
-        server,
-        this.router._mockerParser,
-      );
+      websocket(server, this.router?._mockerParser);
     }
 
     this.server = server;

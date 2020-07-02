@@ -1,4 +1,4 @@
-import mockstar from 'mockstar';
+import {Parser} from 'mockstar';
 import handleXhr from './xhr';
 import {Router} from '../../types';
 import {
@@ -15,7 +15,7 @@ const HANDLER_NAME_FIELD = 'mockerName';
 
 export default (router: Router, localServerConfig: LocalServerConfig) => {
   // 创建 Parser 对象
-  const mockerParser = new mockstar.Parser({
+  const mockerParser = new Parser({
     basePath: localServerConfig.mockServerPath as string,
     buildPath: localServerConfig.buildPath,
     watch: localServerConfig.watch,

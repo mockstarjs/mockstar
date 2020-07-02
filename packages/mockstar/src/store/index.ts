@@ -1,6 +1,6 @@
 import low from 'lowdb';
-import FileSync from 'lowdb/adapters/FileAsync';
+import FileSync from 'lowdb/adapters/FileSync';
 
-export function getDB(fullPath: string): low.LowdbAsync<any> {
-  return (low(new FileSync(fullPath)) as unknown) as low.LowdbAsync<any>;
+export function getDB(fullPath: string): low.LowdbSync<any> {
+  return low(new FileSync(fullPath));
 }
