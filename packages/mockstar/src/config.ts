@@ -56,5 +56,3 @@ export const MOCK_MODULES = 'mock_modules';
  * @type {String}
  */
 export const LOCAL_STORE_FILE = 'db.json';
-
-

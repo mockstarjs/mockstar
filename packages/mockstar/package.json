@@ -5,10 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "babel --presets env,stage-0 src/ --out-dir lib/ --source-maps",
-    "watch-compile": "npm run build -- --watch",
-    "watch": "npm run watch-compile",
-    "test-mocha": "node ./node_modules/mocha/bin/_mocha",
+    "build": "tsc -d",
+    "test-mocha": "mocha",
     "test": "npm run eslint && npm run test-cov",
     "eslint": "eslint src/",
     "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha"
@@ -37,12 +35,12 @@
     "url-handle": "^0.2.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^10.0.1",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-0": "^6.24.1",
+    "@types/fs-extra": "^9.0.1",
+    "@types/lowdb": "^1.0.9",
+    "@types/marked": "^1.1.0",
     "chai": "^4.2.0",
-    "eslint": "^5.7.0",
-    "mocha": "^5.2.0"
+    "mocha": "^8.0.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
   }
 }
