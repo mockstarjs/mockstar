@@ -7,7 +7,7 @@ import {MS_QUERY_KEY} from './config';
 
 interface GetQueryItemOpt {
   cookies?: Record<string, any>;
-  mockstarQueryString?: string;
+  mockstarQueryString?: string | string[];
   referer?: string;
 }
 
@@ -42,7 +42,7 @@ export function createMockStarQuery(queryMap: Record<string, string>): MockStarQ
  */
 export function getQueryItem(name: string, opts: GetQueryItemOpt = {}) {
   const queryItemsFromCookie = getQueryItemsFromCookieMap(opts.cookies);
-  const queryItemsFromHeaders = getQueryItemsFromQueryString(opts.mockstarQueryString);
+  const queryItemsFromHeaders = getQueryItemsFromQueryString(opts.mockstarQueryString as string);
   const queryItemsFromReferer = getQueryItemsFromReferer(opts.referer);
 
   let result: any = null;
