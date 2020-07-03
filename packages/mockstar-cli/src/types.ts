@@ -3,5 +3,6 @@ export interface Argv {
   help?: boolean;
   debug?: boolean;
   silent?: boolean;
+  dev?: boolean;
   _?: string[];
 }

@@ -5,11 +5,8 @@ import {MockStar} from './core';
 import {Help} from './internal/help';
 import {Info} from './internal/info';
 import {Version} from './internal/version';
-// const internalPluginStart = require('./internal/start');
-// const internalPluginRun = require('./internal/run');
-// const internalPluginStatus = require('./internal/status');
-// const internalPluginStop = require('./internal/stop');
-// const internalPluginInit = require('./internal/init');
+import {Status} from './internal/status';
+import {Stop} from './internal/stop';
 
 function check(mockstar: MockStar) {
   const log = mockstar.log;
@@ -48,7 +45,7 @@ export async function Main() {
   }
 
   // 初始化
-  await mockstar.init([new Help(), new Info(), new Version()]);
+  await mockstar.init([new Help(), new Info(), new Version(), new Status(), new Stop()]);
 
   let cmd = args._.shift();
 
