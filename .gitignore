@@ -68,3 +68,5 @@ tmp/
 db.json
 
 .DS_Store
+
+.vscode
