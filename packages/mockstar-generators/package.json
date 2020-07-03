@@ -4,6 +4,7 @@
   "description": "generators for mockstar",
   "main": "src/index.js",
   "scripts": {
+    "build": "tsc -d",
     "test-mocha": "node ./node_modules/mocha/bin/_mocha",
     "test": "npm run eslint && npm run test-cov",
     "eslint": "eslint src/",
@@ -34,12 +35,14 @@
     "yeoman-generator": "^3.2.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^10.0.1",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-0": "^6.24.1",
+    "@types/fs-extra": "^9.0.1",
+    "@types/mkdirp": "^1.0.1",
+    "@types/shelljs": "^0.8.8",
+    "@types/yeoman-environment": "^2.3.3",
+    "@types/yeoman-generator": "^3.1.4",
     "chai": "^4.2.0",
     "eslint": "^5.7.0",
-    "mocha": "^5.2.0"
+    "mocha": "^8.0.1",
+    "typescript": "^3.9.6"
   }
 }

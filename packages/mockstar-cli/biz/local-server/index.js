@@ -15,9 +15,9 @@ const mockstarLocalServer = require('mockstar-local-server');
  * @param {Function} callback 回调函数，接受两个参数 isSuccess 和 localServerConfig
  */
 function startServer(configOpts = {}, callback) {
-    return mockstarLocalServer.startServer(configOpts, callback);
+  return mockstarLocalServer.startServer(configOpts, callback);
 }
 
 module.exports = {
-    startServer: startServer
+  startServer: startServer,
 };
