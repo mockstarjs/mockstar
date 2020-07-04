@@ -62,12 +62,12 @@ export default class MockerConfig {
    * @param {Object} config config.json 中的值
    * @param {Array} [mockModuleList] mock module 数组
    */
-  constructor(
-    handlerName: string,
-    config: MockerConfigOpt = {},
-    mockModuleList: MockModule[] = [],
-  ) {
+  constructor(handlerName: string, config?: MockerConfigOpt, mockModuleList?: MockModule[]) {
     this.name = handlerName;
+
+    if (!config) {
+      config = {};
+    }
 
     this.route = config.route || '';
 
