@@ -8,8 +8,8 @@ import {MockerConfig} from './MockerConfig';
 export default class extends Generator {
   mockerConfig: MockerConfig;
 
-  constructor() {
-    super([], {});
+  constructor(args: string | string[], options: {}) {
+    super(args, options);
     // 配置参数
     this.mockerConfig = new MockerConfig(this.options.mockerOpts);
   }

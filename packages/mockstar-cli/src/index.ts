@@ -7,6 +7,7 @@ import {Info} from './internal/info';
 import {Version} from './internal/version';
 import {Status} from './internal/status';
 import {Stop} from './internal/stop';
+import {Init} from './internal/init';
 
 function check(mockstar: MockStar) {
   const log = mockstar.log;
@@ -45,7 +46,14 @@ export async function Main() {
   }
 
   // 初始化
-  await mockstar.init([new Help(), new Info(), new Version(), new Status(), new Stop()]);
+  await mockstar.init([
+    new Help(),
+    new Info(),
+    new Version(),
+    new Status(),
+    new Stop(),
+    new Init(),
+  ]);
 
   let cmd = args._.shift();
 

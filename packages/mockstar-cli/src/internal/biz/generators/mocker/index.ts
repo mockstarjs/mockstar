@@ -1,12 +1,14 @@
-const path = require('path');
-const mockstarGenerators = require('mockstar-generators');
-const inquirer = require('inquirer');
-const fse = require('fs-extra');
-const urlParse = require('url-parse');
+import path from 'path';
+import inquirer from 'inquirer';
+import urlParse from 'url-parse';
+import fs from 'fs-extra';
+import {initMocker} from 'mockstar-generators';
+import {getMockServerPathList, getMockerNameFromURL} from '../utils';
 
-const utils = require('../utils');
-
-module.exports = function (opts, callback) {
+export default function (
+  opts: {cwd: string; isDev: boolean},
+  callback: (status: boolean, err?: Error) => void,
+) {
   inquirer
     .prompt([
       {
@@ -14,7 +16,7 @@ module.exports = function (opts, callback) {
         name: 'mockerParentPath',
         message: '请选择 mocker 放置的根目录',
         choices: function () {
-          let list = utils.getMockServerPathList(opts.cwd) || [];
+          let list = getMockServerPathList(opts.cwd) || [];
           return list.map(item => {
             return {
               name: path.relative(opts.cwd, item),
@@ -22,7 +24,7 @@ module.exports = function (opts, callback) {
             };
           });
         },
-        validate: function (mockerParentPath) {
+        validate: mockerParentPath => {
           if (!mockerParentPath) {
             return 'mocker 放置的根目录不能为空';
           }
@@ -46,17 +48,17 @@ module.exports = function (opts, callback) {
         type: 'input',
         name: 'mockerName',
         message: '请输入mocker名称，只能够输入英文、数字和、- 及 _ ',
-        default: function (answers) {
-          return utils.getMockerNameFromURL(answers.reqURL);
+        default: (answers: any) => {
+          return getMockerNameFromURL(answers.reqURL);
         },
-        validate: function (mockerName, answers) {
+        validate: (mockerName, answers) => {
           if (!mockerName) {
             return 'mocker名称不能为空';
           }
 
           // 默认情况下是在当前路径下新建以 projectName 为名字的文件夹，然后再进入其中生成代码。
           // 但如果当前路径下已经存在了，则需要进行提示，避免覆盖
-          if (!opts.isDev && fse.pathExistsSync(path.join(answers.mockerParentPath, mockerName))) {
+          if (!opts.isDev && fs.pathExistsSync(path.join(answers?.mockerParentPath, mockerName))) {
             return `当前目录下已经存在名字为 ${mockerName} 的文件夹了`;
           }
 
@@ -95,8 +97,7 @@ module.exports = function (opts, callback) {
 
       // console.log('--params--', params);
 
-      mockstarGenerators
-        .initMocker(params)
+      initMocker(params)
         .then(() => {
           callback(true);
         })
@@ -104,4 +105,4 @@ module.exports = function (opts, callback) {
           callback(false, err);
         });
     });
-};
+}

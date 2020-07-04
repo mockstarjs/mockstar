@@ -2,7 +2,7 @@
   "name": "mockstar-generators",
   "version": "1.1.6",
   "description": "generators for mockstar",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "tsc -d",
     "test-mocha": "node ./node_modules/mocha/bin/_mocha",

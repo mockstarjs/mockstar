@@ -1,4 +1,4 @@
-const mockstarLocalServer = require('mockstar-local-server');
+import mockstarLocalServer from 'mockstar-local-server';
 
 /**
  * 启动服务
@@ -14,10 +14,9 @@ const mockstarLocalServer = require('mockstar-local-server');
  * @param {Boolean} [configOpts.watch] 是否启用监听
  * @param {Function} callback 回调函数，接受两个参数 isSuccess 和 localServerConfig
  */
-function startServer(configOpts = {}, callback) {
+export function startServer(
+  configOpts = {rootPath: ''},
+  callback: (status: boolean, opt: any) => void,
+) {
   return mockstarLocalServer.startServer(configOpts, callback);
 }
-
-module.exports = {
-  startServer: startServer,
-};

@@ -11,8 +11,8 @@ import initMocker from '../../mocker';
 export default class extends Generator {
   projectConfig: ProjectConfig;
 
-  constructor() {
-    super([], {});
+  constructor(args: string | string[], options: {}) {
+    super(args, options);
 
     // 配置参数
     this.projectConfig = new ProjectConfig(this.options.projectOpts);
