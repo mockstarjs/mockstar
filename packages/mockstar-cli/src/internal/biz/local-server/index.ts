@@ -1,4 +1,4 @@
-import mockstarLocalServer from 'mockstar-local-server';
+import {startServer as Server} from 'mockstar-local-server';
 
 /**
  * 启动服务
@@ -16,7 +16,7 @@ import mockstarLocalServer from 'mockstar-local-server';
  */
 export function startServer(
   configOpts = {rootPath: ''},
-  callback: (status: boolean, opt: any) => void,
+  callback?: (status: boolean, opt: any) => void,
 ) {
-  return mockstarLocalServer.startServer(configOpts, callback);
+  return Server(configOpts, callback);
 }

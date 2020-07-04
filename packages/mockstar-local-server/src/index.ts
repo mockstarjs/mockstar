@@ -20,7 +20,7 @@ import {LocalServerConfigOpt} from './types';
  */
 export function startServer(
   configOpts: LocalServerConfigOpt = {rootPath: ''},
-  callback: (status: boolean, opt: any) => void,
+  callback?: (status: boolean, opt: any) => void,
 ): RunServer {
   // 获取标准的参数
   const mockStarConfig = getLocalServerConfig(configOpts);

@@ -48,7 +48,7 @@ export class RunServer {
    *
    * @param {Function} callback 回调函数
    */
-  start(callback: (status: boolean, opt: any) => void) {
+  start(callback?: (status: boolean, opt: any) => void) {
     this.initBabel();
     this.initLog();
 
@@ -251,7 +251,7 @@ export class RunServer {
    * @param {Function} callback 回调函数
    * @private
    */
-  private startServer(callback: (status: boolean, opt: any) => void) {
+  private startServer(callback?: (status: boolean, opt: any) => void) {
     this.server?.listen(this.localServerConfig.port, () => {
       // mockstarLogger.info('mockstar server is running');
       console.log('mockstar server is running!');
@@ -287,7 +287,7 @@ export class RunServer {
  */
 export default (
   localServerConfig: LocalServerConfig,
-  callback: (status: boolean, opt: any) => void,
+  callback?: (status: boolean, opt: any) => void,
 ) => {
   let runServer = new RunServer(localServerConfig);
 

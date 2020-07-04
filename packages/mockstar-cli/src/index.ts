@@ -8,6 +8,8 @@ import {Version} from './internal/version';
 import {Status} from './internal/status';
 import {Stop} from './internal/stop';
 import {Init} from './internal/init';
+import {Start} from './internal/start';
+import {Run} from './internal/run';
 
 function check(mockstar: MockStar) {
   const log = mockstar.log;
@@ -53,6 +55,8 @@ export async function Main() {
     new Status(),
     new Stop(),
     new Init(),
+    new Start(),
+    new Run(),
   ]);
 
   let cmd = args._.shift();
