@@ -3,7 +3,7 @@ import {expect} from 'chai';
 import MockModule from '../../../src/model/MockModule';
 import MockModuleConfig from '../../../src/model/MockModuleConfig';
 
-describe('./mocker/MockModule.js', () => {
+describe('./model/MockModule.ts', () => {
   describe('check json-file.json', () => {
     let mockModule: MockModule;
 

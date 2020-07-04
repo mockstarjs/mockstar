@@ -2,7 +2,7 @@ import {expect} from 'chai';
 
 import MockStarQuery from '../../../src/model/MockStarQuery';
 
-describe('./mocker/MockStarQuery.ts', () => {
+describe('./model/MockStarQuery.ts', () => {
   describe('list is empty', () => {
     let mockStarQuery: MockStarQuery;
 

@@ -15,7 +15,7 @@ mockModuleList.push(
   new MockModule('exist-config', require('../../data/fixtures/mock_modules/exist-config')),
 );
 
-describe('./mocker/MockerConfig.js', () => {
+describe('./model/MockerConfig.ts', () => {
   describe('check empty.json', () => {
     let mockerConfig;
 

@@ -1,7 +1,7 @@
 /**
  * 当传入为对象时的数据类型
  */
-interface MockerName {
+interface MockerQueryItemObj {
   _ms_name: string;
   _ms_target: string;
   _ms_disable: boolean;
@@ -14,23 +14,8 @@ export default class MockStarQueryItem {
   _ms_disable: boolean;
   _ms_extra: any;
 
-  /**
-   * 构造函数
-   *
-   * @param {Object | String} mockerName mocker 的名字，或者是对象
-   * @param {String} [mockModuleName] mock module 的名字
-   * @param {Boolean} [shouldDisable] 是否禁用 mocker 服务
-   * @param {*} [extra] 额外信息
-   */
-  constructor(mockerName: MockerName);
   constructor(
-    mockerName: string | MockerName,
-    mockModuleName: string,
-    shouldDisable?: boolean,
-    extra?: any,
-  );
-  constructor(
-    mockerName: string | MockerName,
+    mockerName: string | MockerQueryItemObj,
     mockModuleName?: string,
     shouldDisable?: boolean,
     extra?: any,

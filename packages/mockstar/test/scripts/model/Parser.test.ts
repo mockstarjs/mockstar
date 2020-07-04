@@ -2,9 +2,11 @@ import path from 'path';
 import {expect} from 'chai';
 
 import Parser from '../../../src/model/Parser';
+import Mocker from '../../../src/model/Mocker';
+import MockModule from '../../../src/model/MockModule';
 
-describe('./mocker/Parser.js', () => {
-  let mockerParser;
+describe('./model/Parser.ts', () => {
+  let mockerParser: Parser;
 
   before(() => {
     mockerParser = new Parser({
@@ -25,10 +27,10 @@ describe('./mocker/Parser.js', () => {
   });
 
   describe('check getAllMocker', () => {
-    let allMocker;
+    let allMocker: Mocker[];
 
     before(() => {
-      allMocker = mockerParser.getAllMocker(true);
+      allMocker = mockerParser.getAllMocker();
     });
 
     it('should exist 4 members', () => {
@@ -54,11 +56,11 @@ describe('./mocker/Parser.js', () => {
     });
 
     it("mockerParser.getMockModuleByName('demo_01', 'error') should return correct mockModule", () => {
-      let mockModule = mockerParser.getMockModuleByName('demo_01', 'error');
+      let mockModule = mockerParser.getMockModuleByName('demo_01', 'error') as MockModule;
 
       expect(mockModule.name).to.equal('error');
 
-      return mockModule.getResult().then(data => {
+      return mockModule.getResult().then((data: any) => {
         expect(data).to.eql({
           errCode: 100000,
         });
@@ -81,11 +83,11 @@ describe('./mocker/Parser.js', () => {
     });
 
     it("mockerParser.getMockModuleByName('demo_02_renamed', 'error') should return correct mockModule", () => {
-      let mockModule = mockerParser.getMockModuleByName('demo_02_renamed', 'error');
+      let mockModule = mockerParser.getMockModuleByName('demo_02_renamed', 'error') as MockModule;
 
       expect(mockModule.name).to.equal('error');
 
-      return mockModule.getResult().then(data => {
+      return mockModule.getResult().then((data: any) => {
         expect(data).to.eql({
           errCode: 100000,
         });
@@ -93,11 +95,14 @@ describe('./mocker/Parser.js', () => {
     });
 
     it("mockerParser.getMockModuleByName('demo_02_renamed', 'success_1') should return correct mockModule", () => {
-      let mockModule = mockerParser.getMockModuleByName('demo_02_renamed', 'success_1');
+      let mockModule = mockerParser.getMockModuleByName(
+        'demo_02_renamed',
+        'success_1',
+      ) as MockModule;
 
       expect(mockModule.name).to.equal('success_1');
 
-      return mockModule.getResult().then(data => {
+      return mockModule.getResult().then((data: any) => {
         expect(data).to.eql({
           result: {
             other: 'other',
@@ -109,11 +114,14 @@ describe('./mocker/Parser.js', () => {
     });
 
     it("mockerParser.getMockModuleByName('demo_02_renamed', 'success_2') should return correct mockModule", () => {
-      let mockModule = mockerParser.getMockModuleByName('demo_02_renamed', 'success_2');
+      let mockModule = mockerParser.getMockModuleByName(
+        'demo_02_renamed',
+        'success_2',
+      ) as MockModule;
 
       expect(mockModule.name).to.equal('success_2');
 
-      return mockModule.getResult().then(data => {
+      return mockModule.getResult().then((data: any) => {
         expect(data).to.eql({
           result: 2,
         });
@@ -121,11 +129,14 @@ describe('./mocker/Parser.js', () => {
     });
 
     it("mockerParser.getMockModuleByName('demo_02_renamed', 'success_3_renamed') should return correct mockModule", () => {
-      let mockModule = mockerParser.getMockModuleByName('demo_02_renamed', 'success_3_renamed');
+      let mockModule = mockerParser.getMockModuleByName(
+        'demo_02_renamed',
+        'success_3_renamed',
+      ) as MockModule;
 
       expect(mockModule.name).to.equal('success_3_renamed');
 
-      return mockModule.getResult().then(data => {
+      return mockModule.getResult().then((data: any) => {
         expect(data).to.eql({
           result: 3,
         });
@@ -133,20 +144,26 @@ describe('./mocker/Parser.js', () => {
     });
 
     it("mockerParser.getMockModuleByName('demo_02_renamed', 'success_4') should return correct mockModule", () => {
-      let mockModule = mockerParser.getMockModuleByName('demo_02_renamed', 'success_4');
+      let mockModule = mockerParser.getMockModuleByName(
+        'demo_02_renamed',
+        'success_4',
+      ) as MockModule;
 
       expect(mockModule.name).to.equal('success_4');
 
-      return mockModule.getResult().then(data => {
+      return mockModule.getResult().then((data: any) => {
         expect(data).to.equal(4);
       });
     });
     it("mockerParser.getMockModuleByName('demo_02_renamed', 'success_4') with param should return correct mockModule", () => {
-      let mockModule = mockerParser.getMockModuleByName('demo_02_renamed', 'success_4');
+      let mockModule = mockerParser.getMockModuleByName(
+        'demo_02_renamed',
+        'success_4',
+      ) as MockModule;
 
       expect(mockModule.name).to.equal('success_4');
 
-      return mockModule.getResult({a: 110}).then(data => {
+      return mockModule.getResult({a: 110}).then((data: any) => {
         expect(data).to.equal('from_param_110');
       });
     });
@@ -154,7 +171,7 @@ describe('./mocker/Parser.js', () => {
 
   describe('check getMockerByRoute', () => {
     it('should return demo_01', () => {
-      let mocker = mockerParser.getMockerByRoute('/cgi-bin/a/b/demo_01');
+      let mocker = mockerParser.getMockerByRoute('/cgi-bin/a/b/demo_01') as Mocker;
 
       expect(mocker.name).to.equal('demo_01');
     });
@@ -166,7 +183,7 @@ describe('./mocker/Parser.js', () => {
     });
 
     it('should return demo_02', () => {
-      let mocker = mockerParser.getMockerByRoute('/cgi-bin/a/b/demo_02');
+      let mocker = mockerParser.getMockerByRoute('/cgi-bin/a/b/demo_02') as Mocker;
 
       expect(mocker.name).to.equal('demo_02_renamed');
     });
@@ -177,8 +194,10 @@ describe('./mocker/Parser.js', () => {
       let resInfo = mockerParser.getResInfoByRoute('/cgi-bin/a/b/demo_01');
 
       expect(resInfo).to.have.all.keys('mockerItem', 'mockModuleItem', 'moduleFullPath', 'params');
-      expect(resInfo.mockerItem.name).to.equal('demo_01');
-      expect(resInfo.mockModuleItem.name).to.equal('error');
+      if (resInfo) {
+        expect(resInfo.mockerItem.name).to.equal('demo_01');
+        expect(resInfo.mockModuleItem.name).to.equal('error');
+      }
     });
 
     it('should return null', () => {
@@ -191,8 +210,11 @@ describe('./mocker/Parser.js', () => {
       let resInfo = mockerParser.getResInfoByRoute('/cgi-bin/a/b/demo_02');
 
       expect(resInfo).to.have.all.keys('mockerItem', 'mockModuleItem', 'moduleFullPath', 'params');
-      expect(resInfo.mockerItem.name).to.equal('demo_02_renamed');
-      expect(resInfo.mockModuleItem.name).to.equal('success_1');
+
+      if (resInfo) {
+        expect(resInfo.mockerItem.name).to.equal('demo_02_renamed');
+        expect(resInfo.mockModuleItem.name).to.equal('success_1');
+      }
     });
   });
 
