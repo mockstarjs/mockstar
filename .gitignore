@@ -61,7 +61,6 @@ typings/
 .next
 
 .idea
-*-lock.json
 
 lib/
 tmp/
