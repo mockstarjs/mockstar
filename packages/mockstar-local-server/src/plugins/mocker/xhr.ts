@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import express from 'express';
-import mockstar from 'mockstar';
+import {Mocker, Parser, getQueryItem, MS_DISABLE} from 'mockstar';
 import {LocalServerConfig} from '../../config/LocalServerConfig';
 
 export default (
   router: express.Router,
-  mockerList: mockstar.Mocker[],
-  mockerParser: mockstar.Parser,
+  mockerList: Mocker[],
+  mockerParser: Parser,
   localServerConfig: LocalServerConfig,
 ) => {
   const {namespace} = localServerConfig;
@@ -35,6 +35,7 @@ export default (
     const METHOD = (mockerConfig.method || 'get').toLowerCase();
 
     // http://expressjs.com/en/4x/api.html#router.METHOD
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     router[METHOD](ROUTE_PATH, function (req, res, next) {
       handleCallback(req, res, next, {
@@ -46,6 +47,7 @@ export default (
 
     // 如果有定义 namespace，则需要额外支持有 namespace 的场景
     if (namespace) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       router[METHOD](new RegExp('/' + namespace + ROUTE_PATH), function (req, res, next) {
         handleCallback(req, res, next, {
@@ -62,7 +64,7 @@ const handleCallback = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction,
-  opts: {routePath?: string; mockerItem?: mockstar.Mocker; mockerParser?: mockstar.Parser} = {},
+  opts: {routePath?: string; mockerItem?: Mocker; mockerParser?: Parser} = {},
 ) => {
   // Express的req对象，详见 http://expressjs.com/en/4x/api.html#req
 
@@ -112,7 +114,7 @@ const handleCallback = (
   let isDisabled;
 
   // 判断该路由的名字是否在referer中
-  let mockStarQueryItem = mockstar.getQueryItem(mockerItem?.name as string, {
+  const mockStarQueryItem = getQueryItem(mockerItem?.name as string, {
     referer: req.headers.referer,
     mockstarQueryString: req.headers['x-mockstar-query'] as string,
     cookies: req.cookies,
@@ -123,12 +125,12 @@ const handleCallback = (
     isDisabled = mockStarQueryItem.isDisabled();
   } else {
     // 从请求 req 或者 config.json 文件中检查当前请求是否需要禁用 mock 服务
-    const QUERY_KEY = mockstar.MS_DISABLE;
+    const QUERY_KEY = MS_DISABLE;
     isDisabled = req.query[QUERY_KEY] || req.body[QUERY_KEY];
     if (!isDisabled) {
       // 此处要重新获取新的数据，以便取到缓存的。
       // TODO 此处还可以优化，比如及时更新缓存中的数据，而不需要每次都去获取
-      let curMockerItem = mockerParser?.getMockerByName(mockerItem?.name as string);
+      const curMockerItem = mockerParser?.getMockerByName(mockerItem?.name as string);
       isDisabled = curMockerItem?.config?.disable;
     }
   }
@@ -148,7 +150,7 @@ const handleCallback = (
     const resInfo = mockerParser?.getResInfoByRoute(routePath as string, params);
 
     if (!resInfo) {
-      let errMsg =
+      const errMsg =
         'Could not get reqInfo by route=' + routePath + ' and params=' + JSON.stringify(params);
       console.error(errMsg);
       res.status(500).send(errMsg);
@@ -163,7 +165,7 @@ const handleCallback = (
         res.append('x-mockstar-mock-module', resInfo.mockModuleItem.name);
 
         // 延时返回
-        let delay = resInfo.mockModuleItem.config.delay || 0;
+        const delay = resInfo.mockModuleItem.config.delay || 0;
         res.append('x-mockstar-delay', delay + '');
 
         if (delay) {
@@ -176,7 +178,7 @@ const handleCallback = (
       })
       .catch((err: Error) => {
         // 注意 err 有可能是 Error 对象，也可能是普通的字符串或对象
-        let errMsg = (err && err.stack) || err;
+        const errMsg = (err && err.stack) || err;
 
         console.error(errMsg);
 
