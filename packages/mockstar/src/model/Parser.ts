@@ -59,7 +59,6 @@ export default class Parser {
   /**
    * 获取所有的 mocker 信息
    *
-   * @param {Boolean} [isReset] 是否为重置，如果为 true，则将忽略缓存数据
    * @return {Array}
    */
   getAllMocker(): Mocker[] {
