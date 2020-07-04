@@ -105,7 +105,7 @@ export default class Parser {
 
         // 如果存在记录，则更新两个字段即可
         if (cacheMockerItem) {
-          mockerItem.updateConfig({
+          mockerItem.config?.update({
             disable: cacheMockerItem.config.disable,
             activeModule: cacheMockerItem.config.activeModule,
           });

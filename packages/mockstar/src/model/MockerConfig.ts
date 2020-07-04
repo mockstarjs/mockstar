@@ -116,4 +116,8 @@ export default class MockerConfig {
     // 最后更新的时间
     // this.lastModified = Date.now();
   }
+
+  update(opts: MockerConfigOpt): void {
+    _.merge(this, opts);
+  }
 }

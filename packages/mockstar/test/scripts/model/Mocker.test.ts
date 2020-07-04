@@ -7,7 +7,7 @@ import MockerConfig from '../../../src/model/MockerConfig';
 
 describe('./mocker/Mocker.js', () => {
   describe('check demo_01', () => {
-    let mocker;
+    let mocker: Mocker;
 
     before(() => {
       mocker = new Mocker(
@@ -54,7 +54,7 @@ describe('./mocker/Mocker.js', () => {
   });
 
   describe('check demo_02', () => {
-    let mocker;
+    let mocker: Mocker;
 
     before(() => {
       mocker = new Mocker(
