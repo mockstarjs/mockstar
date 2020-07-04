@@ -4,8 +4,9 @@
   "description": "Local server for MockStar",
   "main": "lib/index.js",
   "scripts": {
-    "prepublishOnly": "npm run build && npm run build-ui",
-    "build": "tsc -d",
+    "prepublishOnly": "npm run build",
+    "build": "npm run build-src && npm run build-ui",
+    "build-src": "tsc -d",
     "dev-ui": "cd ./webui && npm run start",
     "build-ui": "cd ./webui && npm run build",
     "test": "npm run test:unit",
