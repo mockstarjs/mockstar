@@ -1,20 +1,23 @@
-const path = require('path');
-const request = require('superagent');
-const fse = require('fs-extra');
-const {expect} = require('chai');
-const testServer = require('../data/test-sever');
-const mockstar = require('mockstar');
+import path from 'path';
+// @ts-ignore
+import request from 'superagent';
+import fse from 'fs-extra';
+import {expect} from 'chai';
+import mockstar from 'mockstar';
+
+// @ts-ignore
+import testServer from '../data/test-sever';
 
 describe('plugin of xhr', () => {
   let port;
-  let cgiBase;
+  let cgiBase: string;
 
   before(function () {
     fse.removeSync(path.join(__dirname, '../data/plugin-xhr-test/build'));
 
     return testServer
       .start(require(path.join(__dirname, '../data/plugin-xhr-test/mockstar.config.js')))
-      .then(data => {
+      .then((data: {port: number}) => {
         // console.log('----', data);
         port = data.port;
         cgiBase = `http://localhost:${port}`;
@@ -29,13 +32,15 @@ describe('plugin of xhr', () => {
   });
 
   describe('get: return active module result', () => {
-    let data;
+    let data: any;
 
     before(function () {
-      return request.get(cgiBase + '/cgi-bin/a/b/demo_02').then(response => {
-        data = JSON.parse(response.res.text);
-        // console.log(data);
-      });
+      return request
+        .get(cgiBase + '/cgi-bin/a/b/demo_02')
+        .then((response: {res: {text: string}}) => {
+          data = JSON.parse(response.res.text);
+          // console.log(data);
+        });
     });
 
     it('should return correct data', () => {
@@ -50,13 +55,15 @@ describe('plugin of xhr', () => {
   });
 
   describe('get: return target mock module result', () => {
-    let data;
+    let data: any;
 
     before(function () {
-      return request.get(cgiBase + '/cgi-bin/a/b/demo_02?_ms_target=success_4').then(response => {
-        data = JSON.parse(response.res.text);
-        // console.log(data);
-      });
+      return request
+        .get(cgiBase + '/cgi-bin/a/b/demo_02?_ms_target=success_4')
+        .then((response: {res: {text: string}}) => {
+          data = JSON.parse(response.res.text);
+          // console.log(data);
+        });
     });
 
     it('should return correct data', () => {
@@ -65,12 +72,12 @@ describe('plugin of xhr', () => {
   });
 
   describe('get: return target mock module result with params', () => {
-    let data;
+    let data: any;
 
     before(function () {
       return request
         .get(cgiBase + '/cgi-bin/a/b/demo_02?_ms_target=success_4&a=88')
-        .then(response => {
+        .then((response: {res: {text: string}}) => {
           data = JSON.parse(response.res.text);
           // console.log(data);
         });
@@ -82,7 +89,7 @@ describe('plugin of xhr', () => {
   });
 
   describe('get: return target mock module result with extra of string by cookie', () => {
-    let data;
+    let data: any;
 
     before(function () {
       let tmpMq = new mockstar.MockStarQuery();
@@ -90,7 +97,7 @@ describe('plugin of xhr', () => {
       return request
         .get(cgiBase + '/cgi-bin/a/b/demo_02')
         .set('cookie', tmpMq.getCookieString())
-        .then(response => {
+        .then((response: {res: {text: string}}) => {
           data = JSON.parse(response.res.text);
           // console.log(data);
         });
@@ -102,7 +109,7 @@ describe('plugin of xhr', () => {
   });
 
   describe('get: return target mock module result with extra of object by cookie', () => {
-    let data;
+    let data: any;
 
     before(function () {
       let tmpMq = new mockstar.MockStarQuery();
@@ -110,7 +117,7 @@ describe('plugin of xhr', () => {
       return request
         .get(cgiBase + '/cgi-bin/a/b/demo_02')
         .set('cookie', tmpMq.getCookieString())
-        .then(response => {
+        .then((response: {res: {text: string}}) => {
           data = JSON.parse(response.res.text);
           // console.log(data);
         });
@@ -122,7 +129,7 @@ describe('plugin of xhr', () => {
   });
 
   describe('get: return target mock module result with extra of string by referer', () => {
-    let data;
+    let data: any;
 
     before(function () {
       let tmpMq = new mockstar.MockStarQuery();
@@ -130,7 +137,7 @@ describe('plugin of xhr', () => {
       return request
         .get(cgiBase + '/cgi-bin/a/b/demo_02')
         .set('referer', 'https://now.qq.com?' + tmpMq.getQueryString())
-        .then(response => {
+        .then((response: {res: {text: string}}) => {
           data = JSON.parse(response.res.text);
           // console.log(data);
         });
@@ -142,7 +149,7 @@ describe('plugin of xhr', () => {
   });
 
   describe('get: return target mock module result with extra of string and cookie first', () => {
-    let data;
+    let data: any;
 
     before(function () {
       let tmpMq1 = new mockstar.MockStarQuery();
@@ -155,7 +162,7 @@ describe('plugin of xhr', () => {
         .get(cgiBase + '/cgi-bin/a/b/demo_02')
         .set('cookie', tmpMq1.getCookieString())
         .set('referer', 'https://now.qq.com?' + tmpMq2.getQueryString())
-        .then(response => {
+        .then((response: {res: {text: string}}) => {
           data = JSON.parse(response.res.text);
           // console.log(data);
         });
@@ -167,13 +174,15 @@ describe('plugin of xhr', () => {
   });
 
   describe('post: return active module result', () => {
-    let data;
+    let data: any;
 
     before(function () {
-      return request.post(cgiBase + '/cgi-bin/a/b/demo_03_post').then(response => {
-        data = JSON.parse(response.res.text);
-        // console.log(data);
-      });
+      return request
+        .post(cgiBase + '/cgi-bin/a/b/demo_03_post')
+        .then((response: {res: {text: string}}) => {
+          data = JSON.parse(response.res.text);
+          // console.log(data);
+        });
     });
 
     it('should return correct data', () => {
@@ -188,7 +197,7 @@ describe('plugin of xhr', () => {
   });
 
   describe('post: return target mock module result', () => {
-    let data;
+    let data: any;
 
     before(function () {
       return request
@@ -196,7 +205,7 @@ describe('plugin of xhr', () => {
         .send({
           _ms_target: 'success_2',
         })
-        .then(response => {
+        .then((response: {res: {text: string}}) => {
           data = JSON.parse(response.res.text);
           // console.log(data);
         });
@@ -214,7 +223,7 @@ describe('plugin of xhr', () => {
   });
 
   describe('post: return target mock module result with params', () => {
-    let data;
+    let data: any;
 
     before(function () {
       return request
@@ -223,7 +232,7 @@ describe('plugin of xhr', () => {
           _ms_target: 'success_2',
           a: 99,
         })
-        .then(response => {
+        .then((response: {res: {text: string}}) => {
           data = JSON.parse(response.res.text);
           // console.log(data);
         });

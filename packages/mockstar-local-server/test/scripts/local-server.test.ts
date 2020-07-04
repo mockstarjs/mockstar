@@ -1,20 +1,22 @@
-const path = require('path');
-const request = require('superagent');
-const fse = require('fs-extra');
-const {expect} = require('chai');
+import path from 'path';
+// @ts-ignore
+import request from 'superagent';
+import fse from 'fs-extra';
+import {expect} from 'chai';
 
-const testServer = require('../data/test-sever');
+// @ts-ignore
+import testServer from '../data/test-sever';
 
 describe('local server for mockstar', () => {
   let port;
-  let cgiBase;
+  let cgiBase: string;
 
   before(function () {
     fse.removeSync(path.join(__dirname, '../data/local-server-test/build'));
 
     return testServer
       .start(require(path.join(__dirname, '../data/local-server-test/mockstar.config.js')))
-      .then(data => {
+      .then((data: {port: number}) => {
         // console.log('----', data);
         port = data.port;
         cgiBase = `http://localhost:${port}`;
@@ -29,13 +31,15 @@ describe('local server for mockstar', () => {
   });
 
   describe('get /mockstar-cgi/mocker', () => {
-    let data;
+    let data: any[];
 
     before(function () {
-      return request.get(cgiBase + '/mockstar-cgi/mocker').then(response => {
-        data = JSON.parse(response.res.text);
-        // console.log(data);
-      });
+      return request
+        .get(cgiBase + '/mockstar-cgi/mocker')
+        .then((response: {res: {text: string}}) => {
+          data = JSON.parse(response.res.text);
+          // console.log(data);
+        });
     });
 
     it('should return array and length is 3', () => {
@@ -65,13 +69,15 @@ describe('local server for mockstar', () => {
   });
 
   describe('get /mockstar-cgi/mocker/:mockerName', () => {
-    let data;
+    let data: {mockModuleList: any; config: any};
 
     before(function () {
-      return request.get(cgiBase + '/mockstar-cgi/mocker/demo_03_post').then(response => {
-        data = JSON.parse(response.res.text);
-        // console.log(data);
-      });
+      return request
+        .get(cgiBase + '/mockstar-cgi/mocker/demo_03_post')
+        .then((response: {res: {text: string}}) => {
+          data = JSON.parse(response.res.text);
+          // console.log(data);
+        });
     });
 
     it('should return object', () => {
@@ -103,17 +109,21 @@ describe('local server for mockstar', () => {
 
   describe('get /mockstar-cgi/mocker/:mockerName/readme', () => {
     it('should exist content', () => {
-      return request.get(cgiBase + '/mockstar-cgi/mocker/demo_03_post/readme').then(response => {
-        let data = JSON.parse(response.res.text);
-        expect(data.html).to.have.lengthOf.at.least(100);
-      });
+      return request
+        .get(cgiBase + '/mockstar-cgi/mocker/demo_03_post/readme')
+        .then((response: {res: {text: string}}) => {
+          let data = JSON.parse(response.res.text);
+          expect(data.html).to.have.lengthOf.at.least(100);
+        });
     });
 
     it('should be empty', () => {
-      return request.get(cgiBase + '/mockstar-cgi/mocker/demo_01/readme').then(response => {
-        let data = JSON.parse(response.res.text);
-        expect(data.html).to.be.empty;
-      });
+      return request
+        .get(cgiBase + '/mockstar-cgi/mocker/demo_01/readme')
+        .then((response: {res: {text: string}}) => {
+          let data = JSON.parse(response.res.text);
+          expect(data.html).to.be.empty;
+        });
     });
   });
 
@@ -121,7 +131,7 @@ describe('local server for mockstar', () => {
     it('should support jpg ', () => {
       return request
         .get(cgiBase + '/mockstar-admin/mockers/demo_03_post/static/logo.jpg')
-        .then(response => {
+        .then((response: {status: any; type: any; body: string | any[]}) => {
           expect(response.status).to.equal(200);
           expect(response.type).to.equal('image/jpeg');
           expect(response.body.length).to.equal(2615);
@@ -131,7 +141,7 @@ describe('local server for mockstar', () => {
     it('should support subdir and png', () => {
       return request
         .get(cgiBase + '/mockstar-admin/mockers/demo_03_post/static/sub/workflow.png')
-        .then(response => {
+        .then((response: {status: any; type: any; body: string | any[]}) => {
           expect(response.status).to.equal(200);
           expect(response.type).to.equal('image/png');
           expect(response.body.length).to.equal(3837);
@@ -147,31 +157,33 @@ describe('local server for mockstar', () => {
             activeModule: 'success_2',
           },
         })
-        .then(response => {
+        .then((response: {res: {text: string}}) => {
           let data = JSON.parse(response.res.text);
 
           // 1. 修改 activeModule 为 success_2
           expect(data.config.activeModule).to.equal('success_2');
 
-          return request.get(cgiBase + '/mockstar-cgi/mocker/demo_03_post').then(response => {
-            let data = JSON.parse(response.res.text);
+          return request
+            .get(cgiBase + '/mockstar-cgi/mocker/demo_03_post')
+            .then((response: {res: {text: string}}) => {
+              let data = JSON.parse(response.res.text);
 
-            // 2. 查询下 activeModule 为 success_2
-            expect(data.config.activeModule).to.equal('success_2');
+              // 2. 查询下 activeModule 为 success_2
+              expect(data.config.activeModule).to.equal('success_2');
 
-            return request
-              .post(cgiBase + '/mockstar-cgi/mocker/demo_03_post', {
-                config: {
-                  activeModule: 'success_1',
-                },
-              })
-              .then(response => {
-                let data = JSON.parse(response.res.text);
+              return request
+                .post(cgiBase + '/mockstar-cgi/mocker/demo_03_post', {
+                  config: {
+                    activeModule: 'success_1',
+                  },
+                })
+                .then((response: {res: {text: string}}) => {
+                  let data = JSON.parse(response.res.text);
 
-                // 3. 修改 activeModule 为 success_1
-                expect(data.config.activeModule).to.equal('success_1');
-              });
-          });
+                  // 3. 修改 activeModule 为 success_1
+                  expect(data.config.activeModule).to.equal('success_1');
+                });
+            });
         });
     });
 
@@ -182,31 +194,33 @@ describe('local server for mockstar', () => {
             disable: false,
           },
         })
-        .then(response => {
+        .then((response: {res: {text: string}}) => {
           let data = JSON.parse(response.res.text);
 
           // 1. 修改 disable 为 false
           expect(data.config.disable).to.be.false;
 
-          return request.get(cgiBase + '/mockstar-cgi/mocker/demo_01').then(response => {
-            let data = JSON.parse(response.res.text);
+          return request
+            .get(cgiBase + '/mockstar-cgi/mocker/demo_01')
+            .then((response: {res: {text: string}}) => {
+              let data = JSON.parse(response.res.text);
 
-            // 2. 查询下 disable 为 false
-            expect(data.config.disable).to.be.false;
+              // 2. 查询下 disable 为 false
+              expect(data.config.disable).to.be.false;
 
-            return request
-              .post(cgiBase + '/mockstar-cgi/mocker/demo_01', {
-                config: {
-                  disable: true,
-                },
-              })
-              .then(response => {
-                let data = JSON.parse(response.res.text);
+              return request
+                .post(cgiBase + '/mockstar-cgi/mocker/demo_01', {
+                  config: {
+                    disable: true,
+                  },
+                })
+                .then((response: {res: {text: string}}) => {
+                  let data = JSON.parse(response.res.text);
 
-                // 3. 修改 disable 为 true
-                expect(data.config.disable).to.be.true;
-              });
-          });
+                  // 3. 修改 disable 为 true
+                  expect(data.config.disable).to.be.true;
+                });
+            });
         });
     });
   });
