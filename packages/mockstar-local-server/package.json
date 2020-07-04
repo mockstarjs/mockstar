@@ -8,10 +8,19 @@
     "build": "tsc -d",
     "dev-ui": "cd ./webui && npm run start",
     "build-ui": "cd ./webui && npm run build",
-    "test-mocha": "mocha",
-    "test": "npm run eslint && npm run test-cov",
-    "eslint": "eslint src/",
-    "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha"
+    "test": "npm run test:unit",
+    "test:unit": "mocha 'test/**/*.test.{ts,tsx}'",
+    "test:cover": "nyc npm run test:unit",
+    "lint": "npx eslint src test --ext .ts"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "keywords": [
     "mock",
@@ -45,13 +54,17 @@
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.11",
     "@types/compression": "^1.7.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.6",
     "@types/errorhandler": "^1.5.0",
+    "@types/expect": "^24.3.0",
     "@types/express": "^4.17.6",
+    "@types/fs-extra": "^9.0.1",
     "@types/lodash": "^4.14.157",
     "@types/method-override": "^0.0.31",
+    "@types/mocha": "^7.0.2",
     "@types/object-assign": "^4.0.30",
     "@types/request": "^2.48.5",
     "@types/socket.io": "^2.1.8",
@@ -59,7 +72,9 @@
     "eslint": "^5.7.0",
     "mocha": "^8.0.1",
     "mockstar-client": "^1.1.5",
+    "nyc": "^15.1.0",
     "superagent": "^3.8.3",
+    "ts-node": "^8.10.2",
     "typescript": "^3.9.6"
   }
 }

@@ -9,7 +9,7 @@ export default (
   mockerParser: mockstar.Parser,
   localServerConfig: LocalServerConfig,
 ) => {
-  let {namespace} = localServerConfig;
+  const {namespace} = localServerConfig;
 
   // 根据用户配置的路由关系，进行解析
   // console.log('mockerList', mockerList);

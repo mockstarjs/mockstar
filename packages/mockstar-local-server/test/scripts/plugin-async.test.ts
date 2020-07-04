@@ -1,20 +1,21 @@
-const path = require('path');
-const fse = require('fs-extra');
-const {expect} = require('chai');
-const {AsyncClient} = require('mockstar-client');
+import path from 'path';
+import fse from 'fs-extra';
+import {expect} from 'chai';
+import {AsyncClient} from 'mockstar-client';
 
-const testServer = require('../data/test-sever');
+// @ts-ignore
+import testServer from '../data/test-sever';
 
 describe('plugin of async', () => {
   let port;
-  let cgiBase;
+  let cgiBase: string;
 
   before(function () {
     fse.removeSync(path.join(__dirname, '../data/plugin-async-test/build'));
 
     return testServer
       .start(require(path.join(__dirname, '../data/plugin-async-test/mockstar.config.js')))
-      .then(data => {
+      .then((data: {port: any}) => {
         // console.log('----', data);
         port = data.port;
         cgiBase = `http://localhost:${port}`;
@@ -29,7 +30,7 @@ describe('plugin of async', () => {
   });
 
   describe('return active module result', () => {
-    let data;
+    let data: unknown;
 
     before(function () {
       let asyncClient = new AsyncClient(cgiBase);
@@ -37,6 +38,7 @@ describe('plugin of async', () => {
       let actualURL = '/async/a/b/async_01';
       let query = null;
 
+      // @ts-ignore
       return asyncClient.request(actualURL, query).then(response => {
         data = response;
       });
@@ -51,7 +53,7 @@ describe('plugin of async', () => {
   });
 
   describe('return target mock module result', () => {
-    let data;
+    let data: unknown;
 
     before(function () {
       let asyncClient = new AsyncClient(cgiBase);
