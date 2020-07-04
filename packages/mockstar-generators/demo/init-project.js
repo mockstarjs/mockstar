@@ -1,5 +1,5 @@
 const path = require('path');
-const { initProject } = require('../src');
+const { initProject } = require('../lib');
 
 initProject({
     isDev: false,

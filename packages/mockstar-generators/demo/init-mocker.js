@@ -1,5 +1,5 @@
 const path = require('path');
-const { initMocker } = require('../src');
+const { initMocker } = require('../lib');
 
 initMocker({
     isDev: false,

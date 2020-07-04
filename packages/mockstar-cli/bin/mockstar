@@ -2,4 +2,6 @@
 
 'use strict';
 
-require('../libs/mockstar')();
+const {Main} = require('../lib/index');
+
+Main();

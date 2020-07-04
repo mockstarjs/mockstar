@@ -1,0 +1,17 @@
+{
+  "name": "basic_03_relative_route",
+  "route": "cgi-bin/a/b/basic_03_relative_route",
+  "routeExtra": {
+    "desc": "I am from routeExtra"
+  },
+  "plugin": "xhr",
+  "description": "basic example description",
+  "disable": true,
+  "defaultModule": "exist-config",
+  "method": "post",
+  "priority": 88,
+  "tags": [
+    "标签1",
+    "标签2"
+  ]
+}

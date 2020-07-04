@@ -1,0 +1,17 @@
+{
+  "name": "basic_04_invalid_active_module",
+  "route": "/cgi-bin/a/b/basic_04_invalid_active_module",
+  "routeExtra": {
+    "desc": "I am from routeExtra"
+  },
+  "plugin": "xhr",
+  "description": "basic example description",
+  "disable": true,
+  "defaultModule": "basic_04_invalid_active_module",
+  "method": "post",
+  "priority": 88,
+  "tags": [
+    "标签1",
+    "标签2"
+  ]
+}
