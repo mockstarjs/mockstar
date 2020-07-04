@@ -2,7 +2,7 @@ import express from 'express';
 import methodOverride from 'method-override';
 import _ from 'lodash';
 import request from 'request';
-import mockstar from 'mockstar';
+import {MS_FROM} from 'mockstar';
 import {parser} from '../body-parser';
 import {LocalServerConfig} from '../../config/LocalServerConfig';
 import initPlugins from '../../plugins';
@@ -54,7 +54,7 @@ export default (localServerConfig: LocalServerConfig) => {
 
     // 判断是否已经是第二次请求了。
     // 请求本地服务的时候，可能会陷入死循环中，因此此处校验最多只请求一次。
-    const isRequested = !!req.query[mockstar.MS_FROM];
+    const isRequested = !!req.query[MS_FROM];
 
     const opts = {
       url: 'http://' + req.headers.host + req.url,
@@ -62,7 +62,7 @@ export default (localServerConfig: LocalServerConfig) => {
       jar: true,
       // timeout: 4000,
       qs: {
-        [mockstar.MS_FROM]: 1,
+        [MS_FROM]: 1,
       },
     };
 

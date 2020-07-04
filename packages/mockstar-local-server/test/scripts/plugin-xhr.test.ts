@@ -3,7 +3,7 @@ import path from 'path';
 import request from 'superagent';
 import fse from 'fs-extra';
 import {expect} from 'chai';
-import mockstar from 'mockstar';
+import {MockStarQuery} from 'mockstar';
 
 // @ts-ignore
 import testServer from '../data/test-sever';
@@ -92,7 +92,7 @@ describe('plugin of xhr', () => {
     let data: any;
 
     before(function () {
-      let tmpMq = new mockstar.MockStarQuery();
+      let tmpMq = new MockStarQuery();
       tmpMq.addOne('demo_02_renamed', 'success_4', false, 'I am extra by cookie');
       return request
         .get(cgiBase + '/cgi-bin/a/b/demo_02')
@@ -112,7 +112,7 @@ describe('plugin of xhr', () => {
     let data: any;
 
     before(function () {
-      let tmpMq = new mockstar.MockStarQuery();
+      let tmpMq = new MockStarQuery();
       tmpMq.addOne('demo_02_renamed', 'success_4', false, {name: 'I am extra by cookie'});
       return request
         .get(cgiBase + '/cgi-bin/a/b/demo_02')
@@ -132,7 +132,7 @@ describe('plugin of xhr', () => {
     let data: any;
 
     before(function () {
-      let tmpMq = new mockstar.MockStarQuery();
+      let tmpMq = new MockStarQuery();
       tmpMq.addOne('demo_02_renamed', 'success_4', false, 'I am extra by referer');
       return request
         .get(cgiBase + '/cgi-bin/a/b/demo_02')
@@ -152,10 +152,10 @@ describe('plugin of xhr', () => {
     let data: any;
 
     before(function () {
-      let tmpMq1 = new mockstar.MockStarQuery();
+      let tmpMq1 = new MockStarQuery();
       tmpMq1.addOne('demo_02_renamed', 'success_4', false, 'I am extra by cookie');
 
-      let tmpMq2 = new mockstar.MockStarQuery();
+      let tmpMq2 = new MockStarQuery();
       tmpMq2.addOne('demo_02_renamed', 'success_4', false, 'I am extra by referer');
 
       return request

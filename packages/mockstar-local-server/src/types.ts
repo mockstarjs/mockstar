@@ -1,5 +1,5 @@
 import express from 'express';
-import mockstar from 'mockstar';
+import {Parser} from 'mockstar';
 
 /**
  * 配置项
@@ -28,5 +28,5 @@ export interface LocalServerConfigOpt {
 }
 
 export interface Router extends express.Router {
-  _mockerParser: mockstar.Parser;
+  _mockerParser: Parser;
 }

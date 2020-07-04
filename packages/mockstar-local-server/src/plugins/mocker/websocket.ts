@@ -1,8 +1,8 @@
 import http from 'http';
-import mockstar from 'mockstar';
+import {Parser} from 'mockstar';
 import socket from 'socket.io';
 
-export default function (server: http.Server, mockerParser: mockstar.Parser) {
+export default function (server: http.Server, mockerParser: Parser) {
   const io = socket(server);
 
   // 获取所有的 mocker 列表
@@ -10,6 +10,7 @@ export default function (server: http.Server, mockerParser: mockstar.Parser) {
 
   // 设置运行跨域
   // io.set('transports', ['websocket', 'xhr-polling', 'jsonp-polling', 'htmlfile', 'flashsocket']);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   io.set('origins', '*:*');
 
@@ -56,7 +57,7 @@ export default function (server: http.Server, mockerParser: mockstar.Parser) {
         console.log(Date.now(), mockerConfig.disable, SOCKET_ROUTE, socket.id, params, opts);
 
         // websocket 名字可以通过传递参数来指定回调结果
-        let emitEventName = opts.eventName || SOCKET_ROUTE;
+        const emitEventName = opts.eventName || SOCKET_ROUTE;
 
         // 如果该项打桩为 disable，则不做任何处理
         if (mockerConfig.disable) {
@@ -65,12 +66,12 @@ export default function (server: http.Server, mockerParser: mockstar.Parser) {
           return;
         }
 
-        let url = SOCKET_ROUTE;
+        const url = SOCKET_ROUTE;
 
         const resInfo = mockerParser.getResInfoByRoute(url, params);
 
         if (!resInfo) {
-          let errMsg =
+          const errMsg =
             'Could not get reqInfo by route=' + url + ' and params=' + JSON.stringify(params);
           console.error(errMsg);
           socket.emit('async_error', errMsg);
@@ -82,7 +83,7 @@ export default function (server: http.Server, mockerParser: mockstar.Parser) {
           .getResult(params)
           .then((result: any) => {
             // 延时返回
-            let delay = resInfo.mockModuleItem.config.delay || 0;
+            const delay = resInfo.mockModuleItem.config.delay || 0;
 
             if (delay) {
               setTimeout(() => {
@@ -96,7 +97,7 @@ export default function (server: http.Server, mockerParser: mockstar.Parser) {
           })
           .catch((err: Error) => {
             // 注意 err 有可能是 Error 对象，也可能是普通的字符串或对象
-            let errMsg = (err && err.stack) || err;
+            const errMsg = (err && err.stack) || err;
 
             console.error(errMsg);
 
