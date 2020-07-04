@@ -1,4 +1,5 @@
 import path from 'path';
+import fse from 'fs-extra';
 import {expect} from 'chai';
 
 import Parser from '../../../src/model/Parser';
@@ -228,13 +229,19 @@ describe('./model/Parser.ts', () => {
 });
 
 describe('./model/Parser.ts use db', () => {
+  const BASE_PATH = path.resolve(__dirname, '../../data/fixtures/mock_server/mockers');
+  const BUILD_PATH = path.join(__dirname, '../../data/tmp');
   let mockerParser: Parser;
 
   before(() => {
     mockerParser = new Parser({
-      basePath: path.resolve(__dirname, '../../data/fixtures/mock_server/mockers'),
-      buildPath: path.join(__dirname, '../../data/tmp'),
+      basePath: BASE_PATH,
+      buildPath: BUILD_PATH,
     });
+  });
+
+  after(() => {
+    fse.removeSync(BUILD_PATH);
   });
 
   describe('check basic info', () => {
@@ -246,6 +253,43 @@ describe('./model/Parser.ts use db', () => {
         'watch',
         'buildPath',
       );
+    });
+
+    it('should exit db.json', () => {
+      expect(fse.existsSync(path.join(BUILD_PATH, './db.json'))).to.be.true;
+    });
+  });
+
+  describe('check getAllMocker', () => {
+    let allMocker: Mocker[];
+
+    before(() => {
+      allMocker = mockerParser.getAllMocker();
+    });
+
+    it('should exist 4 members', () => {
+      expect(allMocker).to.have.lengthOf(4);
+    });
+
+    it('should contain correct mocker', () => {
+      expect(allMocker.map(item => item.name)).to.have.members([
+        'demo_01',
+        'demo_02_renamed',
+        'demo_03_post',
+        'async_01',
+      ]);
+    });
+
+    it('check db.get(mockServerPath)', () => {
+      expect(mockerParser.db?.get('mockServerPath').value()).to.equal(BASE_PATH);
+    });
+
+    it('check db.get(buildPath)', () => {
+      expect(mockerParser.db?.get('buildPath').value()).to.equal(BUILD_PATH);
+    });
+
+    it('check db.get(data)', () => {
+      expect(mockerParser.db?.get('data').value()).to.eql(allMocker);
     });
   });
 });
