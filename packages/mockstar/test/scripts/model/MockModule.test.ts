@@ -3,9 +3,9 @@ import {expect} from 'chai';
 import MockModule from '../../../src/model/MockModule';
 import MockModuleConfig from '../../../src/model/MockModuleConfig';
 
-describe('./mocker/MockModule.js', () => {
+describe('./model/MockModule.ts', () => {
   describe('check json-file.json', () => {
-    let mockModule;
+    let mockModule: MockModule;
 
     before(() => {
       mockModule = new MockModule(
@@ -28,7 +28,7 @@ describe('./mocker/MockModule.js', () => {
     });
 
     it('should return correct value', () => {
-      return mockModule.getResult().then(data => {
+      return mockModule.getResult().then((data: any) => {
         expect(data).to.eql({
           name: 'json-file.json',
           age: 16,
@@ -44,7 +44,7 @@ describe('./mocker/MockModule.js', () => {
         require('../../data/fixtures/mock_modules/return-function-promise'),
       );
 
-      return mockModule.getResult().then(data => {
+      return mockModule.getResult().then((data: any) => {
         expect(data).to.eql({
           name: 'return-function-promise',
           age: 16,
@@ -60,7 +60,7 @@ describe('./mocker/MockModule.js', () => {
         require('../../data/fixtures/mock_modules/return-function-pure'),
       );
 
-      return mockModule.getResult().then(data => {
+      return mockModule.getResult().then((data: any) => {
         expect(data).to.eql({
           name: 'return-function-pure',
           age: 16,
@@ -76,7 +76,7 @@ describe('./mocker/MockModule.js', () => {
         require('../../data/fixtures/mock_modules/return-function-with-param'),
       );
 
-      return mockModule.getResult('name-a', 2, 'not-exist').then(data => {
+      return mockModule.getResult('name-a', 2, 'not-exist').then((data: any) => {
         expect(data).to.eql({
           name: 'return-function-with-param',
           desc: 'a=name-a,b=2',
@@ -93,7 +93,7 @@ describe('./mocker/MockModule.js', () => {
         require('../../data/fixtures/mock_modules/return-plain-object'),
       );
 
-      return mockModule.getResult().then(data => {
+      return mockModule.getResult().then((data: any) => {
         expect(data).to.eql({
           name: 'return-plain-object',
           age: 16,
@@ -109,7 +109,7 @@ describe('./mocker/MockModule.js', () => {
         require('../../data/fixtures/mock_modules/return-promise'),
       );
 
-      return mockModule.getResult().then(data => {
+      return mockModule.getResult().then((data: any) => {
         expect(data).to.eql({
           name: 'return-promise',
           age: 16,
@@ -125,7 +125,7 @@ describe('./mocker/MockModule.js', () => {
         require('../../data/fixtures/mock_modules/no-config'),
       );
 
-      return mockModule.getResult().then(data => {
+      return mockModule.getResult().then((data: any) => {
         expect(data).to.eql({
           name: 'no-config',
           age: 16,
@@ -142,11 +142,37 @@ describe('./mocker/MockModule.js', () => {
         require('../../data/fixtures/mock_modules/exist-config/config'),
       );
 
-      return mockModule.getResult().then(data => {
+      return mockModule.getResult().then((data: any) => {
         expect(data).to.eql({
           name: 'exist-config',
           age: 16,
         });
+      });
+    });
+  });
+
+  describe('check return-function-but-throw-error', () => {
+    it('should return correct value', () => {
+      let mockModule = new MockModule(
+        'return-function-but-throw-error',
+        require('../../data/fixtures/mock_modules/return-function-but-throw-error'),
+      );
+
+      return mockModule.getResult().catch((e: any) => {
+        expect(e).to.be.a('Error').and.have.property('message', 'return-function-but-throw-error');
+      });
+    });
+  });
+
+  describe('check return-function-but-no-return', () => {
+    it('should return correct value', () => {
+      let mockModule = new MockModule(
+        'return-function-but-no-return',
+        require('../../data/fixtures/mock_modules/return-function-but-no-return'),
+      );
+
+      return mockModule.getResult().then((data: any) => {
+        expect(data).to.be.undefined;
       });
     });
   });

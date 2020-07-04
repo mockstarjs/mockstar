@@ -59,7 +59,6 @@ export default class Parser {
   /**
    * 获取所有的 mocker 信息
    *
-   * @param {Boolean} [isReset] 是否为重置，如果为 true，则将忽略缓存数据
    * @return {Array}
    */
   getAllMocker(): Mocker[] {
@@ -105,7 +104,7 @@ export default class Parser {
 
         // 如果存在记录，则更新两个字段即可
         if (cacheMockerItem) {
-          mockerItem.updateConfig({
+          mockerItem.config?.update({
             disable: cacheMockerItem.config.disable,
             activeModule: cacheMockerItem.config.activeModule,
           });

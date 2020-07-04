@@ -72,7 +72,8 @@ export function getQueryItemsFromReferer(referer: string | undefined): any[] {
   let paramsFromReferer;
 
   try {
-    paramsFromReferer = JSON.parse(urlHandle.query(MS_QUERY_KEY, referer)) || [];
+    paramsFromReferer =
+      JSON.parse(decodeURIComponent(urlHandle.query(MS_QUERY_KEY, referer))) || [];
 
     // 初步校验一下是否为数组即可
     if (!Array.isArray(paramsFromReferer)) {

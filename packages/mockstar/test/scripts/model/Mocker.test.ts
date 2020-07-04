@@ -5,9 +5,9 @@ import Mocker from '../../../src/model/Mocker';
 import MockModule from '../../../src/model/MockModule';
 import MockerConfig from '../../../src/model/MockerConfig';
 
-describe('./mocker/Mocker.js', () => {
+describe('./model/Mocker.ts', () => {
   describe('check demo_01', () => {
-    let mocker;
+    let mocker: Mocker;
 
     before(() => {
       mocker = new Mocker(
@@ -54,7 +54,7 @@ describe('./mocker/Mocker.js', () => {
   });
 
   describe('check demo_02', () => {
-    let mocker;
+    let mocker: Mocker;
 
     before(() => {
       mocker = new Mocker(

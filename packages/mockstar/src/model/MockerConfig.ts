@@ -62,12 +62,12 @@ export default class MockerConfig {
    * @param {Object} config config.json 中的值
    * @param {Array} [mockModuleList] mock module 数组
    */
-  constructor(
-    handlerName: string,
-    config: MockerConfigOpt = {},
-    mockModuleList: MockModule[] = [],
-  ) {
+  constructor(handlerName: string, config?: MockerConfigOpt, mockModuleList?: MockModule[]) {
     this.name = handlerName;
+
+    if (!config) {
+      config = {};
+    }
 
     this.route = config.route || '';
 
@@ -115,5 +115,9 @@ export default class MockerConfig {
 
     // 最后更新的时间
     // this.lastModified = Date.now();
+  }
+
+  update(opts: MockerConfigOpt): void {
+    _.merge(this, opts);
   }
 }

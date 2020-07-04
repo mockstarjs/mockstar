@@ -38,7 +38,7 @@ export default class MockStarQuery {
    * @returns {String}
    */
   getQueryString(): string {
-    return MS_QUERY_KEY + '=' + this.getString();
+    return MS_QUERY_KEY + '=' + encodeURIComponent(this.getString());
   }
 
   /**

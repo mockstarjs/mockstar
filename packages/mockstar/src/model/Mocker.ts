@@ -67,14 +67,6 @@ export default class Mocker {
     this.config = new MockerConfig(this.name, config, this.mockModuleList);
   }
 
-  /**
-   * 更新配置
-   * @param {Object} opts
-   */
-  updateConfig(opts: MockerConfigOpt): void {
-    this.config = _.merge({}, this.config, opts);
-  }
-
   private getMockModuleList() {
     const mockModuleList: MockModule[] = [];
 

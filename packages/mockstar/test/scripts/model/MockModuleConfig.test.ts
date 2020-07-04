@@ -2,9 +2,9 @@ import {expect} from 'chai';
 
 import MockModuleConfig from '../../../src/model/MockModuleConfig';
 
-describe('./mocker/MockModuleConfig.js', () => {
+describe('./model/MockModuleConfig.ts', () => {
   describe('check exist-config', () => {
-    let mockModuleConfig;
+    let mockModuleConfig: MockModuleConfig;
 
     before(() => {
       mockModuleConfig = new MockModuleConfig(
