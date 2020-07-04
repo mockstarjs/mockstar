@@ -1,6 +1,6 @@
 {
   "name": "mockstar-starting",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "mockstar starting",
   "main": "lib/index.js",
   "scripts": {
