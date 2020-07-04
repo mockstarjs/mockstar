@@ -41,7 +41,7 @@ export default class extends Generator {
       return Promise.reject(`必须要配置 route`);
     }
 
-    return Promise.reject(`error`);
+    return Promise.resolve();
   }
 
   /**
