@@ -6,6 +6,7 @@
     "stop": "mockstar stop"
   },
   "dependencies": {
-    "mockstar": "^<%= projectConfig.pkgVersion['mockstar'] %>"
+    "mockstar": "^<%= projectConfig.pkgVersion['mockstar'] %>",
+    "mockstar-cli": "^<%= projectConfig.pkgVersion['mockstar'] %>"
   }
 }

@@ -24,7 +24,7 @@ module.exports = {
         sidebar: {
           '/wiki/': [
             {
-              title: '关于 matman',
+              title: '关于 mockstar',
               path: '/wiki/',
               collapsable: false,
             },
