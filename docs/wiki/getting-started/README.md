@@ -17,24 +17,37 @@ sidebarDepth: 0
 $ node -v
 
 # 使用脚手架初始化项目
-$ npx matman-cli init
+$ npx mockstar-cli init project
 ```
 
 ## 目录结构
 
 ```bash
 .
-├── case_modules
-│   └── page_baidu_index
-│       ├── basic-check.js
-│       ├── crawlers
-│       │   └── get-page-info-for-search.js
-│       └── search-check.js
-├── matman.config.js
+├── README.md
+├── mockstar.config.js
 ├── package.json
-└── test
-    ├── basic-check.test.js
-    └── search-check.test.js
+└── src
+    ├── lib
+    │   └── base-cgi.js
+    └── mockers
+        └── demo_cgi
+            ├── README.md
+            ├── base.js
+            ├── config.json
+            ├── index.js
+            ├── mock_modules
+            │   ├── error_100000
+            │   │   ├── config.json
+            │   │   └── index.js
+            │   ├── success_type_1
+            │   │   ├── config.json
+            │   │   └── index.js
+            │   └── success_type_2.json
+            └── static
+                ├── logo.jpg
+                └── sub
+                    └── workflow.png
 ```
 
 使用脚手架新建的目录结构如上面所示，这也是我们推荐的目录结构。

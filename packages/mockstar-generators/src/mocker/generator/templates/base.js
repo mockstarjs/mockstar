@@ -5,10 +5,10 @@ const baseCgi = require('../../lib/base-cgi');
  * @type {Object}
  */
 const defaultData = {
-    uid: 0,
-    type: 0,
-    description: '',
-    other_msg: '初始信息'
+  uid: 0,
+  type: 0,
+  description: '',
+  other_msg: '初始信息',
 };
 
 /**
@@ -18,7 +18,7 @@ const defaultData = {
  * @returns {Promise}
  */
 function getSuccessData(data = {}) {
-    return baseCgi.success(data, defaultData);
+  return baseCgi.success(data, defaultData);
 }
 
 /**
@@ -29,10 +29,10 @@ function getSuccessData(data = {}) {
  * @returns {Promise}
  */
 function getErrorData(errCode, errMsg) {
-    return baseCgi.error(errCode, errMsg);
+  return baseCgi.error(errCode, errMsg);
 }
 
 module.exports = {
-    getSuccessData: getSuccessData,
-    getErrorData: getErrorData
+  getSuccessData: getSuccessData,
+  getErrorData: getErrorData,
 };

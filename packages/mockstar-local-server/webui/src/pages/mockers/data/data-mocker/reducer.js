@@ -5,23 +5,23 @@ import {
   MOCKER_REQUEST,
   MOCKER_REQUEST_FAIL,
   MOCKER_REQUEST_SUCCESS,
-  SET_ACTIVE_MODULE_REQUEST_SUCCESS
+  SET_ACTIVE_MODULE_REQUEST_SUCCESS,
 } from './action';
 
 const initialState = {
   isLoaded: false,
   data: {},
-  readme: ''
+  readme: '',
 };
 
 function mockerInfo(state = initialState, action) {
-  let { type, data } = action,
+  let {type, data} = action,
     update = {};
 
   switch (type) {
     case MOCKER_REQUEST:
       update = {
-        isLoaded: false
+        isLoaded: false,
       };
       break;
     case MOCKER_REQUEST_SUCCESS:
@@ -30,19 +30,19 @@ function mockerInfo(state = initialState, action) {
         data: _.merge({}, data, {
           modules: (data.modules || []).sort((a, b) => {
             return b.priority - a.priority;
-          })
-        })
+          }),
+        }),
       };
       break;
     case MOCKER_REQUEST_FAIL:
       update = {
-        isLoaded: true
+        isLoaded: true,
       };
       break;
 
     case MOCKER_README_REQUEST_SUCCESS:
       update = {
-        readme: data.html
+        readme: data.html,
       };
       break;
 
@@ -58,4 +58,3 @@ function mockerInfo(state = initialState, action) {
 }
 
 export default mockerInfo;
-

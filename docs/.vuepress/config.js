@@ -45,15 +45,6 @@ module.exports = {
               children: ['improve/summary', 'improve/get-start', 'improve/simple'],
             },
             {
-              title: '基本理论',
-              collapsable: false,
-              children: [
-                'basic-concepts/page-snapshot',
-                'basic-concepts/data-snapshot',
-                'basic-concepts/test-by-mock',
-              ],
-            },
-            {
               title: 'FAQ',
               collapsable: false,
               children: ['faq/common'],
@@ -65,30 +56,22 @@ module.exports = {
               path: '/api/',
             },
             {
-              title: 'matman.config.js 配置',
-              path: '/api/matman-config',
+              title: 'mockstar.config.js 配置',
+              path: '/api/mockstar-config',
             },
             {
-              title: 'matman API',
-              path: '/api/matman',
-            },
-            {
-              title: 'PageDriver 对象',
-              path: '/api/pageDriver',
-            },
-            {
-              title: 'MatmanResult 对象',
-              path: '/api/matman-result.md',
-            },
-            {
-              title: '爬虫工具：web-crawl-util',
-              path: '/api/web-crawl-util',
+              title: 'mockstar API',
+              path: '/api/mockstar',
             },
           ],
           '/tool/': [
             {
               title: '说明',
               path: '/tool/',
+            },
+            {
+              title: 'mockstar-cli',
+              path: '/tool/mockstar-cli',
             },
             {
               title: 'Proxy SwitchyOmega',
