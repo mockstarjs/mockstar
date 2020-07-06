@@ -37,7 +37,7 @@ module.exports = {
               title: '快速入门',
               path: '/wiki/getting-started/',
               collapsable: false,
-              children: ['getting-started/default', 'getting-started/newMocker'],
+              children: ['getting-started/default', 'getting-started/new-mocker'],
             },
             {
               title: '深入',
@@ -60,8 +60,12 @@ module.exports = {
               path: '/api/mockstar-config',
             },
             {
-              title: 'mockstar API',
+              title: 'mocker 的 config.json 配置',
               path: '/api/mockstar',
+            },
+            {
+              title: 'mock module 的 config.json 配置',
+              path: '/api/mocker-module',
             },
           ],
           '/tool/': [

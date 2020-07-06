@@ -2,158 +2,66 @@
 sidebarDepth: 2
 ---
 
-# matman 包 API
+# mocker 的 config.json 配置
 
-## 1. launch
-
-> 获得异步的 PageDriver
-
-### 1.1 原型定义
+## 1. 类型定义
 
 ```typescript
 /**
- * 获得异步的 PageDriver
  *
- * @param {BrowserRunner} browserRunner 浏览器运行器，目前支持 puppeteer 和 nightmare 两种
- * @param {PageDriverOpts} pageDriverOpts
- * @param {MatmanConfigOpts} matmanConfigOpts
+ * @param [route] 需要处理的路由，只有匹配到这个路由，才会被处理
+ * @param [routeExtra] 额外的路由匹配参数
+ * @param [name] 名字
+ * @param [description] 简要描述
+ * @param [disable] 此mocker是否为禁用状态，一旦设置为 true，则将忽略该mocker，而是去请求现网
+ * @param [defaultModule] 默认初始化时激活的 mock module 名字
+ * @param [activeModule] 当前激活的 mock module 名字
+ * @param [method] http 请求方式，包括 get(默认) 和 post
+ * @param [plugin] 数据mock类型，包括 xhr(默认) 和 async
+ * @param [priority] 管理后台列表中排序的权重，值越大则越排在前面
+ * @param [tags] 管理后台用到的标签，用于过滤，字符串数组
  */
-export declare function launch(browserRunner: BrowserRunner, pageDriverOpts?: PageDriverOpts, matmanConfigOpts?: MatmanConfigOpts): PageDriverAsync;
-```
-
-### 1.2 入参类型
-
-#### 1.2.1 BrowserRunner
-
-浏览器运行器，目前支持 `puppeteer` 和 `nightmare` 两种。
-
-大家不需要关心 Runner 的实现细节，只需要引入对应的 `matman-runner-puppeteer` 或者 `matman-runner-nightmare` 包并实例化传入即可，例如下面这样：
-
-```js
-const matman = require('matman');
-const {BrowserRunner} = require('matman-runner-puppeteer');
-
-const page = matman.launch(new BrowserRunner(), opts);
-
-// or
-
-const matman = require('matman');
-const {BrowserRunner} = require('matman-runner-nightmare');
-
-const page = matman.launch(new BrowserRunner(), opts);
-```
-
-#### 1.2.2 PageDriverOpts
-
-传递给运行器的启动参数，他的类型定义如下：
-
-```typescript
-export interface PageDriverOpts {
-  caseModuleFilePath: string;
-  tag?: string;
-  show?: boolean;
-  doNotCloseBrowser?: boolean;
-  useRecorder?: boolean;
-  delayBeforeRun?: number;
+export interface MockerConfigOpt {
+  route?: string;
+  routeExtra?: Record<string, unknown>;
+  description?: string;
+  disable?: boolean;
+  defaultModule?: string;
+  activeModule?: string;
+  method?: 'GET' | 'POST' | 'get' | 'post';
+  plugin?: 'xhr' | 'async';
+  priority?: number;
+  tags?: string[];
 }
 ```
 
-- `caseModuleFilePath`：端到端测试文件路径
-- `tag`：生成文件的标识，matman 会在生成产物后面附带 tag，这对于生成多份输出相当有用
-- `show`：是否显示浏览器界面
-- `doNotCloseBrowser`：执行完成后是否关闭浏览器
-- `useRecorder`：是否启用全局的记录器，用于监听网络请求、console 等
-- `delayBeforeRun`：延迟执行
+## 2. 含义介绍
 
-#### 1.2.3 MatmanConfigOpts
+|     字段名      |    类型    |     默认值      |                           含义描述                           |
+| :-------------: | :--------: | :-------------: | :----------------------------------------------------------: |
+|     `route`     |  `String`  |      `''`       |        需要处理的路由，只有匹配到这个路由，才会被处理        |
+|  `routeExtra`   |  `Object`  |      `{}`       |                      额外的路由匹配参数                      |
+|     `name`      |  `String`  |      `''`       |                             名字                             |
+|  `description`  |  `String`  |     `name`      |                           简要描述                           |
+|    `disable`    | `Boolean`  |     `false`     | 此 mocker 是否为禁用状态，一旦设置为 true，则将忽略该 mocker，而是去请求现网 |
+| `defaultModule` |  `String`  |      `''`       |             默认初始化时激活的 mock module 名字              |
+| `activeModule`  |  `String`  | `defaultModule` |                 当前激活的 mock module 名字                  |
+|    `method`     |  `String`  |      `GET`      |            http 请求方式，包括 get(默认) 和 post             |
+|    `plugin`     |  `String`  |      `XHR`      |            数据mock类型，包括 xhr(默认) 和 async             |
+|   `priority`    |  `Number`  |       `0`       |         管理后台列表中排序的权重，值越大则越排在前面         |
+|     `tags`      | `String[]` |   `['全部']`    |           管理后台用到的标签，用于过滤，字符串数组           |
 
-- matman 全局配置，不推荐使用
-- 推荐在根目录下定义 `matman.config.js` 进行使用，请[参考](./matman-config)
+## 3. 文件示例
 
-### 1.3 返回结果
+> - 目前仅支持 JSON 配置文件
 
-返回 `PageDriverAsync`，请[参考](./pageDriver#_2-pagedriverasync)
-
-## 2. launchSync
-
-> 获得同步的 PageDriver
-
-### 2.1 原型定义
-
-```typescript
-/**
- * 获得同步的 PageDriver
- *
- * @param {BrowserRunner} browserRunner 浏览器运行器，目前支持 puppeteer 和 nightmare 两种
- * @param {PageDriverOpts} pageDriverOpts
- * @param {MatmanConfigOpts} matmanConfigOpts
- */
-export declare function launchSync(browserRunner: BrowserRunner, pageDriverOpts?: PageDriverOpts, matmanConfigOpts?: MatmanConfigOpts): PageDriverSync;
+```json
+{
+  "description": "description for demo_cgi",
+  "route": "/cgi-bin/a/b/demo_cgi",
+  "defaultModule": "success_type_1",
+  "method": "",
+  "tags": ["tag1", "tag2"]
+}
 ```
-
-### 2.2 入参类型
-
-#### 2.2.1 BrowserRunner
-
-浏览器运行器，目前支持 `puppeteer` 和 `nightmare` 两种。
-
-大家不需要关心 Runner 的实现细节，只需要引入对应的 `matman-runner-puppeteer` 或者 `matman-runner-nightmare` 包并实例化传入即可，例如下面这样：
-
-```js
-const matman = require('matman');
-const {BrowserRunner} = require('matman-runner-puppeteer');
-
-const page = matman.launchSync(new BrowserRunner(), opts);
-
-// or
-
-const matman = require('matman');
-const {BrowserRunner} = require('matman-runner-nightmare');
-
-const page = matman.launchSync(new BrowserRunner(), opts);
-```
-
-#### 2.2.2 PageDriverOpts
-
-与 `lunch` 中的定义相同，请参考上述文档。
-
-#### 2.2.3 MatmanConfigOpts
-
-- matman 全局配置，不推荐使用
-- 推荐在根目录下定义 `matman.config.js` 进行使用，请[参考](./matman-config)
-
-### 2.3 返回结果
-
-返回 `PageDriverSync`，请[参考](./pageDriver#_2-pagedriversync)
-
-## 3. getLocalWhistleServer
-
-> 获得本地 whistle 地址
-
-### 3.1 原型定义
-
-```typescript
-/**
- * 获得本地 whistle 地址
- *
- * @param {Number} port 指定端口
- * @param {Boolean} doNotAutoCheckStartedPort 不需要自动获得已经启动的端口
- */
-export declare function getLocalWhistleServer(port: number, doNotAutoCheckStartedPort?: boolean): Promise<string>;
-```
-
-### 3.2 入参类型
-
-#### 3.2.1 port
-
-指定 Whistle 端口
-
-#### 3.2.2 doNotAutoCheckStartedPort
-
-是否自动嗅探，正在运行的 whistle 服务
-
-### 3.3 返回结果
-
-- 返回结果为：`Promise<string>`
-- 例如：`127.0.0.1:8899`
 
