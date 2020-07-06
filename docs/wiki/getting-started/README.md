@@ -6,9 +6,7 @@ sidebarDepth: 0
 
 ## 新建项目
 
-按照 [安装和升级](../install.md) 一文配置好环境之后，我们将开启学习 **web 端对端测试**之旅。记下来，我们将以百度（ [https://www.baidu.com](https://www.baidu.com) ）为测试对象，使用 matman 做一些简单的 web 端对端测试。
-
-> 如果你不想跟着步骤来做，则可以直接访问 [https://github.com/matmanjs/matman-demo-getting-started](https://github.com/matmanjs/matman-demo-getting-started) 来获取最终的代码。
+按照 [安装和升级](../install.md) 一文配置好环境之后，我们将开启学习 **mockstar 数据 mock**之旅。接下来，我们将以生成的模板项目为例，为大家讲解。
 
 在开始之前，请再次确认下环境是否准备好：
 
@@ -52,6 +50,10 @@ $ npx mockstar-cli init project
 
 使用脚手架新建的目录结构如上面所示，这也是我们推荐的目录结构。
 
-- `case_modules`：存放所有的端到端测试文件，我们推荐使用 `page_<二级域名>_<URI>` 命名同一个页面的不同数据快照获取方式
-- `matman.config.js`：存放matman配置文件
-- `test`：存放所有的 mocha 测试文件
+- `src` 文件夹，存放最主要的代码逻辑
+
+  - `lib` 文件夹，存放一些 mocker 桩对象用到的公共方法及数据
+  - `mockers` 文件夹，存放生成的 mocker 桩对象
+  - `mockers/*/mock_modules` 文件夹，存放同一个接口的不同返回数据
+
+- `mockstar.config.js` 配置文件，配置对应 mocker 桩对象存放的地址

@@ -37,12 +37,12 @@ module.exports = {
               title: '快速入门',
               path: '/wiki/getting-started/',
               collapsable: false,
-              children: ['getting-started/baidu_01', 'getting-started/baidu_02'],
+              children: ['getting-started/default', 'getting-started/newMocker'],
             },
             {
               title: '深入',
               collapsable: false,
-              children: ['improve/summary', 'improve/get-start', 'improve/simple'],
+              children: ['improve/summary', 'improve/get-start', 'improve/simple', 'improve/how'],
             },
             {
               title: 'FAQ',
