@@ -2,25 +2,25 @@
 sidebarDepth: 0
 ---
 
-# 关于 matman
+# 关于 mockstar
 
->  [matman](https://github.com/matmanjs/matman) 是一个用于**web 端对端测试**（E2E，End-to-End Testing）的框架。提供了一整套方案，十分适合 web 前端开发人员来编写端对端测试。
+>  [mockstar](https://github.com/mockstarjs/mockstar) 是一个用于**测试、开发中的 mock 数据生成与管理**（E2E，End-to-End Testing）的框架。提供了一整套方案，十分适合 web 前端开发人员来编写数据 mock。
 
 ## 更适合 web 前端开发者使用
 
-matman 可能是 `最适合` **web 前端开发人员编写端对端测试的方案**。
+mockstar 可能是 `最适合的、最完善的` **web 前端开发人员**使用的的数据 mock 工具。
 
-- 整个过程无需去学习 Python 等新语言，只需要了解 `HTML/CSS/JS` 即可
-- 没有繁杂的安装配置，依靠 npm 包，你所需要的可能只是 `npm install`
-- 无需高深的编程技能，框架提供了众多测试工具，只需要你安心写自己的逻辑
+- 整个过程无需去学习 Python 等新语言，只需要了解 `JS` 即可
+- 没有繁杂的安装配置，依靠 npm 包，你所需要的可能只是 `mockstar init` 与 `npm run start`
+- 无需高深的编程技能，框架提供了完善的数据 mock 快速生成、管理后台等，你只需要安心写自己的 mock 数据
 
-## 更适合单页面的精细化测试
+## 更加丰富的功能
 
-> - 精细化测试：对 UI 展示和行为交互进行深度测试。
->
-> - 单页面测试：这一点是相对而言的，有些业务是需要测试多个页面之间交互（例如淘宝页面之间的跳转），这种场景 matman 方案也可以做，只是并不擅长。
+> - 传统的数据 mock 仅仅支持对 JSON 接口的模拟
+>- 对于其他场景 `JSBridge、WebSocket` 等的支持很弱或者没有
 
-matman 方案推荐[基于白盒数据做端对端测试方案](basic-concepts/test-by-mock.md)，尤其适合单页面的精细化测试，例如移动端 h5 页等。
+- mockstar 方案支持传统的 `XHR`、`Fetch` 请求
+- mockstar 方案同时支持对 `WebSocket` 或者 `JSBridge` 回调等异步数据
 
 
 ## 特性
