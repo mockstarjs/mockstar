@@ -77,7 +77,7 @@ export default class extends Generator {
         },
       );
 
-      // this.fs.copy(this.templatePath('src'), this.destinationPath('src'));
+      this.fs.copy(this.templatePath('src'), this.destinationPath('src'));
 
       // 增加一个简单的 mocker 即可
       const demoMockerName = 'demo_cgi';
