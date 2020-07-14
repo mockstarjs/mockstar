@@ -69,3 +69,5 @@ db.json
 .DS_Store
 
 .vscode
+
+docs-dist
