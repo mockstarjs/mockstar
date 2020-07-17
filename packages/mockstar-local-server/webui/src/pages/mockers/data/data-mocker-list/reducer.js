@@ -1,16 +1,16 @@
 import _ from 'lodash';
 
-import { MOCKER_LIST_REQUEST_FAIL, MOCKER_LIST_REQUEST_SUCCESS } from './action';
+import {MOCKER_LIST_REQUEST_FAIL, MOCKER_LIST_REQUEST_SUCCESS} from './action';
 
-import { SET_ACTIVE_MODULE_REQUEST_SUCCESS } from '../data-mocker';
+import {SET_ACTIVE_MODULE_REQUEST_SUCCESS} from '../data-mocker';
 
 const initialState = {
   isLoaded: false,
-  list: []
+  list: [],
 };
 
 function mockerListInfo(state = initialState, action) {
-  let { type, data } = action,
+  let {type, data} = action,
     update = {};
 
   switch (type) {
@@ -19,17 +19,17 @@ function mockerListInfo(state = initialState, action) {
         isLoaded: true,
         list: (data || []).sort((a, b) => {
           return b.priority - a.priority;
-        })
+        }),
       };
       break;
     case MOCKER_LIST_REQUEST_FAIL:
       update = {
-        isLoaded: true
+        isLoaded: true,
       };
       break;
 
     case SET_ACTIVE_MODULE_REQUEST_SUCCESS:
-      update.list = state.list.map((item) => {
+      update.list = state.list.map(item => {
         if (item.name === data.name) {
           item = _.merge({}, item, data);
         }
@@ -45,4 +45,3 @@ function mockerListInfo(state = initialState, action) {
 }
 
 export default mockerListInfo;
-

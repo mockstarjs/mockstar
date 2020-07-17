@@ -1,4 +1,4 @@
-const { getSuccessData } = require('../../base');
+const {getSuccessData} = require('../../base');
 
 /**
  *
@@ -7,10 +7,10 @@ const { getSuccessData } = require('../../base');
  * @return {Promise|*}
  */
 module.exports = function (params, req) {
-    return getSuccessData({
-        uid: params.uid || 11111,
-        type: 1,
-        description: '我是学生',
-        other_msg: '【更灵活】支持符合 CommonJS 规范的 node 模块'
-    });
+  return getSuccessData({
+    uid: params.uid || 11111,
+    type: 1,
+    description: '我是学生',
+    other_msg: '【更灵活】支持符合 CommonJS 规范的 node 模块',
+  });
 };

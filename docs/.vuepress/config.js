@@ -24,7 +24,7 @@ module.exports = {
         sidebar: {
           '/wiki/': [
             {
-              title: '关于 matman',
+              title: '关于 mockstar',
               path: '/wiki/',
               collapsable: false,
             },
@@ -37,21 +37,12 @@ module.exports = {
               title: '快速入门',
               path: '/wiki/getting-started/',
               collapsable: false,
-              children: ['getting-started/baidu_01', 'getting-started/baidu_02'],
+              children: ['getting-started/default', 'getting-started/new-mocker'],
             },
             {
               title: '深入',
               collapsable: false,
-              children: ['improve/summary', 'improve/get-start', 'improve/simple'],
-            },
-            {
-              title: '基本理论',
-              collapsable: false,
-              children: [
-                'basic-concepts/page-snapshot',
-                'basic-concepts/data-snapshot',
-                'basic-concepts/test-by-mock',
-              ],
+              children: ['improve/summary', 'improve/get-start', 'improve/simple', 'improve/how'],
             },
             {
               title: 'FAQ',
@@ -65,30 +56,26 @@ module.exports = {
               path: '/api/',
             },
             {
-              title: 'matman.config.js 配置',
-              path: '/api/matman-config',
+              title: 'mockstar.config.js 配置',
+              path: '/api/mockstar-config',
             },
             {
-              title: 'matman API',
-              path: '/api/matman',
+              title: 'mocker 的 config.json 配置',
+              path: '/api/mockstar',
             },
             {
-              title: 'PageDriver 对象',
-              path: '/api/pageDriver',
-            },
-            {
-              title: 'MatmanResult 对象',
-              path: '/api/matman-result.md',
-            },
-            {
-              title: '爬虫工具：web-crawl-util',
-              path: '/api/web-crawl-util',
+              title: 'mock module 的 config.json 配置',
+              path: '/api/mocker-module',
             },
           ],
           '/tool/': [
             {
               title: '说明',
               path: '/tool/',
+            },
+            {
+              title: 'mockstar-cli',
+              path: '/tool/mockstar-cli',
             },
             {
               title: 'Proxy SwitchyOmega',

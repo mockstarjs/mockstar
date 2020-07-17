@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
 import List from './components/list';
 import Mocker from './components/mocker';
@@ -7,7 +7,7 @@ import Mocker from './components/mocker';
 import './index.less';
 
 export default function MockersContainer(props) {
-  let { match } = props;
+  let {match} = props;
 
   return (
     <div className="page-mockers">
@@ -16,4 +16,3 @@ export default function MockersContainer(props) {
     </div>
   );
 }
-

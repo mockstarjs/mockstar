@@ -4,7 +4,7 @@
   "description": "generators for mockstar",
   "main": "lib/index.js",
   "scripts": {
-    "build": "tsc -d",
+    "build": "node build.js",
     "test-mocha": "node ./node_modules/mocha/bin/_mocha",
     "test": "npm run eslint && npm run test-cov",
     "eslint": "eslint src/",

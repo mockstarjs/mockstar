@@ -52,10 +52,10 @@ import logoBig from '../images/fastest-config.svg';
 export default {
   computed: {
     title() {
-      return 'matman.js';
+      return 'mockstar.js';
     },
     description() {
-      return 'web 端对端测试解决方案';
+      return '桩数据模拟与管理平台';
     },
     introductionLink() {
       return '/wiki';
