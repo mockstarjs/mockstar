@@ -71,7 +71,7 @@ function execCmd(
   configOpts: Record<string, unknown>,
   options: cp.SpawnOptionsWithoutStdio,
 ): cp.ChildProcessWithoutNullStreams {
-  let args = argsOpts || [];
+  const args = argsOpts || [];
 
   if (configOpts) {
     args.push('--data');
@@ -101,12 +101,14 @@ export function start(
         try {
           config.pid && process.kill(config.pid);
           saveStartCache({});
-        } catch (err) {}
+        } catch (err) {
+          console.error(`process.kill(${config.pid}) catch`, err);
+        }
       }
     }
 
     // 否则先移除错误文件，因为后续使用 child_process 执行了命令之后会将错误记录在这个错误文件内
-    let errorFile = getErrorCachePath(configOpts.rootPath);
+    const errorFile = getErrorCachePath(configOpts.rootPath);
     try {
       // 移除文件
       if (fs.existsSync(errorFile)) {
@@ -117,8 +119,9 @@ export function start(
     }
 
     // 执行启动命令
-    let child = execCmd(argsOpts, configOpts, {
+    const child = execCmd(argsOpts, configOpts, {
       detached: true,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       stdio: [null, null, fs.openSync(errorFile, 'a+')],
     });
@@ -136,12 +139,14 @@ export function start(
     }
 
     // 接下来的3秒内，每隔600ms检查是否有错误文件，如果没有错误文件，则可以认为是成功启动了
-    let startTime = Date.now();
+    const startTime = Date.now();
     (function execCallback() {
       let error;
       try {
         error = fs.readFileSync(errorFile, {encoding: 'utf8'});
-      } catch (e) {}
+      } catch (err) {
+        console.error(`fs.readFileSync(${errorFile}) catch`, err);
+      }
 
       // 如果遇到错误，则不再进行处理，直接
       if (error) {
@@ -168,8 +173,8 @@ export function start(
 }
 
 export function getIpList(): string[] {
-  let ipList: string[] = [];
-  let ifaces = os.networkInterfaces();
+  const ipList: string[] = [];
+  const ifaces = os.networkInterfaces();
   Object.keys(ifaces).forEach(function (ifname) {
     ifaces[ifname]?.forEach(function (iface) {
       if (iface.family == 'IPv4') {
@@ -177,7 +182,7 @@ export function getIpList(): string[] {
       }
     });
   });
-  let index = ipList.indexOf('127.0.0.1');
+  const index = ipList.indexOf('127.0.0.1');
   if (index !== -1) {
     ipList.splice(index, 1);
   }
@@ -187,7 +192,7 @@ export function getIpList(): string[] {
 
 export function getStatus(callback: (e: string | boolean, config: any) => void) {
   // 获得启动的缓存数据
-  let config = getStartCache() || {};
+  const config = getStartCache() || {};
 
   // 检查缓存的进程是否在启动中
   isRunning(config.pid, function (isPidRunning) {
