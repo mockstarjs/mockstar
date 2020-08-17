@@ -15,7 +15,7 @@ export default {
       return [
         {
           title: '纯 JavaScript',
-          desc: '使用 JS 语言来写用例，无额外学习成本',
+          desc: '使用 JS 语言来写 mock 数据，无额外学习成本',
           backgroundImage: 'http://res.imtt.qq.com/hippydoc/img/shazam.png',
         },
         {

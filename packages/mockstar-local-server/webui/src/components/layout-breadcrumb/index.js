@@ -5,7 +5,6 @@ import React, {Component} from 'react';
 import {Breadcrumb} from 'antd';
 
 class LayoutBreadcrumb extends Component {
-
   constructor(props, context) {
     super(props, context);
   }

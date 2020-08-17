@@ -1,200 +1,37 @@
 # 03. 简单静态页面
 
-从本节开始，我们通过几个例子看看具体的 matman 具体的工作方式，我们的项目中同样内置了单元测试的文件，与普通的 `mocha、chai` 区别不大，大家直接查看 `/test/unit` 下的文件即可。
+在一些前后端分离的项目中，后端提供 CGI 接口，而前端通过发送 ajax 请求来获取数据。
 
-## 1. 测试概述
+## 1. 提高并行开发时的效率
 
-<img src="./simple.assets/image-20200522093401304.png" alt="image-20200522093401304" style="zoom:33%;" />
+理想状况下，CGI 准备完成之后，前端再投入，合力完成项目开发。
 
-简单静态页面的结构如上。
+但实际中，大部分时候两者几乎是并行开发的。
 
-我们需要测试的页面元素为下面几部分：
+就意味着前端在投入开发时，在缺乏 CGI 的数据的情况下，可能将无法实现业务逻辑。在此情况下，前端可以自己构造数据，完成业务逻辑代码实现，最后在 CGI 准备好之后进行接口联调。这将极大提高并行开发时的效率。
 
-- 图片正确展示
-- 规则说明正确显现
-- 同意与不同意按钮显示
-- 友情提示正确显示
+## 2. 提高联调 CGI 接口的效率
 
-## 2. 获取页面数据快照
+联调接口时，除了对齐接口字段之外，实际上还包含着业务逻辑的联调。
 
-> 在示例文件中，我们给出了两种编写爬虫方式
->
-> - 直接使用 jQuery
-> - 使用 web-crawl-util 的 API
->
-> 在这里我们只展示使用 web-crawl-util 的 API 的版本
+例如：
 
-### 2.1 爬虫脚本
+- 一个账号信息查询接口返回数据中包含一个 `type` 字段，它的值可能有几个含义：`1=教师，2=学生，3=家长`。
+- 前端页面中可能会针对不同的 `type` 值，展示不同的 UI 和逻辑交互。
+- 在联调这个接口时，我们如果真的注册三个账号来调试，则需要不停切换账号，效率将会非常低。
 
-新建 `/DevOps/matman-app/case_modules/page-simple/crawlers/get-page-info.js` 文件，添加如下内容：
+另外一些情况下，要命中某些逻辑，需要一些限制条件，而这种限制条件往往较难构造。
 
-```js
-module.exports = () => {
-    return {
-        topImageInfo: getTopImageInfo(),
-        middleRule: getMiddleRule(),
-        buttonCondition: getButtonCondition(),
-        oneLineText: getOneLineText(),
-        remarks: 'Got data by npm package: web-crawl-util'
-    };
-};
+例如一个提现的接口，就得分别验证：
 
-/**
- * 顶层图片信息
- */
-function getTopImageInfo() {
-    const parentSelector = '#anchors';
+- 有足够的钱
+- 没有足够的钱
+- 未实名验证等场景
 
-    const result = {
-        isExist: useJquery.isExist(parentSelector)
-    };
+又不同的交互，前端完成可以自行构造需要的数据，用来完成 UI 交互的开发，而不必真的取让 CGI 开发的同学来帮你构造。
 
-    if (result.isExist) {
-        result.anchor1 = useJquery.getImageDomUrl('.use-img', parentSelector);
-        result.anchor2 = useJquery.getBackgroundImageUrl('.use-background', parentSelector);
-    }
+## 3. 降低对 CGI 的强依赖
 
-    return result;
-}
+开发场景下，CGI 同学也在修改代码，可能会改出问题，或者遇到测试环境突然挂了的时候，如果没有数据模拟，前端同学就只能干睁眼了。
 
-/**
- * 规则说明
- */
-function getMiddleRule() {
-    const parentSelector = '#rules';
-
-    const result = {
-        isExist: useJquery.isExist(parentSelector)
-    };
-
-    if (result.isExist) {
-        result.text = useJquery.getText(parentSelector);
-    }
-
-    return result;
-}
-
-/**
- * 获取按钮状态
- */
-function getButtonCondition() {
-    const parentSelector = '.btn-group';
-
-    const result = {
-        isExist: useJquery.isExist(parentSelector)
-    };
-
-    if (result.isExist) {
-        result.active_btn = useJquery.getText('.active', parentSelector);
-        result.disable_btn = useJquery.getText('.disable', parentSelector);
-    }
-
-    return result;
-}
-
-/**
- * 获取不能换行的文本
- */
-function getOneLineText() {
-    const parentSelector = '#tips';
-
-    const result = {
-        isExist: useJquery.isExist(parentSelector)
-    };
-
-    if (result.isExist) {
-        result.isOneLine = useJquery.getStyle('div.long-word', parentSelector).isOneLine;
-        result.text = useJquery.getText('div.long-word', parentSelector);
-    }
-
-    return result;
-}
-```
-
-### 2.2 启动脚本
-
-新建 `/DevOps/matman-app/case_modules/page-simple/crawlers/get-page-info.js` 文件，添加如下内容：
-
-```js
-module.exports = (opts) => {
-    return env.createPageDriver(__filename, opts)
-
-        // 加载页面地址
-        .goto(env.getPageUrl())
-
-        // 需要等待某些条件达成，才开始运行爬虫脚本
-        .wait(env.WAIT.READY)
-
-        // 爬虫脚本的函数，用于获取页面中的数据
-        .evaluate('./crawlers/get-page-info.js')
-
-        // 结束，获取结果
-        .end();
-};
-```
-
-使用 matman 执行无头浏览器模拟浏览，调用爬虫脚本得到数据快照。
-
-## 3. 测试样例文件
-
-新建 `/test/e2e/page-simple/basic-check.test.js` 文件，添加如下内容：
-
-```js
-describe('simple 页面：常规检查-普通静态页面', function () {
-    this.timeout(30000);
-
-    let resultData;
-
-    before(function () {
-        return checkPage({ show: false, doNotEnd: false, useRecorder: true })
-            .then(function (result) {
-                // console.log(JSON.stringify(result));
-                resultData = result;
-            });
-    });
-
-    describe('检查基本信息', function () {
-        let data;
-
-        before(function () {
-            data = resultData.data;
-        });
-
-        it('顶层图片检查通过', function () {
-            expect(data.topImageInfo).to.eql({
-                'anchor1': '//pic.url.cn/hy_personal/33ab1df8c733dfb724654cb8d9b8fe91647fc4ed4ade9ec4002d92f0e8867248/640',
-                'anchor2': 'http://pic.url.cn/hy_personal/e308b9c90742cc3c5c67334b6db49b19f891e8d507212fde3af431b8b8597b02/640',
-                'isExist': true
-            });
-        });
-
-        it('规则文案检查通过', function () {
-            expect(data.middleRule).to.eql({
-                'isExist': true,
-                'text': '规则说明：1.第一条规则；2.第二条规则；3.第三条规则，这条规则很长，会自动换行展示自动换行展示自动换行展示自动换行展示自动换行展示；同意不同意'
-            });
-        });
-
-        it('按钮样式检查通过', function () {
-            expect(data.buttonCondition).to.eql({
-                'isExist': true,
-                'active_btn': '同意',
-                'disable_btn': '不同意'
-            });
-        });
-
-        it('文字单行检查通过', function () {
-            expect(data.oneLineText).to.eql({
-                'isExist': true,
-                'isOneLine': true,
-                'text': '我简单说两句，我很长，但是不能够换行不能够换行不能够换行不能够换行不能够换行不能够换行不能够换行'
-            });
-        });
-    });
-});
-```
-
-## 4. 测试结果
-
-<img src="./simple.assets/image-20200522155206545.png" alt="image-20200522155206545" style="zoom:50%;" />
-
+而出现现网问题时，为了复现前端的问题，往往也需要自行构造一些数据，以便修复前端UI交互的逻辑错误。
