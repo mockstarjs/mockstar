@@ -1,6 +1,6 @@
 {
   "name": "mockstar-generators",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "generators for mockstar",
   "main": "lib/index.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "bluebird": "^3.5.3",
     "fs-extra": "^7.0.1",
     "mkdirp": "^0.5.1",
-    "mockstar": "^1.2.1",
+    "mockstar": "^1.2.2",
     "shelljs": "^0.8.3",
     "url-parse": "^1.4.4",
     "yeoman-environment": "^2.3.4",

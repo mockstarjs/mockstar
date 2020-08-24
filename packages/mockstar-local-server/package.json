@@ -1,6 +1,6 @@
 {
   "name": "mockstar-local-server",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Local server for MockStar",
   "main": "lib/index.js",
   "scripts": {
@@ -50,7 +50,7 @@
     "lodash": "^4.17.15",
     "log4js": "^2.8.0",
     "method-override": "^2.3.10",
-    "mockstar": "^1.2.1",
+    "mockstar": "^1.2.2",
     "request": "^2.81.0",
     "socket.io": "^2.1.1"
   },
@@ -72,7 +72,7 @@
     "chai": "^4.2.0",
     "eslint": "^5.7.0",
     "mocha": "^8.0.1",
-    "mockstar-client": "^1.2.1",
+    "mockstar-client": "^1.2.2",
     "nyc": "^15.1.0",
     "superagent": "^3.8.3",
     "ts-node": "^8.10.2",
