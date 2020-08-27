@@ -1,14 +1,14 @@
-import {Parser} from 'mockstar';
+import { Parser, pkgInfo } from 'mockstar';
 import handleXhr from './xhr';
-import {Router} from '../../types';
+import { Router } from '../../types';
 import {
+  initGetAdminDetail,
   initGetList,
   initGetOne,
-  initPostOne,
   initGetOneReadMe,
-  initGetAdminDetail,
+  initPostOne,
 } from '../../server/router/base-router';
-import {LocalServerConfig} from '../../config/LocalServerConfig';
+import { LocalServerConfig } from '../../config/LocalServerConfig';
 
 const PLUGIN_NAME = 'mocker';
 const HANDLER_NAME_FIELD = 'mockerName';
@@ -24,25 +24,25 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
   const adminCGIBase = localServerConfig.getAdminCGIBase();
 
   // 获取所有的 mocker 列表
-  let mockerList = mockerParser.getAllMocker();
+  const mockerList = mockerParser.getAllMocker();
 
   // GET ${adminCGIBase}/mocker 所有的 mocker 列表信息
   initGetList(router, adminCGIBase, PLUGIN_NAME, (req, res) => {
-    let mockerList = mockerParser.getAllMocker();
+    const mockerList = mockerParser.getAllMocker();
 
     res.jsonp(mockerList);
   });
 
   // GET ${adminCGIBase}/mocker/:mockerName 获得这个 mocker 的信息
   initGetOne(router, adminCGIBase, PLUGIN_NAME, HANDLER_NAME_FIELD, (req, res) => {
-    let result = mockerParser.getMockerByName(req.params[HANDLER_NAME_FIELD]);
+    const result = mockerParser.getMockerByName(req.params[HANDLER_NAME_FIELD]);
 
     res.jsonp(result);
   });
 
   // POST ${adminCGIBase}/mocker/:mockerName 设置这个 mocker 的信息
   initPostOne(router, adminCGIBase, PLUGIN_NAME, HANDLER_NAME_FIELD, (req, res) => {
-    let result = mockerParser.updateMocker(req.params[HANDLER_NAME_FIELD], req.body);
+    const result = mockerParser.updateMocker(req.params[HANDLER_NAME_FIELD], req.body);
 
     res.jsonp(result);
   });
@@ -67,6 +67,9 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
       query: req.query,
       path: req.path,
       config: localServerConfig,
+      pkg: {
+        [pkgInfo.name]: pkgInfo.version,
+      },
     });
   });
 

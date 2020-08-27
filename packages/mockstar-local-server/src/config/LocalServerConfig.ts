@@ -1,6 +1,6 @@
 import fs from 'fs';
-import {LocalServerConfigOpt} from '../types';
-import {getMockServerPath, getBuildPath, getLogPath} from '../utils/mockstar';
+import { LocalServerConfigOpt } from '../types';
+import { getMockServerPath, getBuildPath, getLogPath } from '../utils/mockstar';
 
 export class LocalServerConfig {
   // 根目录
@@ -33,7 +33,7 @@ export class LocalServerConfig {
    *
    * @param {Object} configOpts 配置项
    */
-  constructor(configOpts: LocalServerConfigOpt = {rootPath: ''}) {
+  constructor(configOpts: LocalServerConfigOpt = { rootPath: '' }) {
     this.rootPath = configOpts.rootPath;
 
     this.buildPath = getBuildPath(this.rootPath, configOpts.buildPath);
@@ -110,7 +110,7 @@ export class LocalServerConfig {
    * @param {Boolean} [ignoreNamespace] 是否忽略 namespace
    * @return {String}
    */
-  getAdminCGIBase(ignoreNamespace: boolean = false): string {
+  getAdminCGIBase(ignoreNamespace?: boolean): string {
     return `${this.getAdminSiteRootPath(ignoreNamespace)}${this.adminCGIRouteName}`;
   }
 
