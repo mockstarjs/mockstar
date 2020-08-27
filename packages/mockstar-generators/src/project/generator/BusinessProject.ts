@@ -14,7 +14,7 @@ export default class BusinessProject {
     this.isDev = opts.isDev || false;
     this.autoInstall = opts.autoInstall || false;
     this.pkgVersion = opts.pkgVersion || {};
-    this.name = opts.name || '';
+    this.name = opts.name || 'mockstar-app';
     this.port = opts.port || 9527;
     this.cmder = opts.cmder || 'npm';
   }
