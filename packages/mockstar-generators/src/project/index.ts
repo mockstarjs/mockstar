@@ -46,3 +46,7 @@ export default function initProject(opts: { pkgVersion?: { mockstar: string } } 
     );
   });
 }
+
+export function getProjectGeneratorTemplatesRoot(): string {
+  return path.join(__dirname, './generator/templates');
+}
