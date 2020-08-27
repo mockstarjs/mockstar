@@ -64,19 +64,19 @@ export default {
       return '快速开始 →';
     },
     toWorkbenchLink() {
-      return 'https://github.com/matmanjs/matman';
+      return 'https://github.com/mockstarjs/mockstar';
     },
     getStarted() {
       return '管理平台';
     },
     starLink() {
-      return 'https://github.com/matmanjs/matman';
+      return 'https://github.com/mockstarjs/mockstar';
     },
     fockLink() {
-      return 'https://github.com/matmanjs/matman';
+      return 'https://github.com/mockstarjs/mockstar';
     },
     issuesLink() {
-      return 'https://github.com/matmanjs/matman/issues';
+      return 'https://github.com/mockstarjs/mockstar/issues';
     },
     logoBig() {
       return logoBig;
