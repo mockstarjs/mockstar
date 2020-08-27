@@ -1,28 +1,12 @@
 import React, { Component } from 'react';
 import { Button, Form, Input } from 'antd';
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
-  },
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
 };
-
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
 };
 
 const debugJsonData = {
@@ -32,61 +16,80 @@ const debugJsonData = {
   },
 };
 
-class NormalLoginForm extends Component {
-  handleSubmit = e => {
-    e.preventDefault();
+export default class CreateMockerForm extends Component {
+  formRef = React.createRef();
 
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (
+      this.props.localServerConfig.mockServerPath !== nextProps.localServerConfig.mockServerPath
+    ) {
+      this.formRef.current.setFieldsValue({
+        parentPath: nextProps.localServerConfig.mockServerPath,
+      });
+    }
+  }
 
-        this.props.handleCreateMocker(values);
-      }
-    });
+  onFinish = values => {
+    console.log('Success:', values);
+    this.props.handleCreateMocker(values);
+  };
+
+  onFinishFailed = errorInfo => {
+    console.log('Failed:', errorInfo);
   };
 
   render() {
     const { localServerConfig } = this.props;
-    const { getFieldDecorator } = this.props.form;
+
+    const initialValues = {
+      parentPath: localServerConfig.mockServerPath,
+      mockerName: 'i-am-xhr-request-get',
+      mockerMethod: 'GET',
+      mockerRoute: '/cgi-bin/i-am-xhr-request-get',
+      debugMockModuleJsonData: JSON.stringify(debugJsonData, null, 2),
+    };
 
     return (
-      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="父级目录">
-          {getFieldDecorator('parentPath', {
-            rules: [{ required: true, message: 'Please input your parentPath!' }],
-            initialValue: localServerConfig.mockServerPath,
-          })(<Input placeholder="parentPath" />)}
+      <Form
+        {...layout}
+        name="basic"
+        ref={this.formRef}
+        initialValues={initialValues}
+        onFinish={this.onFinish}
+        onFinishFailed={this.onFinishFailed}>
+        <Form.Item
+          label="父级目录"
+          name="parentPath"
+          rules={[{ required: true, message: 'Please input your parentPath!' }]}>
+          <Input value={localServerConfig.mockServerPath} />
         </Form.Item>
 
-        <Form.Item label="mocker name">
-          {getFieldDecorator('mockerName', {
-            rules: [{ required: true, message: 'Please input your mockerName!' }],
-            initialValue: 'i-am-xhr-request-get',
-          })(<Input placeholder="mockerName" />)}
+        <Form.Item
+          label="mocker name"
+          name="mockerName"
+          rules={[{ required: true, message: 'Please input your mockerName!' }]}>
+          <Input />
         </Form.Item>
 
-        <Form.Item label="mocker method">
-          {getFieldDecorator('mockerMethod', {
-            rules: [{ required: true, message: 'Please input your mockerMethod!' }],
-            initialValue: 'GET',
-          })(<Input placeholder="mockerMethod" />)}
+        <Form.Item
+          label="mocker method"
+          name="mockerMethod"
+          rules={[{ required: true, message: 'Please input your mockerMethod!' }]}>
+          <Input />
         </Form.Item>
 
-        <Form.Item label="mocker route">
-          {getFieldDecorator('mockerRoute', {
-            rules: [{ required: true, message: 'Please input your mockerRoute!' }],
-            initialValue: '/cgi-bin/i-am-xhr-request-get',
-          })(<Input placeholder="mockerRoute" />)}
+        <Form.Item
+          label="mocker route"
+          name="mockerRoute"
+          rules={[{ required: true, message: 'Please input your mockerRoute!' }]}>
+          <Input />
         </Form.Item>
 
-        <Form.Item label="桩数据">
-          {getFieldDecorator('debugMockModuleJsonData', {
-            rules: [],
-            initialValue: JSON.stringify(debugJsonData, null, 2),
-          })(<Input.TextArea autoSize />)}
+        <Form.Item label="桩数据" name="debugMockModuleJsonData">
+          <Input.TextArea autoSize />
         </Form.Item>
 
-        <Form.Item {...tailFormItemLayout}>
+        <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
             提交
           </Button>
@@ -95,5 +98,3 @@ class NormalLoginForm extends Component {
     );
   }
 }
-
-export default Form.create({ name: 'normal_login' })(NormalLoginForm);
