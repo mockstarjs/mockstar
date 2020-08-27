@@ -2,11 +2,11 @@ import express from 'express';
 import methodOverride from 'method-override';
 import _ from 'lodash';
 import request from 'request';
-import {MS_FROM} from 'mockstar';
-import {parser} from '../body-parser';
-import {LocalServerConfig} from '../../config/LocalServerConfig';
+import { MS_FROM } from 'mockstar';
+import { parser } from '../body-parser';
+import { LocalServerConfig } from '../../config/LocalServerConfig';
 import initPlugins from '../../plugins';
-import {Router} from '../../types';
+import { Router } from '../../types';
 
 export default (localServerConfig: LocalServerConfig) => {
   // Create router

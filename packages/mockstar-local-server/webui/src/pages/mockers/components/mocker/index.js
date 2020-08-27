@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Layout} from 'antd';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Layout } from 'antd';
 
-import {AsyncClient} from 'mockstar-client';
+import { AsyncClient } from 'mockstar-client';
 
-import {ajax} from '../../../../business/db';
+import { ajax } from '../../../../business/db';
 
 import {
   loadMocker,
@@ -12,7 +12,7 @@ import {
   setMockerActiveModule,
   setMockerDisable,
 } from '../../data/data-mocker';
-import {loadMockerList} from '../../data/data-mocker-list';
+import { loadMockerList } from '../../data/data-mocker-list';
 
 import MockerBreadcrumb from './display-breadcrumb';
 import MockerDetail from './display-detail';
@@ -23,7 +23,7 @@ import MockModuleList from './display-mock-module-list';
 import MockerReadme from './display-readme';
 import MockerMenu from './display-menu';
 
-import {getNamespace} from '../../../../custom';
+import { getNamespace } from '../../../../custom';
 
 import './index.less';
 
@@ -39,7 +39,7 @@ class Mocker extends Component {
   componentDidMount() {
     console.log('Mocker componentDidMount', this.props);
 
-    let {mockerName} = this.props.match.params;
+    let { mockerName } = this.props.match.params;
 
     // 加载这个 mocker 的信息
     this.props.loadMocker(mockerName);
@@ -50,7 +50,7 @@ class Mocker extends Component {
   }
 
   getMockServerHost() {
-    const {localServerConfig} = this.props;
+    const { localServerConfig } = this.props;
 
     // hostname 应该与页面一致
     const hostname = window.location.hostname;
@@ -67,7 +67,7 @@ class Mocker extends Component {
   }
 
   handlePreviewResult = query => {
-    const {mockerItem} = this.props;
+    const { mockerItem } = this.props;
 
     let actualURL = mockerItem.config.route;
 
@@ -134,7 +134,7 @@ class Mocker extends Component {
 
   handleModalEmitPush = data => {
     console.log('--push---', data);
-    const {mockerItem} = this.props;
+    const { mockerItem } = this.props;
 
     // 获得 host
     let host = this.getMockServerHost();
@@ -160,8 +160,8 @@ class Mocker extends Component {
   };
 
   render() {
-    const {isLoaded, mockerItem, readme, match, mockerListInfo} = this.props;
-    const {modalShowData} = this.state;
+    const { isLoaded, mockerItem, readme, match, mockerListInfo } = this.props;
+    const { modalShowData } = this.state;
     const mockServerHost = this.getMockServerHost();
 
     return (
@@ -216,7 +216,7 @@ class Mocker extends Component {
 }
 
 function mapStateToProps(state) {
-  const {mockerInfo, mockerListInfo, detailInfo} = state;
+  const { mockerInfo, mockerListInfo, detailInfo } = state;
 
   return {
     isLoaded: mockerInfo.isLoaded,

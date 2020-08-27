@@ -3,6 +3,7 @@ import handleXhr from './xhr';
 import { Router } from '../../types';
 import {
   initGetAdminDetail,
+  initPostCreateMocker,
   initGetList,
   initGetOne,
   initGetOneReadMe,
@@ -67,6 +68,17 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
       query: req.query,
       path: req.path,
       config: localServerConfig,
+      pkg: {
+        [pkgInfo.name]: pkgInfo.version,
+      },
+    });
+  });
+
+  // POST ${adminCGIBase}/create-mocker 获得配置项数据
+  initPostCreateMocker(router, adminCGIBase, (req, res) => {
+    res.jsonp({
+      status: 200,
+      description: 'xxx',
       pkg: {
         [pkgInfo.name]: pkgInfo.version,
       },
