@@ -6,5 +6,13 @@
  * @return {Promise|*}
  */
 module.exports = function (params, req) {
-  return <%- JSON.stringify(businessMocker.debugMockModuleJsonData, null, 2); %>;
+  return {
+  "retcode": 0,
+  "result": {
+    "uid": 99999,
+    "type": 9,
+    "description": "我是 debug",
+    "other_msg": "仅作为临时调试用，建议按照不同的场景构造不同的 mock module!"
+  }
+};
 };

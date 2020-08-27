@@ -93,14 +93,14 @@ export default class extends Generator {
           name: demoMockerName,
           route: '/cgi-bin/a/b/' + demoMockerName,
           method: 'get',
-          debugMockModuleJsonData: {
-            retcode: 0,
-            result: {
-              uid: 99999,
-              type: 9,
-              description: '我是 debug',
-              other_msg: '仅作为临时调试用，建议按照不同的场景构造不同的 mock module!',
-            },
+        },
+        debugMockModuleJsonData: {
+          retcode: 0,
+          result: {
+            uid: 99999,
+            type: 9,
+            description: '我是 debug',
+            other_msg: '仅作为临时调试用，建议按照不同的场景构造不同的 mock module!',
           },
         },
       });

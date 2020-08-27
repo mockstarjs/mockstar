@@ -5,41 +5,43 @@ import shell from 'shelljs';
 import fs from 'fs-extra';
 import walkSync from 'walk-sync';
 
-import { MockerConfig } from './MockerConfig';
+import BusinessMocker from './BusinessMocker';
 
 export default class extends Generator {
-  mockerConfig: MockerConfig;
+  businessMocker: BusinessMocker;
 
   constructor(args: string | string[], options: Record<string, unknown>) {
     super(args, options);
 
     // 配置参数
-    this.mockerConfig = new MockerConfig(this.options.mockerOpts);
+    this.businessMocker = new BusinessMocker(this.options.mockerOpts);
   }
 
   /**
    * Show template basic message.
    */
   initializing() {
-    if (this.mockerConfig.isDev) {
-      console.log('--initializing--', this.mockerConfig);
+    if (this.businessMocker.isDev) {
+      console.log('--initializing--', this.businessMocker);
     }
   }
 
   validate() {
-    if (this.mockerConfig.isDev) {
+    if (this.businessMocker.isDev) {
       console.log('--validate--');
     }
 
     if (
-      !this.mockerConfig.isDev &&
+      !this.businessMocker.isDev &&
       fs.pathExistsSync(
-        path.join(this.mockerConfig.parentPath, this.mockerConfig.config.name as string),
+        path.join(this.businessMocker.parentPath, this.businessMocker.config.name as string),
       )
     ) {
       // 如果当前路径下已经存在了，则需要进行提示，避免覆盖
-      return Promise.reject(`当前目录下已经存在名字为 ${this.mockerConfig.config.name} 的文件夹了`);
-    } else if (!this.mockerConfig.config.route) {
+      return Promise.reject(
+        `当前目录下已经存在名字为 ${this.businessMocker.config.name} 的文件夹了`,
+      );
+    } else if (!this.businessMocker.config.route) {
       // 必须的参数验证
       return Promise.reject(`必须要配置 route`);
     }
@@ -51,7 +53,7 @@ export default class extends Generator {
    * Generator project files.
    */
   writing() {
-    const { parentPath, config } = this.mockerConfig;
+    const { parentPath, config } = this.businessMocker;
 
     const _copyTemplates = () => {
       const folderPath = path.join(parentPath, config.name as string);
@@ -76,7 +78,7 @@ export default class extends Generator {
             this.templatePath(curFile),
             this.destinationPath(curFile.replace(/\.ejs$/, '')),
             {
-              mockerConfig: this.mockerConfig,
+              businessMocker: this.businessMocker,
             },
           );
         } else {
@@ -89,13 +91,13 @@ export default class extends Generator {
   }
 
   install() {
-    if (this.mockerConfig.isDev) {
+    if (this.businessMocker.isDev) {
       console.log('--install--');
     }
   }
 
   end() {
-    if (this.mockerConfig.isDev) {
+    if (this.businessMocker.isDev) {
       console.log('--end--');
     }
   }

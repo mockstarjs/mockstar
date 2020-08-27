@@ -1,4 +1,4 @@
-# <%= businessMocker.config.name %>
+# i-am-xhr-request-get
 
 【接口的描述，建议可以适当补充一些图片】
 
