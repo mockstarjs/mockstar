@@ -1,22 +1,37 @@
 import path from 'path';
 import 'mocha';
 import { expect } from 'chai';
+import fse from 'fs-extra';
+import walkSync from 'walk-sync';
 
 import initMocker, { getMockerGeneratorTemplatesRoot } from '../../../src/mocker';
 
+const FIXTURE_PATH = path.join(__dirname, '../../data/fixtures/mockers');
+const TMP_PATH = path.join(__dirname, '../../tmp');
+
 describe('./mocker/index.ts', () => {
-  describe('initMocker()', () => {
+  describe('basic check', () => {
     it('initMocker should be a function', () => {
       expect(initMocker).to.be.an('function');
     });
 
-    it('check iAmXHRRequestGet', async () => {
+    it('getMockerGeneratorTemplatesRoot should be a function', () => {
+      expect(getMockerGeneratorTemplatesRoot).to.be.an('function');
+    });
+  });
+
+  describe('initMocker(i-am-xhr-request-get)', () => {
+    const name = 'i-am-xhr-request-get';
+    const fixtureSaveDir = path.join(FIXTURE_PATH, name);
+    const tmpSaveDir = path.join(TMP_PATH, name);
+
+    before(async () => {
       await initMocker({
         isDev: false,
-        parentPath: path.join(__dirname, '../../data/fixtures/mockers'),
+        parentPath: TMP_PATH,
         isInitReadme: true,
         config: {
-          name: 'i-am-xhr-request-get',
+          name: name,
           method: 'get',
           route: '/cgi-bin/i-am-xhr-request-get',
         },
@@ -30,7 +45,24 @@ describe('./mocker/index.ts', () => {
           },
         },
       });
-      expect(initMocker).to.be.an('function');
+    });
+
+    after(() => {
+      fse.removeSync(tmpSaveDir);
+    });
+
+    it('check all files exits', async () => {
+      const tmpPaths = walkSync(tmpSaveDir);
+      const expectPaths = walkSync(fixtureSaveDir);
+
+      expect(tmpPaths).to.eql(expectPaths);
+    });
+
+    it('check README.md', async () => {
+      const tmpContent = fse.readFileSync(path.join(tmpSaveDir, 'README.md'), 'utf8');
+      const expectContent = fse.readFileSync(path.join(fixtureSaveDir, 'README.md'), 'utf8');
+
+      expect(tmpContent).to.equal(expectContent);
     });
   });
 
