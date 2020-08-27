@@ -56,13 +56,23 @@ describe('./mocker/index.ts', () => {
       const expectPaths = walkSync(fixtureSaveDir);
 
       expect(tmpPaths).to.eql(expectPaths);
+      expect(tmpPaths.length).to.equal(19);
     });
 
-    it('check README.md', async () => {
-      const tmpContent = fse.readFileSync(path.join(tmpSaveDir, 'README.md'), 'utf8');
-      const expectContent = fse.readFileSync(path.join(fixtureSaveDir, 'README.md'), 'utf8');
+    it('check all files equal', async () => {
+      const tmpPaths = walkSync.entries(tmpSaveDir);
 
-      expect(tmpContent).to.equal(expectContent);
+      tmpPaths.forEach(entry => {
+        if (!entry.isDirectory()) {
+          const tmpContent = fse.readFileSync(path.join(tmpSaveDir, entry.relativePath), 'utf8');
+          const expectContent = fse.readFileSync(
+            path.join(fixtureSaveDir, entry.relativePath),
+            'utf8',
+          );
+
+          expect(tmpContent).to.equal(expectContent);
+        }
+      });
     });
   });
 
