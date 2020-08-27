@@ -68,11 +68,11 @@ class LayoutHeader extends Component {
             </NavLink>
           </Menu.Item>
 
-          <Menu.Item key="debug">
-            <NavLink to={`${getSiteBase()}/debug`} isActive={this.handleIsActive}>
-              debug
-            </NavLink>
-          </Menu.Item>
+          {/*<Menu.Item key="debug">*/}
+          {/*  <NavLink to={`${getSiteBase()}/debug`} isActive={this.handleIsActive}>*/}
+          {/*    debug*/}
+          {/*  </NavLink>*/}
+          {/*</Menu.Item>*/}
         </Menu>
       </Layout.Header>
     );

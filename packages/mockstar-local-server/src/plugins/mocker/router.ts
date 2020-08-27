@@ -1,4 +1,5 @@
 import path from 'path';
+import fse from 'fs-extra';
 import { Parser, pkgInfo } from 'mockstar';
 import { initMocker } from 'mockstar-generators';
 import handleXhr from './xhr';
@@ -96,6 +97,24 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
       console.log('JSON.parse debugMockModuleJsonData error', e);
     }
 
+    const targetMockerPath = path.join(initMockerOpts.parentPath, initMockerOpts.config.name);
+
+    // 注意，如果已经存在同名文件夹，则返回
+    if (fse.existsSync(targetMockerPath)) {
+      res.jsonp({
+        status: 500,
+        msg: '创建失败！',
+        pkg: {
+          [pkgInfo.name]: pkgInfo.version,
+        },
+        result: `已经存在该文件：${targetMockerPath}`,
+      });
+
+      return;
+    }
+
+    // 这里还有一个隐藏 bug ，就是如果 初始化失败一次之后，后续就卡住了，无响应，
+    // 因此才在上一步主动检查
     initMocker(initMockerOpts)
       .then(data => {
         res.jsonp({
@@ -105,13 +124,11 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
             [pkgInfo.name]: pkgInfo.version,
           },
           result: {
-            mockerPath: path.join(initMockerOpts.parentPath, initMockerOpts.config.name),
+            mockerPath: targetMockerPath,
           },
         });
       })
       .catch(err => {
-        console.error(err);
-
         res.jsonp({
           status: 500,
           msg: '创建失败！',
