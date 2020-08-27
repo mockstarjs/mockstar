@@ -4,41 +4,41 @@ import Generator from 'yeoman-generator';
 import shell from 'shelljs';
 import fs from 'fs-extra';
 
-import { ProjectConfig } from './ProjectConfig';
+import BusinessProject from './BusinessProject';
 
 import initMocker from '../../mocker';
 import walkSync from 'walk-sync';
 
 export default class extends Generator {
-  projectConfig: ProjectConfig;
+  businessProject: BusinessProject;
 
-  constructor(args: string | string[], options: {}) {
+  constructor(args: string | string[], options: Record<string, unknown>) {
     super(args, options);
 
     // 配置参数
-    this.projectConfig = new ProjectConfig(this.options.projectOpts);
+    this.businessProject = new BusinessProject(this.options.projectOpts);
   }
 
   /**
    * Show template basic message.
    */
   initializing() {
-    if (this.projectConfig.isDev) {
-      console.log('--initializing--', this.projectConfig);
+    if (this.businessProject.isDev) {
+      console.log('--initializing--', this.businessProject);
     }
   }
 
   validate() {
-    if (this.projectConfig.isDev) {
+    if (this.businessProject.isDev) {
       console.log('--validate--');
     }
 
     if (
-      !this.projectConfig.isDev &&
-      fs.pathExistsSync(path.join(this.projectConfig.parentPath, this.projectConfig.name))
+      !this.businessProject.isDev &&
+      fs.pathExistsSync(path.join(this.businessProject.parentPath, this.businessProject.name))
     ) {
       // 如果当前路径下已经存在了，则需要进行提示，避免覆盖
-      return Promise.reject(`当前目录下已经存在名字为 ${this.projectConfig.name} 的文件夹了`);
+      return Promise.reject(`当前目录下已经存在名字为 ${this.businessProject.name} 的文件夹了`);
     }
 
     return Promise.resolve();
@@ -48,7 +48,7 @@ export default class extends Generator {
    * Generator project files.
    */
   writing() {
-    const { parentPath, name } = this.projectConfig;
+    const { parentPath, name } = this.businessProject;
 
     const _copyTemplates = () => {
       const folderPath = path.join(parentPath, name);
@@ -73,7 +73,7 @@ export default class extends Generator {
             this.templatePath(curFile),
             this.destinationPath(curFile.replace(/\.ejs$/, '')),
             {
-              projectConfig: this.projectConfig,
+              businessProject: this.businessProject,
             },
           );
         } else {
@@ -85,7 +85,7 @@ export default class extends Generator {
       const demoMockerName = 'demo_cgi';
 
       return initMocker({
-        isDev: this.projectConfig.isDev,
+        isDev: this.businessProject.isDev,
         parentPath: path.join(this.destinationPath(), './mock_server'),
         isInitReadme: true,
         config: {
@@ -110,25 +110,25 @@ export default class extends Generator {
   }
 
   install() {
-    if (this.projectConfig.isDev) {
+    if (this.businessProject.isDev) {
       console.log('--install--');
     }
 
-    if (this.projectConfig.autoInstall) {
+    if (this.businessProject.autoInstall) {
       console.log(
         '正在安装 npm 包，如果安装缓慢，亦可手动执行 ' +
-          this.projectConfig.cmder +
+          this.businessProject.cmder +
           ' install 命令...',
       );
 
-      shell.exec(this.projectConfig.cmder + ' install', { silent: true });
+      shell.exec(this.businessProject.cmder + ' install', { silent: true });
 
       console.log('安装完成!');
     }
   }
 
   end() {
-    if (this.projectConfig.isDev) {
+    if (this.businessProject.isDev) {
       console.log('--end--');
     }
   }

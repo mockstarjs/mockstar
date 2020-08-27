@@ -3,16 +3,32 @@ import yeoman from 'yeoman-environment';
 
 import { pkgInfo } from 'mockstar';
 
+export interface PkgVersion {
+  mockstar?: string;
+  'mockstar-cli'?: string;
+}
+
+export interface InitProjectOpts {
+  parentPath: string;
+  isDev?: boolean;
+  autoInstall?: boolean;
+  pkgVersion?: PkgVersion;
+  name?: string;
+  port?: number;
+  cmder?: string;
+}
+
 /**
- * 初始化一个 mocker
+ * 初始化一个 project
  */
-export default function initProject(opts: { pkgVersion?: { mockstar: string } } = {}) {
+export default function initProject(opts: InitProjectOpts) {
   // generator 的名字
   const name = 'project';
 
   // 依赖包的版本号
   opts.pkgVersion = {
     mockstar: pkgInfo.version,
+    'mockstar-cli': pkgInfo.version,
   };
 
   // generator 的目录
