@@ -1,12 +1,14 @@
+import path from 'path';
 import { Parser, pkgInfo } from 'mockstar';
+import { initMocker } from 'mockstar-generators';
 import handleXhr from './xhr';
 import { Router } from '../../types';
 import {
   initGetAdminDetail,
-  initPostCreateMocker,
   initGetList,
   initGetOne,
   initGetOneReadMe,
+  initPostCreateMocker,
   initPostOne,
 } from '../../server/router/base-router';
 import { LocalServerConfig } from '../../config/LocalServerConfig';
@@ -76,13 +78,49 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
 
   // POST ${adminCGIBase}/create-mocker 获得配置项数据
   initPostCreateMocker(router, adminCGIBase, (req, res) => {
-    res.jsonp({
-      status: 200,
-      description: 'xxx',
-      pkg: {
-        [pkgInfo.name]: pkgInfo.version,
+    const initMockerOpts = {
+      isDev: false,
+      parentPath: req.body.parentPath,
+      isInitReadme: true,
+      config: {
+        name: req.body.mockerName,
+        method: req.body.mockerMethod,
+        route: req.body.mockerRoute,
       },
-    });
+      debugMockModuleJsonData: req.body.debugMockModuleJsonData,
+    };
+
+    try {
+      initMockerOpts.debugMockModuleJsonData = JSON.parse(initMockerOpts.debugMockModuleJsonData);
+    } catch (e) {
+      console.log('JSON.parse debugMockModuleJsonData error', e);
+    }
+
+    initMocker(initMockerOpts)
+      .then(data => {
+        res.jsonp({
+          status: 200,
+          msg: '创建成功',
+          pkg: {
+            [pkgInfo.name]: pkgInfo.version,
+          },
+          result: {
+            mockerPath: path.join(initMockerOpts.parentPath, initMockerOpts.config.name),
+          },
+        });
+      })
+      .catch(err => {
+        console.error(err);
+
+        res.jsonp({
+          status: 500,
+          msg: '创建失败！',
+          pkg: {
+            [pkgInfo.name]: pkgInfo.version,
+          },
+          result: (err && err.message) || err,
+        });
+      });
   });
 
   // 处理 plugin=xhr 的场景

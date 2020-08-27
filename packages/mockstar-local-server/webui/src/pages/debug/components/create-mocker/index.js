@@ -49,7 +49,11 @@ class CreateMocker extends Component {
           console.log(`url=${requestURL}`, queryData, data);
         }
 
-        this.addLog(data, 'success');
+        if (data.status === 200) {
+          this.addLog(data, 'success');
+        } else {
+          this.addLog(data.result, 'error');
+        }
       })
       .catch(err => {
         console.error(err);
