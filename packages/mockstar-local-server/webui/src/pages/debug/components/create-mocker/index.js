@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Alert, Divider, Tag } from 'antd';
 
 import CreateMockerForm from './create-mocker-form';
 
@@ -9,6 +10,12 @@ import { getCGIBase } from '../../../../custom';
 import './index.less';
 
 class CreateMocker extends Component {
+  state = {
+    logs: [],
+    message: '',
+    messageType: 'info',
+  };
+
   getMockServerHost() {
     const { localServerConfig } = this.props;
 
@@ -34,19 +41,38 @@ class CreateMocker extends Component {
       requestURL = 'http://127.0.0.1:9527' + requestURL;
     }
 
+    this.addLog(`准备发送请求：${JSON.stringify(queryData)}`);
+
     getDataByPost(requestURL, queryData)
       .then(data => {
         if (process.env.NODE_ENV !== 'production') {
           console.log(`url=${requestURL}`, queryData, data);
         }
+
+        this.addLog(data, 'success');
       })
       .catch(err => {
         console.error(err);
+
+        this.addLog((err && err.message) || err, 'error');
       });
+  };
+
+  addLog = (message, messageType = 'info') => {
+    this.setState({
+      logs: [
+        ...this.state.logs,
+        {
+          message: typeof message === 'object' ? JSON.stringify(message) : message,
+          messageType,
+        },
+      ],
+    });
   };
 
   render() {
     const { localServerConfig } = this.props;
+    const { logs } = this.state;
 
     return (
       <div className="create-mocker">
@@ -56,6 +82,16 @@ class CreateMocker extends Component {
           localServerConfig={localServerConfig}
           handleCreateMocker={this.handleCreateMocker}
         />
+
+        {logs.map((item, index) => {
+          return (
+            <div key={index}>
+              <Tag>{index}</Tag>
+              <Alert message={item.message} type={item.messageType} />
+              <Divider />
+            </div>
+          );
+        })}
       </div>
     );
   }
