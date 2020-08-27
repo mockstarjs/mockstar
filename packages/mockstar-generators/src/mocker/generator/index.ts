@@ -52,7 +52,6 @@ export default class extends Generator {
    */
   writing() {
     const { parentPath, config } = this.mockerConfig;
-    console.log('==this.mockerConfig==', this.mockerConfig);
 
     const _copyTemplates = () => {
       const folderPath = path.join(parentPath, config.name as string);

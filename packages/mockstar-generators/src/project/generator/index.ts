@@ -7,6 +7,7 @@ import fs from 'fs-extra';
 import { ProjectConfig } from './ProjectConfig';
 
 import initMocker from '../../mocker';
+import walkSync from 'walk-sync';
 
 export default class extends Generator {
   projectConfig: ProjectConfig;
@@ -57,34 +58,35 @@ export default class extends Generator {
 
       this.destinationRoot(this.destinationPath(folderPath));
 
-      this.fs.copyTpl(this.templatePath('_package'), this.destinationPath('package.json'), {
-        projectConfig: this.projectConfig,
+      // 遍历模板下的所有文件
+      const allFiles: string[] = [];
+      walkSync.entries(this.sourceRoot()).forEach(entry => {
+        if (!entry.isDirectory()) {
+          allFiles.push(entry.relativePath);
+        }
       });
 
-      this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
-
-      this.fs.copy(this.templatePath('gitattributes'), this.destinationPath('.gitattributes'));
-
-      this.fs.copyTpl(this.templatePath('_README.md'), this.destinationPath('README.md'), {
-        projectConfig: this.projectConfig,
+      // 如果以 .ejs 为结尾的则默认为模板文件
+      allFiles.forEach((curFile: string) => {
+        if (path.extname(curFile) === '.ejs') {
+          this.fs.copyTpl(
+            this.templatePath(curFile),
+            this.destinationPath(curFile.replace(/\.ejs$/, '')),
+            {
+              projectConfig: this.projectConfig,
+            },
+          );
+        } else {
+          this.fs.copy(this.templatePath(curFile), this.destinationPath(curFile));
+        }
       });
-
-      this.fs.copyTpl(
-        this.templatePath('mockstar.config'),
-        this.destinationPath('mockstar.config.js'),
-        {
-          projectConfig: this.projectConfig,
-        },
-      );
-
-      // this.fs.copy(this.templatePath('src'), this.destinationPath('src'));
 
       // 增加一个简单的 mocker 即可
       const demoMockerName = 'demo_cgi';
 
       return initMocker({
         isDev: this.projectConfig.isDev,
-        parentPath: path.join(this.destinationPath(), './src/mockers'),
+        parentPath: path.join(this.destinationPath(), './mock_server'),
         isInitReadme: true,
         config: {
           description: '我是' + demoMockerName,
