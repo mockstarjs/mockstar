@@ -1,14 +1,24 @@
 {
   "name": "mockstar-generators",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "generators for mockstar",
   "main": "lib/index.js",
   "scripts": {
-    "build": "node build.js",
-    "test-mocha": "node ./node_modules/mocha/bin/_mocha",
-    "test": "npm run eslint && npm run test-cov",
-    "eslint": "eslint src/",
-    "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha"
+    "prepublishOnly": "npm run build",
+    "build": "tsc -d && node ./run-after-build.js",
+    "test": "npm run test:cover",
+    "test:unit": "mocha 'test/**/*.test.{ts,tsx}'",
+    "test:cover": "nyc npm run test:unit",
+    "lint": "eslint src test --ext .ts"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "keywords": [
     "mock",
@@ -25,24 +35,28 @@
   },
   "homepage": "https://github.com/mockstarjs/mockstar#readme",
   "dependencies": {
-    "bluebird": "^3.5.3",
     "fs-extra": "^7.0.1",
     "mkdirp": "^0.5.1",
-    "mockstar": "^1.2.2",
+    "mockstar": "^1.3.0",
     "shelljs": "^0.8.3",
-    "url-parse": "^1.4.4",
     "yeoman-environment": "^2.3.4",
     "yeoman-generator": "^3.2.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/expect": "^24.3.0",
     "@types/fs-extra": "^9.0.1",
     "@types/mkdirp": "^1.0.1",
+    "@types/mocha": "^7.0.2",
     "@types/shelljs": "^0.8.8",
-    "@types/yeoman-environment": "^2.3.3",
+    "@types/yeoman-environment": "^2.10.1",
     "@types/yeoman-generator": "^3.1.4",
     "chai": "^4.2.0",
     "eslint": "^5.7.0",
-    "mocha": "^8.0.1",
-    "typescript": "^3.9.6"
+    "mocha": "^8.1.2",
+    "nyc": "^15.1.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6",
+    "walk-sync": "^2.2.0"
   }
 }

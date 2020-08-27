@@ -23,7 +23,7 @@ export default {
       return {
         lisence: 'MIT',
         copyright: `© ${new Date().getFullYear()} TENCENT IVWEB.All Rights Reserved`,
-        repoLink: 'https://github.com/matmanjs/matman',
+        repoLink: 'https://github.com/mockstarjs/mockstar',
       };
     },
     footerLogo() {

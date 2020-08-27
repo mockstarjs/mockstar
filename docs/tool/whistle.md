@@ -6,7 +6,7 @@
 
 ### Node
 
-matman 是基于 Node 来实现的，因此需要在本机安装 Node 。
+mockstar 是基于 Node 来实现的，因此需要在本机安装 Node 。
 
 为了获得更好的性能，推荐安装最新版本的 Node，进入 https://nodejs.org/ 官网，选择 LTS 版本的 Node 安装即可。
 
@@ -45,7 +45,7 @@ $ w2 -V
 在终端/控制台下运行如下命令可以启动whistle
 
 ```bash
-hebly723-MC1:matman-demo hebly723$ w2 start
+hebly723-MC1:mockstar-demo hebly723$ w2 start
 [i] whistle@1.15.10 restarted
 [i] 1. use your device to visit the following URL list, gets the IP of the URL you can access:
        http://127.0.0.1:8899/
