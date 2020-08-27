@@ -1,6 +1,6 @@
 {
   "name": "mockstar-cli",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "CLI tool for MockStar",
   "bin": {
     "mockstar": "./bin/mockstar"
@@ -48,7 +48,7 @@
     "minimist": "^1.2.0",
     "mockstar": "^1.3.0",
     "mockstar-generators": "^1.3.0",
-    "mockstar-local-server": "^1.3.1",
+    "mockstar-local-server": "^1.3.2",
     "mockstar-starting": "^1.2.2",
     "ora": "^4.0.4",
     "osenv": "^0.1.4",
@@ -72,7 +72,7 @@
     "cross-spawn": "^5.1.0",
     "eslint": "^5.7.0",
     "mocha": "^8.0.1",
-    "mockstar-client": "^1.3.1",
+    "mockstar-client": "^1.3.2",
     "superagent": "^3.8.3",
     "typescript": "^3.9.6"
   }
