@@ -1,5 +1,3 @@
-const baseCgi = require('../../lib/base-cgi');
-
 /**
  * 默认值
  * @type {Object}
@@ -12,24 +10,39 @@ const defaultData = {
 };
 
 /**
- * 获得成功类型的数据
+ * 获得CGI成功时返回的信息
  *
- * @param {Object | Promise} data 可能是plain object，也可能是 Promise
+ * @param {Object | Promise} data CGI实际的数据
  * @returns {Promise}
  */
-function getSuccessData(data = {}) {
-  return baseCgi.success(data, defaultData);
+function getSuccessData(data) {
+  return Promise.resolve(data).then(function (resultData) {
+    return {
+      retcode: 0,
+      result: Object.assign({}, defaultData, resultData),
+    };
+  });
 }
 
 /**
- * 获得失败类型的数据
+ * 获得CGI异常和失败时返回的信息
  *
- * @param {Number | Promise} errCode 可能是Number，也可能是 Promise
+ * @param {Number | Promise} errCode 错误码
  * @param {String} [errMsg] 错误信息
  * @returns {Promise}
  */
 function getErrorData(errCode, errMsg) {
-  return baseCgi.error(errCode, errMsg);
+  return Promise.resolve(errCode).then(function (resultCode) {
+    let obj = {
+      retcode: resultCode,
+    };
+
+    if (errMsg) {
+      obj.err_msg = errMsg;
+    }
+
+    return obj;
+  });
 }
 
 module.exports = {

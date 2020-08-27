@@ -1,18 +1,18 @@
 import path from 'path';
 import yeoman from 'yeoman-environment';
 
-import mockstarPkg from 'mockstar/package.json';
+import { pkgInfo } from 'mockstar';
 
 /**
  * 初始化一个 mocker
  */
-export default function initProject(opts: {pkgVersion?: {mockstar: string}} = {}) {
+export default function initProject(opts: { pkgVersion?: { mockstar: string } } = {}) {
   // generator 的名字
   const name = 'project';
 
   // 依赖包的版本号
   opts.pkgVersion = {
-    mockstar: mockstarPkg.version,
+    mockstar: pkgInfo.version,
   };
 
   // generator 的目录

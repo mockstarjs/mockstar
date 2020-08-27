@@ -3,13 +3,14 @@ import mkdirp from 'mkdirp';
 import Generator from 'yeoman-generator';
 import shell from 'shelljs';
 import fs from 'fs-extra';
-import {MockerConfig} from './MockerConfig';
+import { MockerConfig } from './MockerConfig';
 
 export default class extends Generator {
   mockerConfig: MockerConfig;
 
-  constructor(args: string | string[], options: {}) {
+  constructor(args: string | string[], options: Record<string, unknown>) {
     super(args, options);
+
     // 配置参数
     this.mockerConfig = new MockerConfig(this.options.mockerOpts);
   }
@@ -48,7 +49,7 @@ export default class extends Generator {
    * Generator project files.
    */
   writing() {
-    const {parentPath, config, isInitReadme} = this.mockerConfig;
+    const { parentPath, config, isInitReadme } = this.mockerConfig;
 
     const _copyTemplates = () => {
       const folderPath = path.join(parentPath, config.name as string);

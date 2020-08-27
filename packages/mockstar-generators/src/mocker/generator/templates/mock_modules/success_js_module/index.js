@@ -1,6 +1,7 @@
-const {getSuccessData} = require('../../base');
+const { getSuccessData } = require('../../base');
 
 /**
+ * 学生类型
  *
  * @param {Object} params 请求参数的对象，例如 ?a=1&b=2 ，则 params={a:1,b:2}
  * @param {Object} req 详见 http://expressjs.com/en/4x/api.html#req

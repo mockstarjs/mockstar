@@ -1,10 +1,11 @@
 {
   "description": "description for <%= mockerConfig.config.name %>",
   "route": "<%= mockerConfig.config.route %>",
-  "defaultModule": "success_type_1",
+  "defaultModule": "debug",
   "method": "<%= mockerConfig.config.method %>",
   "tags": [
     "tag1",
-    "tag2"
+    "tag2",
+    "<%= mockerConfig.config.method %>"
   ]
 }
