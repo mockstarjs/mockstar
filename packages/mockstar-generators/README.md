@@ -26,9 +26,6 @@ $ npm install mockstar-generators --save
   - `opts.autoInstall`，`boolean`，默认值为 `false` ，初始化完成之后是否立即执行 install
   - `opts.cmder`，`string`，默认值为 `npm` 
   - `opts.isDev`，`boolean`，默认值为 `false` ，开始调试打印日志
-  - `opts.pkgVersion`，`object`，依赖的包的版本
-    - `opts.mockstar`，`string`，[mockstar](https://www.npmjs.com/package/mockstar) 的版本号，例如 `1.2.2`
-    - `opts['mockstar-cli']`，`string`，[mockstar-cli](https://www.npmjs.com/package/mockstar-cli) 的版本号，例如 `1.2.2`
 
 ```js
 const path = require('path');
