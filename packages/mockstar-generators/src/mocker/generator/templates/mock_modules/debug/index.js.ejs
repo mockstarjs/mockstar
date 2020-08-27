@@ -6,13 +6,5 @@
  * @return {Promise|*}
  */
 module.exports = function (params, req) {
-  return {
-    retcode: 0,
-    result: {
-      uid: params.uid || 11111,
-      type: 1,
-      description: '我是学生',
-      other_msg: '【更灵活】支持符合 CommonJS 规范的 node 模块',
-    },
-  };
+  return <%- JSON.stringify(mockerConfig.config.debugMockModuleJsonData, null, 2); %>;
 };

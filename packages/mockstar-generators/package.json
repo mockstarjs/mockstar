@@ -39,6 +39,7 @@
     "mkdirp": "^0.5.1",
     "mockstar": "^1.2.2",
     "shelljs": "^0.8.3",
+    "walk-sync": "^2.2.0",
     "yeoman-environment": "^2.3.4",
     "yeoman-generator": "^3.2.0"
   },
