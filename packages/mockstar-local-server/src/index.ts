@@ -1,8 +1,8 @@
-import run, {RunServer} from './run';
-import {findAvailablePort} from './utils/port';
-import {getBuildPath, getLogPath, getMockServerPath} from './utils/mockstar';
-import {getLocalServerConfig} from './config';
-import {LocalServerConfigOpt} from './types';
+import run, { RunServer } from './run';
+import { findAvailablePort } from './utils/port';
+import { getBuildPath, getLogPath, getMockServerPath } from './utils/mockstar';
+import { getLocalServerConfig } from './config';
+import { LocalServerConfigOpt } from './types';
 
 /**
  * 启动服务
@@ -19,7 +19,7 @@ import {LocalServerConfigOpt} from './types';
  * @param {Function} callback 回调函数，接受两个参数 isSuccess 和 localServerConfig
  */
 export function startServer(
-  configOpts: LocalServerConfigOpt = {rootPath: ''},
+  configOpts: LocalServerConfigOpt = { rootPath: '' },
   callback?: (status: boolean, opt: any) => void,
 ): RunServer {
   // 获取标准的参数
@@ -33,4 +33,4 @@ export function startServer(
   return run(mockStarConfig, callback);
 }
 
-export {findAvailablePort, getLocalServerConfig, getMockServerPath, getBuildPath, getLogPath};
+export { findAvailablePort, getLocalServerConfig, getMockServerPath, getBuildPath, getLogPath };

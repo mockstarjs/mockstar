@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Layout, Menu} from 'antd';
-import {NavLink} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Layout, Menu } from 'antd';
+import { NavLink } from 'react-router-dom';
 
-import {getSiteBase, getSiteRoot} from '../../custom';
+import { getSiteBase, getSiteRoot } from '../../custom';
 
 import './index.less';
 
@@ -26,6 +26,7 @@ class LayoutHeader extends Component {
       [getSiteRoot()]: 'home',
       [`${getSiteBase()}/dashboard`]: 'home',
       [`${getSiteBase()}/mockers`]: 'mockers',
+      [`${getSiteBase()}/debug`]: 'debug',
     };
 
     let newMenuId = map[curMenu.url];
@@ -41,7 +42,7 @@ class LayoutHeader extends Component {
   };
 
   render() {
-    let {activeMenu} = this.state;
+    let { activeMenu } = this.state;
 
     // 如果被嵌套在 iframe 中，则不展示导航
     if (window.self !== window.top) {
@@ -54,7 +55,7 @@ class LayoutHeader extends Component {
           theme="dark"
           mode="horizontal"
           selectedKeys={[activeMenu]}
-          style={{lineHeight: '64px'}}>
+          style={{ lineHeight: '64px' }}>
           <Menu.Item key="home">
             <NavLink to={`${getSiteBase()}/dashboard`} isActive={this.handleIsActive}>
               首页
@@ -64,6 +65,12 @@ class LayoutHeader extends Component {
           <Menu.Item key="mockers">
             <NavLink to={`${getSiteBase()}/mockers`} isActive={this.handleIsActive}>
               数据模拟
+            </NavLink>
+          </Menu.Item>
+
+          <Menu.Item key="debug">
+            <NavLink to={`${getSiteBase()}/debug`} isActive={this.handleIsActive}>
+              debug
             </NavLink>
           </Menu.Item>
         </Menu>

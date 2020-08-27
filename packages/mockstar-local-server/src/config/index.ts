@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import {LocalServerConfig} from './LocalServerConfig';
-import {LocalServerConfigOpt} from '../types';
+import { LocalServerConfig } from './LocalServerConfig';
+import { LocalServerConfigOpt } from '../types';
 
 /**
  * @param {Object} opts 额外的一些参数
@@ -26,11 +26,11 @@ interface GetConfigOpt {
  * @returns {LocalServerConfig}
  */
 export function getLocalServerConfig(
-  configOpts: LocalServerConfigOpt = {rootPath: ''},
+  configOpts: LocalServerConfigOpt = { rootPath: '' },
   opts: GetConfigOpt = {},
 ) {
   // 注意要用 _.merge，因为 Object.assign 会将 undefined 属性值也拷贝过去
-  let localServerConfig = new LocalServerConfig(_.merge({}, configOpts, opts));
+  const localServerConfig = new LocalServerConfig(_.merge({}, configOpts, opts));
 
   if (!localServerConfig.isValid()) {
     return null;
