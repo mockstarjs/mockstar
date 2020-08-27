@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "tsc -d",
+    "build": "tsc -d && node ./run-after-build.js",
     "test": "npm run test:unit",
     "test:unit": "mocha 'test/**/*.test.{ts,tsx}'",
     "test:cover": "nyc npm run test:unit",
