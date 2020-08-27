@@ -85,6 +85,10 @@ module.exports = {
               title: 'Whistle',
               path: '/tool/whistle',
             },
+            {
+              title: 'mockstar-devtools-extensions',
+              path: '/tool/mockstar-devtools-extensions',
+            },
           ],
           '/release/': true,
         },
