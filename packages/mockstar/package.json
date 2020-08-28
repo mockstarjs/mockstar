@@ -1,6 +1,6 @@
 {
   "name": "mockstar",
-  "version": "1.3.0",
+  "version": "1.3.3",
   "description": "Easy to build mock server",
   "main": "lib/index.js",
   "scripts": {
