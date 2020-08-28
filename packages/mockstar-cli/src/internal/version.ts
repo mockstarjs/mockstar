@@ -1,7 +1,7 @@
-import {Base} from './base';
-import {MockStar} from '../core';
-import {Command} from '../core/command';
-import {Argv} from '../types';
+import { Base } from './base';
+import { MockStar } from '../core';
+import { Command } from '../core/command';
+import { Argv } from '../types';
 
 export class Version implements Base {
   desc: string;

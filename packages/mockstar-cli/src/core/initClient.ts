@@ -1,6 +1,6 @@
 import fs from 'hexo-fs';
-import {MockStar} from './index';
-import {MineLogger} from './logger';
+import { MockStar } from './index';
+import { MineLogger } from './logger';
 
 /**
  * Init mockstar client, including ~/.mockstar, ~/.mockstar/package.json, ~/.mockstar/.mockstarrc.yml
@@ -18,7 +18,7 @@ class Client {
 
   initHome() {
     const ctx = this.ctx;
-    const {baseDir} = ctx;
+    const { baseDir } = ctx;
 
     return new Promise(resolve => {
       if (fs.existsSync(baseDir) && fs.statSync(baseDir).isFile()) {
@@ -40,7 +40,7 @@ class Client {
 
   initPkg() {
     const ctx = this.ctx;
-    const {pkgPath} = ctx;
+    const { pkgPath } = ctx;
 
     return new Promise(resolve => {
       if (!fs.existsSync(pkgPath)) {
@@ -65,7 +65,7 @@ class Client {
 
   initLogs() {
     const ctx = this.ctx;
-    const {logDir} = ctx;
+    const { logDir } = ctx;
 
     return new Promise(resolve => {
       fs.ensurePathSync(logDir);
