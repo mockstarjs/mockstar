@@ -1,10 +1,10 @@
-import path from 'path';
 import express from 'express';
 import cors from 'cors';
 import compression from 'compression';
 import errorhandler from 'errorhandler';
 import objectAssign from 'object-assign';
 import cookieParser from 'cookie-parser';
+import { getStaticDir } from 'mockstar-webui';
 
 interface Opts {
   noGzip?: boolean;
@@ -20,9 +20,9 @@ export default function (opts?: Opts) {
   //   ? userDir
   //   : defaultDir;
 
-  const staticDir = path.join(__dirname, '../../../webui/build');
+  const staticDir = getStaticDir();
 
-  opts = objectAssign({logger: true, static: staticDir}, opts);
+  opts = objectAssign({ logger: true, static: staticDir }, opts);
 
   const arr: (express.Handler | express.ErrorRequestHandler)[] = [];
 
@@ -45,7 +45,7 @@ export default function (opts?: Opts) {
 
   // Enable CORS for all the requests, including static files
   if (!opts.noCors) {
-    arr.push(cors({origin: true, credentials: true}));
+    arr.push(cors({ origin: true, credentials: true }));
   }
 
   if (process.env.NODE_ENV === 'development') {
