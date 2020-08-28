@@ -49,7 +49,9 @@ class MockersList extends Component {
   };
 
   handleSelectTagChange = e => {
-    this.setState({ curTag: e.target.value });
+    this.setState({
+      curTag: e.target.value
+    });
   };
 
   handleActive = (mockerName, mockModuleName) => {

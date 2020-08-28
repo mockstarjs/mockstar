@@ -1,12 +1,12 @@
 import React from 'react';
 
-import {Alert, Button, Card} from 'antd';
-import {NavLink} from 'react-router-dom';
+import { Alert, Button, Card, Radio } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 import './index.less';
 
 export default function MockerListItem(props) {
-  const {mockerItem, mockersPath, curTag, index, clickTag, setActive, setDisable} = props;
+  const { mockerItem, mockersPath, curTag, index, clickTag, setActive, setDisable } = props;
   const mockerItemConfig = mockerItem.config;
 
   const isDisabled = mockerItemConfig.disable;
@@ -35,39 +35,37 @@ export default function MockerListItem(props) {
       </div>
 
       <p>点击标签进行过滤：</p>
-
-      <Button.Group>
-        {mockerItemConfig.tags.map((tagName, tagIndex) => {
-          return (
-            <Button
-              key={tagIndex}
-              className={tagName === curTag ? 'active' : ''}
-              icon="tag"
-              onClick={clickTag.bind(this, tagName)}>
-              {tagName}
-            </Button>
-          );
-        })}
-      </Button.Group>
+      <Radio.Group value={curTag} onChange={(e) => {
+        clickTag(e.target.value);
+      }}>
+        {
+          mockerItemConfig.tags.map((tagName, tagIndex) => {
+            return (
+              <Radio.Button value={tagName} key={tagIndex}>{tagName}</Radio.Button>
+            );
+          })
+        }
+      </Radio.Group>
 
       <br />
       <br />
 
       <p>请选择需要激活的模块：</p>
-      <Button.Group>
-        {mockerItem.mockModuleList.map((item, index) => {
-          return (
-            <Button
-              key={index}
-              disabled={isDisabled ? 'disable' : ''}
-              className={item.name === mockerItemConfig.activeModule ? 'active' : ''}
-              icon={item.name === mockerItemConfig.activeModule ? 'check' : ''}
-              onClick={setActive.bind(this, mockerItem.name, item.name)}>
-              {item.name}
-            </Button>
-          );
-        })}
-      </Button.Group>
+      <Radio.Group
+        value={mockerItemConfig.activeModule}
+        disabled={isDisabled ? 'disable' : ''}
+        onChange={(e) => {
+          setActive(mockerItem.name, e.target.value);
+        }}
+      >
+        {
+          mockerItem.mockModuleList.map((item, index) => {
+            return (
+              <Radio.Button value={item.name} key={index}>{item.name}</Radio.Button>
+            );
+          })
+        }
+      </Radio.Group>
     </Card>
   );
 }
