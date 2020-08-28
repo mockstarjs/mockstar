@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import {Button, Col, Row} from 'antd';
+import { Col, Radio, Row } from 'antd';
 
-import {loadMockerList} from '../../data/data-mocker-list';
+import { loadMockerList } from '../../data/data-mocker-list';
 import ListItem from './list-item';
 
 import './index.less';
-import {setMockerActiveModule, setMockerDisable} from '../../data/data-mocker';
+import { setMockerActiveModule, setMockerDisable } from '../../data/data-mocker';
 
 class MockersList extends Component {
   constructor(props, context) {
@@ -24,7 +24,7 @@ class MockersList extends Component {
   }
 
   getAllTags() {
-    const {list} = this.props;
+    const { list } = this.props;
 
     let arr = [];
 
@@ -36,8 +36,8 @@ class MockersList extends Component {
   }
 
   getFilterList() {
-    const {curTag} = this.state;
-    const {list} = this.props;
+    const { curTag } = this.state;
+    const { list } = this.props;
 
     return list.filter(item => item.config.tags.indexOf(curTag) > -1);
   }
@@ -46,6 +46,10 @@ class MockersList extends Component {
     this.setState({
       curTag: tagName,
     });
+  };
+
+  handleSelectTagChange = e => {
+    this.setState({ curTag: e.target.value });
   };
 
   handleActive = (mockerName, mockModuleName) => {
@@ -81,8 +85,8 @@ class MockersList extends Component {
   }
 
   render() {
-    const {match} = this.props;
-    const {curTag} = this.state;
+    const { match } = this.props;
+    const { curTag } = this.state;
 
     const tagList = this.getAllTags();
     const filterList = this.getFilterList();
@@ -92,19 +96,15 @@ class MockersList extends Component {
     return (
       <div className="mockers">
         <div className="tag-wrapper">
-          <Button.Group>
-            {tagList.map((tagName, tagIndex) => {
-              return (
-                <Button
-                  key={tagIndex}
-                  className={tagName === curTag ? 'active' : ''}
-                  icon="tag"
-                  onClick={this.handleClickTag.bind(this, tagName)}>
-                  {tagName}
-                </Button>
-              );
-            })}
-          </Button.Group>
+          <Radio.Group value={curTag} onChange={this.handleSelectTagChange}>
+            {
+              tagList.map((tagName, tagIndex) => {
+                return (
+                  <Radio.Button value={tagName} key={tagIndex}>{tagName}</Radio.Button>
+                );
+              })
+            }
+          </Radio.Group>
         </div>
 
         <div className="list-wrapper">
@@ -136,7 +136,7 @@ class MockersList extends Component {
 }
 
 function mapStateToProps(state) {
-  const {mockerListInfo} = state;
+  const { mockerListInfo } = state;
 
   return {
     isLoaded: mockerListInfo.isLoaded,
