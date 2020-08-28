@@ -6,7 +6,8 @@
     "mockstar": "./bin/mockstar"
   },
   "scripts": {
-    "build": "tsc -d",
+    "prepublishOnly": "npm run build",
+    "build": "tsc -d && node ./run-after-build.js",
     "test-mocha": "node ./node_modules/mocha/bin/_mocha",
     "test": "npm run eslint && npm run test-cov",
     "eslint": "eslint libs/",
