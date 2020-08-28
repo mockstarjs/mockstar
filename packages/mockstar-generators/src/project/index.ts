@@ -26,10 +26,12 @@ export default function initProject(opts: InitProjectOpts) {
   const name = 'project';
 
   // 依赖包的版本号
-  opts.pkgVersion = {
-    mockstar: pkgInfo.version,
-    'mockstar-cli': pkgInfo.version,
-  };
+  opts.pkgVersion = Object.assign({
+      mockstar: pkgInfo.version,
+      'mockstar-cli': pkgInfo.version,
+    },
+    opts.pkgVersion,
+  );
 
   // generator 的目录
   const generatorPath = path.join(__dirname, './generator');

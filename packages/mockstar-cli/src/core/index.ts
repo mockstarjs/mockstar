@@ -2,11 +2,11 @@ import path from 'path';
 import fs from 'fs-extra';
 import osenv from 'osenv';
 import chalk from 'chalk';
-import {Argv} from '../types';
-import {createLogger, MineLogger} from './logger';
-import {Command} from './command';
+import { Argv } from '../types';
+import { createLogger, MineLogger } from './logger';
+import { Command } from './command';
 import initClient from './initClient';
-import {Base} from '../internal/base';
+import { Base } from '../internal/base';
 
 const sep = path.sep;
 

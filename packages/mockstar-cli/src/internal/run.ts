@@ -1,9 +1,9 @@
-import {Base} from './base';
-import {startServer} from './biz/local-server/index';
+import { Base } from './base';
+import { startServer } from './biz/local-server/index';
 import getRunArgs from './biz/get-args';
-import {MockStar} from '../core';
-import {Command} from '../core/command';
-import {Argv} from '../types';
+import { MockStar } from '../core';
+import { Command } from '../core/command';
+import { Argv } from '../types';
 
 export class Run implements Base {
   desc: string;

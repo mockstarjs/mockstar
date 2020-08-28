@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import {getLocalServerConfig} from 'mockstar-local-server';
+import { getLocalServerConfig } from 'mockstar-local-server';
 
 interface GetArgsOpts {
   dev?: boolean;

@@ -1,10 +1,10 @@
 import path from 'path';
-import {start, showRunningStatus} from 'mockstar-starting';
-import {Base} from './base';
+import { showRunningStatus, start } from 'mockstar-starting';
+import { Base } from './base';
 import getStartArgs from './biz/get-args';
-import {MockStar} from '../core';
-import {Command} from '../core/command';
-import {Argv} from '../types';
+import { MockStar } from '../core';
+import { Command } from '../core/command';
+import { Argv } from '../types';
 
 // 启动脚本路径
 const BOOTSTRAP_PATH = path.join(__dirname, './biz/start-by-cp.js');
@@ -31,7 +31,7 @@ export class Start implements Base {
     // console.log(args);
 
     // 获取参数
-    let configOpts = getStartArgs(args);
+    const configOpts = getStartArgs(args);
 
     if (!configOpts) {
       return Promise.reject('configOpts is null');

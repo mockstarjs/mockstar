@@ -1,4 +1,4 @@
-import {startServer} from './local-server';
+import { startServer } from './local-server';
 
 let configOpts;
 
