@@ -1,28 +1,43 @@
 {
-  "name": "pro-react-spa",
+  "name": "mockstar-ui",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build"
+  },
   "dependencies": {
-    "antd": "^3.12.3",
+    "antd": "^4.6.1",
     "classnames": "^2.2.6",
     "lodash": "^4.17.10",
-    "mockstar-client": "^1.0.3",
-    "react": "16.2.0",
-    "react-dom": "16.2.1",
+    "mockstar-client": "^1.2.2",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^1.1.4",
+    "react-scripts": "^3.4.3",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "superagent": "^3.8.3"
   },
-  "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build"
-  },
   "devDependencies": {
-    "babel-plugin-import": "^1.7.0",
-    "react-app-rewire-less": "^2.1.1",
-    "react-app-rewired": "^1.5.2"
+    "@craco/craco": "^5.6.4",
+    "babel-plugin-import": "^1.13.0",
+    "craco-less": "^1.17.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

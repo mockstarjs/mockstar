@@ -15,6 +15,22 @@ export function initGetAdminDetail(
 }
 
 /**
+ * 创建 mocker 的接口
+ * @param router
+ * @param adminCGIBase
+ * @param pluginName
+ * @param handlerNameField
+ * @param callback
+ */
+export function initPostCreateMocker(
+  router: express.Router,
+  adminCGIBase: string,
+  callback: express.RequestHandler,
+) {
+  router.post(`${adminCGIBase}/create-mocker`, callback);
+}
+
+/**
  * 获得所有的 handler 列表
  * @param router
  * @param adminCGIBase

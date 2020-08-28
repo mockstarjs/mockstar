@@ -1,2 +1,4 @@
 test/**/build/
 demo/**/build/
+
+demo/**/i-am-xhr-request-get
