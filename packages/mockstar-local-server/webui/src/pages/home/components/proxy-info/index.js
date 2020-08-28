@@ -27,7 +27,7 @@ class ProxyInfo extends Component {
 
         <blockquote>
           强烈推荐使用{' '}
-          <a href="https://avwo.github.io/whistle/" target="_blank">
+          <a href="https://avwo.github.io/whistle/" target="_blank" rel="noopener noreferrer">
             whistle
           </a>{' '}
           来做代理服务器。

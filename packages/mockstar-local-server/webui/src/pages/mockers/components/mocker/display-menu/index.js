@@ -1,15 +1,11 @@
-import React, {Component} from 'react';
-import {Menu} from 'antd';
-import {withRouter} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Menu } from 'antd';
+import { withRouter } from 'react-router-dom';
 
 import './index.less';
 
 class MockerMenu extends Component {
-  constructor(props, context) {
-    super(props, context);
-  }
-
-  handleClick = ({item, key}) => {
+  handleClick = ({ item, key }) => {
     if (this.props.match.params.mockerName !== key) {
       this.props.history.push(this.props.match.path.replace(/:mockerName/gi, key));
 
@@ -19,12 +15,12 @@ class MockerMenu extends Component {
   };
 
   render() {
-    let {mockerListInfo, match} = this.props;
+    let { mockerListInfo, match } = this.props;
     if (!mockerListInfo.isLoaded) {
       return null;
     }
 
-    let {mockerName} = match.params;
+    let { mockerName } = match.params;
 
     return (
       <div className="mocker-menu">

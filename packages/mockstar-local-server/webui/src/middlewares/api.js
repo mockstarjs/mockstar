@@ -45,6 +45,9 @@ export default store => next => action => {
         break;
       case failureType:
         obj[STATUS] = 'fail';
+        break;
+      default:
+        break;
     }
 
     if (obj[STATUS] !== 'fetching') {
