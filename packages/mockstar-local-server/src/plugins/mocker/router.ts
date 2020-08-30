@@ -11,6 +11,7 @@ import {
   initGetOneReadMe,
   initPostCreateMocker,
   initPostOne,
+  initPostSearchHandlerList,
 } from '../../server/router/base-router';
 import { LocalServerConfig } from '../../config/LocalServerConfig';
 
@@ -138,6 +139,22 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
           result: (err && err.message) || err,
         });
       });
+  });
+
+  // POST ${adminCGIBase}/search-mocker-list 获得配置项数据
+  initPostSearchHandlerList(router, adminCGIBase, (req, res) => {
+    const searchRoute = req.body.route;
+
+    res.jsonp({
+      status: 200,
+      msg: '创建成功',
+      pkg: {
+        [pkgInfo.name]: pkgInfo.version,
+      },
+      result: {
+        searchRoute: searchRoute,
+      },
+    });
   });
 
   // 处理 plugin=xhr 的场景

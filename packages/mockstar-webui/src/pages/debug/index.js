@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import CreateMocker from './components/create-mocker';
+import SearchMocker from './components/search-mocker';
 
 import './index.less';
 
@@ -9,6 +10,7 @@ export default class Debug extends Component {
     return (
       <div className="page-debug text-content">
         <CreateMocker />
+        <SearchMocker />
       </div>
     );
   }
