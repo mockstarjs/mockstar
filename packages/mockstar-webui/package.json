@@ -9,6 +9,7 @@
     "build": "craco build"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.2.2",
     "antd": "^4.6.1",
     "classnames": "^2.2.6",
     "lodash": "^4.17.10",

@@ -1,7 +1,8 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { Alert, Button, Card, Radio } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { SettingOutlined } from '@ant-design/icons';
 
 import './index.less';
 
@@ -19,7 +20,7 @@ export default function MockerListItem(props) {
         <div className="card-action">
           <Button
             type={isDisabled ? 'primary' : 'default'}
-            icon="setting"
+            icon={<SettingOutlined />}
             className="set-disable-btn"
             onClick={setDisable.bind(this, mockerItem.name, isDisabled)}>
             {isDisabled ? '启用' : '禁用'}
