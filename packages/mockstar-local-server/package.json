@@ -1,6 +1,6 @@
 {
   "name": "mockstar-local-server",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "description": "Local server for MockStar",
   "main": "lib/index.js",
   "scripts": {
@@ -49,7 +49,7 @@
     "method-override": "^2.3.10",
     "mockstar": "^1.3.4",
     "mockstar-generators": "^1.3.4",
-    "mockstar-webui": "^1.3.5",
+    "mockstar-webui": "^1.3.6",
     "request": "^2.81.0",
     "socket.io": "^2.1.1"
   },
