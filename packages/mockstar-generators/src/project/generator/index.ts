@@ -92,7 +92,7 @@ export default class extends Generator {
           description: '我是' + demoMockerName,
           name: demoMockerName,
           route: '/cgi-bin/a/b/' + demoMockerName,
-          method: 'get',
+          method: 'GET',
         },
         debugMockModuleJsonData: {
           retcode: 0,

@@ -105,7 +105,7 @@ export default class MockerConfig {
       }
     }
 
-    this.method = config.method || 'get';
+    this.method = config.method || 'GET';
 
     this.plugin = config.plugin || 'xhr';
 

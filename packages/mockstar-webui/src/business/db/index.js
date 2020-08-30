@@ -5,7 +5,7 @@ export function ajax(opts = {}) {
   // query 为 null 的时候，需手动换为 undefined
   const queryOpts = opts.data ? opts.data : undefined;
 
-  if (opts.method === 'post') {
+  if (opts.method && (opts.method.toLowerCase() === 'post')) {
     return getDataByPost(opts.url, queryOpts);
   } else {
     return getDataByGet(opts.url, queryOpts);

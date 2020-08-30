@@ -32,7 +32,7 @@ describe('./mocker/index.ts', () => {
         isInitReadme: true,
         config: {
           name: name,
-          method: 'get',
+          method: 'GET',
           route: '/cgi-bin/i-am-xhr-request-get',
         },
         debugMockModuleJsonData: {
@@ -88,7 +88,7 @@ describe('./mocker/index.ts', () => {
         isInitReadme: true,
         config: {
           name: name,
-          method: 'post',
+          method: 'POST',
           route: '/cgi-bin/i-am-xhr-request-post',
         },
         debugMockModuleJsonData: {

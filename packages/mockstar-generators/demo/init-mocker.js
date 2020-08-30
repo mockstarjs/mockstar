@@ -11,7 +11,7 @@ fse.removeSync(path.join(__dirname, '../test/tmp'));
     isInitReadme: true,
     config: {
       name: 'i-am-xhr-request-get',
-      method: 'get',
+      method: 'GET',
       route: '/cgi-bin/i-am-xhr-request-get',
     },
     debugMockModuleJsonData: {

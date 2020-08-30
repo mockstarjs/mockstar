@@ -11,7 +11,7 @@ module.exports = function (args) {
     //     config: {
     //         description: '我是一句话描述',
     //         disable: false,
-    //         method: 'get',
+    //         method: 'GET',
     //         name: 'getName',
     //         plugin: 'xhr',
     //         priority: 1,

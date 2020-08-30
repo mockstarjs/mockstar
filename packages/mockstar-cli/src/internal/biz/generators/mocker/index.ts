@@ -69,8 +69,8 @@ export default function (
         type: 'list',
         name: 'method',
         message: '请求类型',
-        choices: ['get', 'post'],
-        default: 'get',
+        choices: ['GET', 'POST'],
+        default: 'GET',
       },
       {
         type: 'confirm',
