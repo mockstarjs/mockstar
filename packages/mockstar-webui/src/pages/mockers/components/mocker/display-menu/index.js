@@ -31,7 +31,8 @@ class MockerMenu extends Component {
           onClick={this.handleClick}>
           {mockerListInfo.list.map(item => {
             return (
-              <Menu.Item key={item.name} className={item.config.plugin + ' ' + item.config.method}>
+              <Menu.Item key={item.name}
+                         className={item.config.plugin + ' ' + (item.config.method && item.config.method.toLowerCase())}>
                 {item.name}
               </Menu.Item>
             );
