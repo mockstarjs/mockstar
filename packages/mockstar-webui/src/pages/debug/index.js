@@ -8,7 +8,7 @@ import './index.less';
 export default class Debug extends Component {
   render() {
     return (
-      <div className="page-debug text-content">
+      <div className="page-debug">
         <CreateMocker />
         <SearchMocker />
       </div>
