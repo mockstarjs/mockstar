@@ -32,7 +32,7 @@ class MockerMenu extends Component {
           {mockerListInfo.list.map(item => {
             return (
               <Menu.Item key={item.name}
-                         className={item.config.plugin + ' ' + (item.config.method && item.config.method.toLowerCase())}>
+                         className={item.config.plugin + ' ' + item.config.method}>
                 {item.name}
               </Menu.Item>
             );
