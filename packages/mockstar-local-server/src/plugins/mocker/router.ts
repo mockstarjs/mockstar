@@ -62,7 +62,7 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
   // GET ${adminCGIBase}/detail 获得配置项数据
   initGetAdminDetail(router, adminCGIBase, (req, res) => {
     res.jsonp({
-      status: 200,
+      retcode: 0,
       url: req.url,
       hostname: req.hostname,
       ip: req.ip,
@@ -103,7 +103,7 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
     // 注意，如果已经存在同名文件夹，则返回
     if (fse.existsSync(targetMockerPath)) {
       res.jsonp({
-        status: 500,
+        retcode: 500,
         msg: '创建失败！',
         pkg: {
           [pkgInfo.name]: pkgInfo.version,
@@ -119,7 +119,7 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
     initMocker(initMockerOpts)
       .then(data => {
         res.jsonp({
-          status: 200,
+          retcode: 0,
           msg: '创建成功',
           pkg: {
             [pkgInfo.name]: pkgInfo.version,
@@ -131,7 +131,7 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
       })
       .catch(err => {
         res.jsonp({
-          status: 500,
+          retcode: 500,
           msg: '创建失败！',
           pkg: {
             [pkgInfo.name]: pkgInfo.version,
@@ -145,16 +145,26 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
   initPostSearchHandlerList(router, adminCGIBase, (req, res) => {
     const searchRoute = req.body.route;
 
-    res.jsonp({
-      status: 200,
-      msg: '创建成功',
-      pkg: {
-        [pkgInfo.name]: pkgInfo.version,
-      },
-      result: {
-        searchRoute: searchRoute,
-      },
-    });
+    // TODO 如果是共用一个 route 的场景可能要考虑追加 getMockerByRoute params
+    const mockerItem = mockerParser.getMockerByRoute(searchRoute);
+    if (mockerItem) {
+      res.jsonp({
+        retcode: 0,
+        msg: '搜索成功',
+        result: {
+          searchRoute,
+          mockerItem
+        },
+      });
+    } else {
+      res.jsonp({
+        retcode: 500,
+        msg: '搜索失败',
+        result: {
+          searchRoute,
+        },
+      });
+    }
   });
 
   // 处理 plugin=xhr 的场景
