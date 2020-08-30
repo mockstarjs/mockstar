@@ -45,4 +45,4 @@ yarn-error.log*
 
 .idea
 
-logs
+build
