@@ -4,6 +4,7 @@
   "description": "webui for MockStar",
   "main": "index.js",
   "scripts": {
+    "prepublishOnly": "npm run build",
     "start": "craco start",
     "build": "craco build"
   },
