@@ -1,6 +1,6 @@
 {
   "name": "mockstar-webui",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "webui for MockStar",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "antd": "^4.6.1",
     "classnames": "^2.2.6",
     "lodash": "^4.17.10",
-    "mockstar-client": "^1.2.2",
+    "mockstar-client": "^1.3.4",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-redux": "^5.1.1",
