@@ -1,9 +1,9 @@
 import figlet from 'figlet';
 import chalk from 'chalk';
-import {Base} from './base';
-import {MockStar} from '../core';
-import {Command} from '../core/command';
-import {Argv} from '../types';
+import { Base } from './base';
+import { MockStar } from '../core';
+import { Command } from '../core/command';
+import { Argv } from '../types';
 
 export class Info implements Base {
   desc: string;

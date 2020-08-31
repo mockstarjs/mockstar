@@ -1,6 +1,6 @@
-import {MockStar} from '../core';
-import {Command} from '../core/command';
-import {Argv} from '../types';
+import { MockStar } from '../core';
+import { Command } from '../core/command';
+import { Argv } from '../types';
 
 /**
  * @member setInfo 设置信息

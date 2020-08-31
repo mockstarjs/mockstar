@@ -2,11 +2,11 @@ import path from 'path';
 import inquirer from 'inquirer';
 import urlParse from 'url-parse';
 import fs from 'fs-extra';
-import {initMocker} from 'mockstar-generators';
-import {getMockServerPathList, getMockerNameFromURL} from '../utils';
+import { initMocker } from 'mockstar-generators';
+import { getMockServerPathList, getMockerNameFromURL } from '../utils';
 
 export default function (
-  opts: {cwd: string; isDev: boolean},
+  opts: { cwd: string; isDev: boolean },
   callback: (status: boolean, err?: Error) => void,
 ) {
   inquirer
@@ -16,7 +16,7 @@ export default function (
         name: 'mockerParentPath',
         message: '请选择 mocker 放置的根目录',
         choices: function () {
-          let list = getMockServerPathList(opts.cwd) || [];
+          const list = getMockServerPathList(opts.cwd) || [];
           return list.map(item => {
             return {
               name: path.relative(opts.cwd, item),
@@ -69,8 +69,8 @@ export default function (
         type: 'list',
         name: 'method',
         message: '请求类型',
-        choices: ['get', 'post'],
-        default: 'get',
+        choices: ['GET', 'POST'],
+        default: 'GET',
       },
       {
         type: 'confirm',
@@ -84,7 +84,7 @@ export default function (
 
       const urlParseResult = urlParse(answers.reqURL.trim());
 
-      let params = Object.assign({}, opts, {
+      const params = Object.assign({}, opts, {
         parentPath: answers.mockerParentPath,
         isInitReadme: answers.isInitReadme,
         config: {

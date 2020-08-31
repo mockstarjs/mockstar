@@ -4,7 +4,7 @@ sidebarDepth: 1
 
 # 安装和升级
 
-在使用 matman 来构建项目之前，需要先安装 Node 和 [mockstar-cli](https://www.npmjs.com/package/mockstar-cli) 。
+在使用 mockstar 来构建项目之前，需要先安装 Node 和 [mockstar-cli](https://www.npmjs.com/package/mockstar-cli) 。
 
 ## 01. 安装 Node.js 并验证版本
 
@@ -26,7 +26,7 @@ $ node -v
 - 如果能正常输出 Node 的版本号，表示 Node 已安装成功（ Windows 系统可能需要重新打开 cmd）
 - 值得注意的是，一定要确保 Node.js 版本在 `10.18.1` 及以上，否则将无法运行
 
-## 02. 安装 matman-cli
+## 02. 安装 mockstar-cli
 
 ### 2.1 初始化项目
 
@@ -39,7 +39,7 @@ $ node -v
 $ npm config set registry https://registry.npm.taobao.org
 
 # 推荐大家使用 npx 进行初始化，保证运行 cli 的最新版本
-$ npx matman-cli init project
+$ npx mockstar-cli init project
 
 # 或者使用
 $ npm install -g mockstar-cli

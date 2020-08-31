@@ -1,10 +1,10 @@
 import fs from 'hexo-fs';
 import path from 'path';
 import osenv from 'osenv';
-import bunyan, {Stream} from 'bunyan';
+import bunyan, { Stream } from 'bunyan';
 import chalk from 'chalk';
-import {Writable} from 'stream';
-import {formatDate} from '../utils';
+import { Writable } from 'stream';
+import { formatDate } from '../utils';
 
 interface CreateLoggerOpts {
   silent?: boolean;
@@ -41,8 +41,8 @@ const levelColors = {
 class ConsoleStream extends Writable {
   debug: boolean;
 
-  constructor(env: {debug?: boolean}) {
-    super({objectMode: true});
+  constructor(env: { debug?: boolean }) {
+    super({ objectMode: true });
 
     this.debug = !!env.debug;
   }

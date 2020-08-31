@@ -1,15 +1,15 @@
 import minimist from 'minimist';
 import semver from 'semver';
-import {MockStar} from './core';
+import { MockStar } from './core';
 
-import {Help} from './internal/help';
-import {Info} from './internal/info';
-import {Version} from './internal/version';
-import {Status} from './internal/status';
-import {Stop} from './internal/stop';
-import {Init} from './internal/init';
-import {Start} from './internal/start';
-import {Run} from './internal/run';
+import { Help } from './internal/help';
+import { Info } from './internal/info';
+import { Version } from './internal/version';
+import { Status } from './internal/status';
+import { Stop } from './internal/stop';
+import { Init } from './internal/init';
+import { Start } from './internal/start';
+import { Run } from './internal/run';
 
 function check(mockstar: MockStar) {
   const log = mockstar.log;

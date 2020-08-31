@@ -32,7 +32,7 @@ export default (
     }
 
     // 默认是 get 请求，除非定义 method 字段
-    const METHOD = (mockerConfig.method || 'get').toLowerCase();
+    const METHOD = (mockerConfig.method || 'GET').toLowerCase();
 
     // http://expressjs.com/en/4x/api.html#router.METHOD
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

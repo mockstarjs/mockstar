@@ -1,8 +1,5 @@
-node_modules/
-coverage/
-demo/
-test/
-src/
-tmp/
+demo
+test
+.nyc_output
 coverage
-*.map
+node_modules

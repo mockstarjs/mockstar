@@ -61,7 +61,7 @@ describe('local server for mockstar', () => {
                 disable: false,
                 defaultModule: 'success_1',
                 activeModule: 'success_1',
-                method: 'post',
+                method: 'POST',
                 priority: 0,
                 tags: ['全部', 'tag1', 'tag2']
             });
@@ -98,7 +98,7 @@ describe('local server for mockstar', () => {
                 disable: false,
                 defaultModule: 'success_1',
                 activeModule: 'success_1',
-                method: 'post',
+                method: 'POST',
                 priority: 0,
                 tags: ['全部', 'tag1', 'tag2']
             });

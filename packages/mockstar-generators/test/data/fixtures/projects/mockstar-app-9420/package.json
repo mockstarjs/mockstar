@@ -1,0 +1,15 @@
+{
+  "name": "mockstar-app-9420",
+  "private": true,
+  "scripts": {
+    "start": "mockstar start --watch",
+    "dev": "mockstar run --dev --watch",
+    "stop": "mockstar stop"
+  },
+  "dependencies": {
+    "mockstar-cli": "^1.2.2"
+  },
+  "devDependencies": {
+    "mockstar-cli": "^1.2.2"
+  }
+}

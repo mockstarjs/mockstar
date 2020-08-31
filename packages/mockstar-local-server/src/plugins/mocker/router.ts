@@ -1,14 +1,19 @@
-import {Parser} from 'mockstar';
+import path from 'path';
+import fse from 'fs-extra';
+import { Parser, pkgInfo } from 'mockstar';
+import { initMocker } from 'mockstar-generators';
 import handleXhr from './xhr';
-import {Router} from '../../types';
+import { Router } from '../../types';
 import {
+  initGetAdminDetail,
   initGetList,
   initGetOne,
-  initPostOne,
   initGetOneReadMe,
-  initGetAdminDetail,
+  initPostCreateMocker,
+  initPostOne,
+  initPostSearchHandlerList,
 } from '../../server/router/base-router';
-import {LocalServerConfig} from '../../config/LocalServerConfig';
+import { LocalServerConfig } from '../../config/LocalServerConfig';
 
 const PLUGIN_NAME = 'mocker';
 const HANDLER_NAME_FIELD = 'mockerName';
@@ -24,25 +29,25 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
   const adminCGIBase = localServerConfig.getAdminCGIBase();
 
   // 获取所有的 mocker 列表
-  let mockerList = mockerParser.getAllMocker();
+  const mockerList = mockerParser.getAllMocker();
 
   // GET ${adminCGIBase}/mocker 所有的 mocker 列表信息
   initGetList(router, adminCGIBase, PLUGIN_NAME, (req, res) => {
-    let mockerList = mockerParser.getAllMocker();
+    const mockerList = mockerParser.getAllMocker();
 
     res.jsonp(mockerList);
   });
 
   // GET ${adminCGIBase}/mocker/:mockerName 获得这个 mocker 的信息
   initGetOne(router, adminCGIBase, PLUGIN_NAME, HANDLER_NAME_FIELD, (req, res) => {
-    let result = mockerParser.getMockerByName(req.params[HANDLER_NAME_FIELD]);
+    const result = mockerParser.getMockerByName(req.params[HANDLER_NAME_FIELD]);
 
     res.jsonp(result);
   });
 
   // POST ${adminCGIBase}/mocker/:mockerName 设置这个 mocker 的信息
   initPostOne(router, adminCGIBase, PLUGIN_NAME, HANDLER_NAME_FIELD, (req, res) => {
-    let result = mockerParser.updateMocker(req.params[HANDLER_NAME_FIELD], req.body);
+    const result = mockerParser.updateMocker(req.params[HANDLER_NAME_FIELD], req.body);
 
     res.jsonp(result);
   });
@@ -57,7 +62,7 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
   // GET ${adminCGIBase}/detail 获得配置项数据
   initGetAdminDetail(router, adminCGIBase, (req, res) => {
     res.jsonp({
-      status: 200,
+      retcode: 0,
       url: req.url,
       hostname: req.hostname,
       ip: req.ip,
@@ -67,7 +72,99 @@ export default (router: Router, localServerConfig: LocalServerConfig) => {
       query: req.query,
       path: req.path,
       config: localServerConfig,
+      pkg: {
+        [pkgInfo.name]: pkgInfo.version,
+      },
     });
+  });
+
+  // POST ${adminCGIBase}/create-mocker 获得配置项数据
+  initPostCreateMocker(router, adminCGIBase, (req, res) => {
+    const initMockerOpts = {
+      isDev: false,
+      parentPath: req.body.parentPath,
+      isInitReadme: true,
+      config: {
+        name: req.body.mockerName,
+        method: req.body.mockerMethod,
+        route: req.body.mockerRoute,
+      },
+      debugMockModuleJsonData: req.body.debugMockModuleJsonData,
+    };
+
+    try {
+      initMockerOpts.debugMockModuleJsonData = JSON.parse(initMockerOpts.debugMockModuleJsonData);
+    } catch (e) {
+      console.log('JSON.parse debugMockModuleJsonData error', e);
+    }
+
+    const targetMockerPath = path.join(initMockerOpts.parentPath, initMockerOpts.config.name);
+
+    // 注意，如果已经存在同名文件夹，则返回
+    if (fse.existsSync(targetMockerPath)) {
+      res.jsonp({
+        retcode: 500,
+        msg: '创建失败！',
+        pkg: {
+          [pkgInfo.name]: pkgInfo.version,
+        },
+        result: `已经存在该文件：${targetMockerPath}`,
+      });
+
+      return;
+    }
+
+    // 这里还有一个隐藏 bug ，就是如果 初始化失败一次之后，后续就卡住了，无响应，
+    // 因此才在上一步主动检查
+    initMocker(initMockerOpts)
+      .then(data => {
+        res.jsonp({
+          retcode: 0,
+          msg: '创建成功',
+          pkg: {
+            [pkgInfo.name]: pkgInfo.version,
+          },
+          result: {
+            mockerPath: targetMockerPath,
+          },
+        });
+      })
+      .catch(err => {
+        res.jsonp({
+          retcode: 500,
+          msg: '创建失败！',
+          pkg: {
+            [pkgInfo.name]: pkgInfo.version,
+          },
+          result: (err && err.message) || err,
+        });
+      });
+  });
+
+  // POST ${adminCGIBase}/search-mocker-list 获得配置项数据
+  initPostSearchHandlerList(router, adminCGIBase, (req, res) => {
+    const searchRoute = req.body.route;
+
+    // TODO 如果是共用一个 route 的场景可能要考虑追加 getMockerByRoute params
+    const mockerItem = mockerParser.getMockerByRoute(searchRoute);
+    if (mockerItem) {
+      res.jsonp({
+        retcode: 0,
+        msg: '搜索成功',
+        result: {
+          searchRoute,
+          mockerItem
+        },
+      });
+    } else {
+      res.jsonp({
+        retcode: 500,
+        msg: '搜索失败',
+        result: {
+          searchRoute,
+        },
+      });
+    }
   });
 
   // 处理 plugin=xhr 的场景
