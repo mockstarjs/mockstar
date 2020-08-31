@@ -1,10 +1,10 @@
 import meow from 'meow';
-import {Base} from './base';
+import { Base } from './base';
 import initProject from './biz/generators/project';
 import initMocker from './biz/generators/mocker';
-import {MockStar} from '../core';
-import {Command} from '../core/command';
-import {Argv} from '../types';
+import { MockStar } from '../core';
+import { Command } from '../core/command';
+import { Argv } from '../types';
 
 export class Init implements Base {
   desc: string;
@@ -19,7 +19,7 @@ export class Init implements Base {
    * 展示帮助信息
    */
   private showHelp() {
-    let arr = [];
+    const arr: string[] = [];
 
     arr.push('    Usage: mockstar init <command> [options] ');
     arr.push('    Commands:');

@@ -2,6 +2,6 @@
 
 'use strict';
 
-const {Main} = require('../lib/index');
+const { Main } = require('../lib/index');
 
 Main();

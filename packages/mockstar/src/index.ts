@@ -2,8 +2,10 @@ import Mocker from './model/Mocker';
 import Parser from './model/Parser';
 import MockStarQuery from './model/MockStarQuery';
 
-import {createMockStarQuery, getQueryItem} from './util';
-import {MS_DISABLE, MS_FROM, MS_QUERY_KEY} from './config';
+import { createMockStarQuery, getQueryItem } from './util';
+import { MS_DISABLE, MS_FROM, MS_QUERY_KEY } from './config';
+
+import pkgInfo from './pkg';
 
 export {
   Mocker,
@@ -14,4 +16,5 @@ export {
   MS_DISABLE,
   MS_QUERY_KEY,
   MS_FROM,
+  pkgInfo,
 };

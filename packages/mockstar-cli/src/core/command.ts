@@ -1,5 +1,5 @@
 import abbrev from 'abbrev';
-import {Base} from '../internal/base';
+import { Base } from '../internal/base';
 
 /**
  * All commands need to be registered before using in CLI console.

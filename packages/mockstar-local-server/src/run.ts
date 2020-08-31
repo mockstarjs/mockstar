@@ -2,18 +2,21 @@ import fs from 'fs';
 import path from 'path';
 import http from 'http';
 import express from 'express';
-import {Router} from './types';
+import { Router } from './types';
 import * as mockstarServer from './server';
 import * as logger from './server/logger';
-import {LocalServerConfig} from './config/LocalServerConfig';
+import { LocalServerConfig } from './config/LocalServerConfig';
 import websocket from './plugins/mocker/websocket';
+import { getIndexHtmlPath } from 'mockstar-webui';
 
 const mockstarLogger = logger.mockstarLogger();
 const attentionLogger = logger.attentionLogger();
 
 // 暴露一个全局log变量
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 global.mockstarLogger = mockstarLogger;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 global.attentionLogger = attentionLogger;
 
@@ -144,9 +147,9 @@ export class RunServer {
       // req.params[0] = 'sub/workflow.png'
       // req.params.name = 'demo_03'
 
-      let mockerName = req.params.mockerName;
-      let mockerItem = this.router?._mockerParser.getMockerByName(mockerName);
-      let staticRelativePath = path.join('static', req.params[0]);
+      const mockerName = req.params.mockerName;
+      const mockerItem = this.router?._mockerParser.getMockerByName(mockerName);
+      const staticRelativePath = path.join('static', req.params[0]);
 
       if (!mockerItem) {
         res.send(`Can not find ${path.join(mockerName, staticRelativePath)}`);
@@ -200,7 +203,7 @@ export class RunServer {
         return resolve(this.html);
       }
 
-      fs.readFile(path.join(__dirname, '../webui/build', 'index.html'), 'utf8', (err, content) => {
+      fs.readFile(getIndexHtmlPath(), 'utf8', (err, content) => {
         if (err) {
           reject(err);
         } else {
@@ -214,7 +217,7 @@ export class RunServer {
           this.html = content.replace('</head>', injectInHead + '</head>');
 
           // 如果需要自定义静态资源的根路径，则还需要进行替换
-          const {staticBasePath} = this.localServerConfig;
+          const { staticBasePath } = this.localServerConfig;
           if (staticBasePath && staticBasePath !== '/') {
             this.html = this.html.replace('/static/css/', staticBasePath + 'static/css/');
             this.html = this.html.replace('/static/js/', staticBasePath + 'static/js/');
@@ -235,7 +238,7 @@ export class RunServer {
     // 2018.10.23 突然无法启动websocket，原因未知
     // let server = require('http').createServer(app);
     // https://socket.io/docs/#Using-with-Express
-    let server = require('http').Server(this.app);
+    const server = require('http').Server(this.app);
 
     // TODO 触发 onBeforeServerListen 事件
     // 如果启动了 plugin=async 则开启 websocket
@@ -289,7 +292,7 @@ export default (
   localServerConfig: LocalServerConfig,
   callback?: (status: boolean, opt: any) => void,
 ) => {
-  let runServer = new RunServer(localServerConfig);
+  const runServer = new RunServer(localServerConfig);
 
   runServer.start(callback);
 
@@ -335,7 +338,7 @@ export default (
       }, delayRestart);
     }
 
-    fs.watch(localServerConfig.mockServerPath, {recursive: true}, (event, filename) => {
+    fs.watch(localServerConfig.mockServerPath, { recursive: true }, (event, filename) => {
       console.log('watch testFolder event', event);
       console.log('watch testFolder filename', filename);
 

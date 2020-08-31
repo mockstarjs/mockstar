@@ -1,8 +1,8 @@
 import meow from 'meow';
-import {Base} from './base';
-import {MockStar} from '../core';
-import {Command} from '../core/command';
-import {Argv} from '../types';
+import { Base } from './base';
+import { MockStar } from '../core';
+import { Command } from '../core/command';
+import { Argv } from '../types';
 
 export class Help implements Base {
   desc: string;
@@ -23,7 +23,7 @@ export class Help implements Base {
   }
 
   async call(m: MockStar, args: Argv): Promise<void> {
-    let arr: string[] = [];
+    const arr: string[] = [];
 
     // 如果不是 -h 或者 --help 命令过来的，则需要提示命令不存在
     if (!args.h && !args.help) {

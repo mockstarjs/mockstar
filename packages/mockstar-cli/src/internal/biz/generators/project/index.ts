@@ -1,10 +1,12 @@
 import path from 'path';
 import inquirer from 'inquirer';
 import fs from 'fs-extra';
-import {initProject} from 'mockstar-generators';
+import { initProject, InitProjectOpts } from 'mockstar-generators';
+
+import pkgInfo from '../../../../pkg';
 
 export default function (
-  opts: {cwd: string; isDev: boolean},
+  opts: { cwd: string; isDev: boolean },
   callback: (status: boolean, err?: Error) => void,
 ) {
   inquirer
@@ -30,12 +32,15 @@ export default function (
       },
     ])
     .then(answers => {
-      const params = Object.assign({}, opts, {
+      const params: InitProjectOpts = Object.assign({}, opts, {
         name: answers.projectName,
         parentPath: opts.cwd,
+        pkgVersion: {
+          [pkgInfo.name]: pkgInfo.version,
+        },
       });
 
-      initProject(params as any)
+      initProject(params)
         .then(() => {
           callback(true);
         })

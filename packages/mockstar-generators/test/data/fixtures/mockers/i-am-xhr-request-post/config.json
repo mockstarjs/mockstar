@@ -1,0 +1,11 @@
+{
+  "description": "description for i-am-xhr-request-post",
+  "route": "/cgi-bin/i-am-xhr-request-post",
+  "defaultModule": "debug",
+  "method": "post",
+  "tags": [
+    "tag1",
+    "tag2",
+    "post"
+  ]
+}

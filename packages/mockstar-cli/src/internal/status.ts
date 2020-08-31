@@ -1,9 +1,9 @@
-import {getStatus, showRunningStatus} from 'mockstar-starting';
-import {Base} from './base';
-import {MockStar} from '../core';
-import {Command} from '../core/command';
-import {Argv} from '../types';
-import {info} from '../utils/colorsLog';
+import { getStatus, showRunningStatus } from 'mockstar-starting';
+import { Base } from './base';
+import { MockStar } from '../core';
+import { Command } from '../core/command';
+import { Argv } from '../types';
+import { info } from '../utils/colorsLog';
 
 export class Status implements Base {
   desc: string;

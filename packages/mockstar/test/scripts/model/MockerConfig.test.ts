@@ -33,7 +33,7 @@ describe('./model/MockerConfig.ts', () => {
         disable: false,
         defaultModule: '',
         activeModule: '',
-        method: 'get',
+        method: 'GET',
         priority: 0,
         tags: ['全部'],
       });
@@ -56,7 +56,7 @@ describe('./model/MockerConfig.ts', () => {
         defaultModule: 'exist-config',
         description: 'basic example description',
         disable: true,
-        method: 'post',
+        method: 'POST',
         name: 'no-list',
         plugin: 'xhr',
         priority: 88,
@@ -111,7 +111,7 @@ describe('./model/MockerConfig.ts', () => {
         disable: false,
         defaultModule: '',
         activeModule: 'return-plain-object',
-        method: 'get',
+        method: 'GET',
         priority: 0,
         tags: ['全部'],
       });
@@ -135,7 +135,7 @@ describe('./model/MockerConfig.ts', () => {
         disable: false,
         defaultModule: '',
         activeModule: 'return-plain-object',
-        method: 'get',
+        method: 'GET',
         priority: 0,
         tags: ['全部'],
       });
@@ -161,7 +161,7 @@ describe('./model/MockerConfig.ts', () => {
         disable: true,
         defaultModule: 'exist-config',
         activeModule: 'exist-config',
-        method: 'post',
+        method: 'POST',
         priority: 88,
         tags: ['全部', '标签1', '标签2'],
       });
@@ -187,7 +187,7 @@ describe('./model/MockerConfig.ts', () => {
         disable: false,
         defaultModule: 'exist-config',
         activeModule: 'another-active-module',
-        method: 'post',
+        method: 'POST',
         priority: 88,
         tags: ['全部', '标签1', '标签2'],
       });
@@ -211,7 +211,7 @@ describe('./model/MockerConfig.ts', () => {
         disable: false,
         defaultModule: 'exist-config',
         activeModule: 'return-plain-object',
-        method: 'get',
+        method: 'GET',
         priority: 0,
         tags: ['全部', '标签1', '标签2'],
       });
@@ -237,7 +237,7 @@ describe('./model/MockerConfig.ts', () => {
         disable: true,
         defaultModule: 'exist-config',
         activeModule: 'exist-config',
-        method: 'post',
+        method: 'POST',
         priority: 88,
         tags: ['全部', '标签1', '标签2'],
       });
@@ -263,7 +263,7 @@ describe('./model/MockerConfig.ts', () => {
         disable: true,
         defaultModule: 'basic_04_invalid_active_module',
         activeModule: 'return-plain-object',
-        method: 'post',
+        method: 'POST',
         priority: 88,
         tags: ['全部', '标签1', '标签2'],
       });
@@ -287,7 +287,7 @@ describe('./model/MockerConfig.ts', () => {
         disable: false,
         defaultModule: '',
         activeModule: 'return-plain-object',
-        method: 'get',
+        method: 'GET',
         priority: 0,
         tags: ['全部'],
       });

@@ -9,10 +9,10 @@ import fsHandler from 'fs-handler';
  * @return {Array}
  */
 export function getMockServerPathList(rootPath: string) {
-  let list: string[] = [];
+  const list: string[] = [];
 
-  fsHandler.search.getAll(rootPath, {globs: ['**/mockstar.config.js']}).forEach((item: any) => {
-    let opts = require(path.join(item.basePath, item.relativePath));
+  fsHandler.search.getAll(rootPath, { globs: ['**/mockstar.config.js'] }).forEach((item: any) => {
+    const opts = require(path.join(item.basePath, item.relativePath));
 
     list.push(opts.mockServerPath || path.join(opts.rootPath, 'src'));
   });

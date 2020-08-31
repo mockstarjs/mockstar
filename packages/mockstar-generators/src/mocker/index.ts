@@ -37,3 +37,7 @@ export default function initMocker(opts = {}) {
     );
   });
 }
+
+export function getMockerGeneratorTemplatesRoot(): string {
+  return path.join(__dirname, './generator/templates');
+}

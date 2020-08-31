@@ -1,0 +1,4 @@
+run-after-build.js
+demo
+src/**/generator/templates
+test/data
