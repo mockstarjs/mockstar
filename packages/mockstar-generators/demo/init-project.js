@@ -10,5 +10,6 @@ fse.removeSync(path.join(__dirname, '../test/tmp'));
     parentPath: path.join(__dirname, '../test/tmp'),
     name: 'mockstar-app',
     port: 9527,
+    // autoInstall: true,
   });
 })();

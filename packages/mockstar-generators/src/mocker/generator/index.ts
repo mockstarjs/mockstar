@@ -1,8 +1,7 @@
 import path from 'path';
-import mkdirp from 'mkdirp';
 import Generator from 'yeoman-generator';
 import shell from 'shelljs';
-import fs from 'fs-extra';
+import fse from 'fs-extra';
 import walkSync from 'walk-sync';
 
 import BusinessMocker from './BusinessMocker';
@@ -33,7 +32,7 @@ export default class extends Generator {
 
     if (
       !(this.businessMocker.isDev || this.businessMocker.force) &&
-      fs.pathExistsSync(
+      fse.pathExistsSync(
         path.join(this.businessMocker.parentPath, this.businessMocker.config.name as string),
       )
     ) {
@@ -58,7 +57,7 @@ export default class extends Generator {
     const _copyTemplates = () => {
       const folderPath = path.join(parentPath, config.name as string);
 
-      mkdirp.sync(folderPath);
+      fse.ensureDirSync(folderPath);
       shell.cd(folderPath);
 
       this.destinationRoot(this.destinationPath(folderPath));

@@ -1,8 +1,6 @@
 import path from 'path';
 import yeoman from 'yeoman-environment';
 
-import { pkgInfo } from 'mockstar';
-
 import { getLatestVersion } from '../utils';
 
 export interface PkgVersion {
@@ -29,18 +27,14 @@ export default async function initProject(opts: InitProjectOpts) {
   const name = 'project';
 
   // 依赖包的版本号
-  opts.pkgVersion = Object.assign({
-      mockstar: pkgInfo.version,
-    },
-    opts.pkgVersion,
-  );
-
-  if (!opts.pkgVersion['mockstar-cli']) {
-    const versionMockstarCli = await getLatestVersion('mockstar-cli');
-    if (versionMockstarCli) {
-      opts.pkgVersion['mockstar-cli'] = versionMockstarCli;
-    }
+  if (!opts.pkgVersion) {
+    opts.pkgVersion = {};
   }
+  opts.pkgVersion = Object.assign({},
+    opts.pkgVersion,
+    await getDependencies('mockstar', opts.pkgVersion.mockstar),
+    await getDependencies('mockstar-cli', opts.pkgVersion['mockstar-cli'])
+  );
 
   // generator 的目录
   const generatorPath = path.join(__dirname, './generator');
@@ -77,4 +71,22 @@ export default async function initProject(opts: InitProjectOpts) {
 
 export function getProjectGeneratorTemplatesRoot(): string {
   return path.join(__dirname, './generator/templates');
+}
+
+async function getDependencies(packageName: string, version?: string): Promise<Record<string, unknown>> {
+  let tmpVersion: (string | null | undefined) = version;
+
+  if (!version) {
+    tmpVersion = await getLatestVersion(packageName);
+  }
+
+  if (tmpVersion) {
+    tmpVersion = `^${tmpVersion}`;
+  } else {
+    tmpVersion = 'latest';
+  }
+
+  return {
+    [packageName]: tmpVersion
+  };
 }

@@ -1,4 +1,4 @@
-import initMocker, { getMockerGeneratorTemplatesRoot } from './mocker';
+import initMocker, { getMockerGeneratorTemplatesRoot, InitMockerOpts } from './mocker';
 import initProject, { getProjectGeneratorTemplatesRoot, InitProjectOpts } from './project';
 
 export {
@@ -7,4 +7,5 @@ export {
   getMockerGeneratorTemplatesRoot,
   getProjectGeneratorTemplatesRoot,
   InitProjectOpts,
+  InitMockerOpts
 };

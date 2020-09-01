@@ -1,13 +1,12 @@
 import path from 'path';
-import mkdirp from 'mkdirp';
 import Generator from 'yeoman-generator';
 import shell from 'shelljs';
-import fs from 'fs-extra';
+import fse from 'fs-extra';
+import walkSync from 'walk-sync';
 
 import BusinessProject from './BusinessProject';
 
 import initMocker from '../../mocker';
-import walkSync from 'walk-sync';
 
 export default class extends Generator {
   businessProject: BusinessProject;
@@ -35,7 +34,7 @@ export default class extends Generator {
 
     if (
       !(this.businessProject.isDev || this.businessProject.force) &&
-      fs.pathExistsSync(path.join(this.businessProject.parentPath, this.businessProject.name))
+      fse.pathExistsSync(path.join(this.businessProject.parentPath, this.businessProject.name))
     ) {
       // 如果当前路径下已经存在了，则需要进行提示，避免覆盖
       return Promise.reject(`当前目录下已经存在名字为 ${this.businessProject.name} 的文件夹了`);
@@ -53,7 +52,8 @@ export default class extends Generator {
     const _copyTemplates = () => {
       const folderPath = path.join(parentPath, name);
 
-      mkdirp.sync(folderPath);
+      fse.ensureDirSync(folderPath);
+
       shell.cd(folderPath);
 
       this.destinationRoot(this.destinationPath(folderPath));
@@ -116,14 +116,25 @@ export default class extends Generator {
 
     if (this.businessProject.autoInstall) {
       console.log(
-        '正在安装 npm 包，如果安装缓慢，亦可手动执行 ' +
-        this.businessProject.cmder +
-        ' install 命令...',
+        `正在安装 npm 包，如果安装缓慢，亦可进入到 ${this.destinationPath()} 目录下手动执行 ${this.businessProject.cmder} install 命令...`
       );
 
-      shell.exec(this.businessProject.cmder + ' install', { silent: true });
+      const shellExecArgs = [
+        this.businessProject.cmder,
+        'install',
+        '--save',
+        '--save-exact',
+        '--loglevel',
+        'error',
+      ];
 
-      console.log('安装完成!');
+      shell.exec(shellExecArgs.join(' '), {
+        silent: false,
+        cwd: this.destinationPath()
+      });
+
+      // yeoman 原生方法
+      // this.installDependencies({ npm: true });
     }
   }
 
