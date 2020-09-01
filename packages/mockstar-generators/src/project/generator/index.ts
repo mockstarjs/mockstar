@@ -7,6 +7,7 @@ import walkSync from 'walk-sync';
 import BusinessProject from './BusinessProject';
 
 import initMocker from '../../mocker';
+import pkgInfo from "../../pkg";
 
 export default class extends Generator {
   businessProject: BusinessProject;
@@ -25,6 +26,10 @@ export default class extends Generator {
     if (this.businessProject.isDev) {
       console.log('--initializing--', this.businessProject);
     }
+
+    console.log();
+    console.log(`${pkgInfo.name} v${pkgInfo.version} init project...`);
+    console.log();
   }
 
   validate() {
