@@ -11,6 +11,7 @@ export interface PkgVersion {
 export interface InitProjectOpts {
   parentPath: string;
   isDev?: boolean;
+  force?: boolean;
   autoInstall?: boolean;
   pkgVersion?: PkgVersion;
   name?: string;

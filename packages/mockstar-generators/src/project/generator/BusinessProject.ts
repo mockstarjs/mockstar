@@ -3,6 +3,7 @@ import { InitProjectOpts, PkgVersion } from '../index';
 export default class BusinessProject {
   parentPath: string;
   isDev: boolean;
+  force: boolean;
   autoInstall: boolean;
   pkgVersion: PkgVersion;
   name: string;
@@ -12,6 +13,7 @@ export default class BusinessProject {
   constructor(opts: InitProjectOpts) {
     this.parentPath = opts.parentPath;
     this.isDev = opts.isDev || false;
+    this.force = opts.force || false;
     this.autoInstall = opts.autoInstall || false;
     this.pkgVersion = opts.pkgVersion || {};
     this.name = opts.name || 'mockstar-app';

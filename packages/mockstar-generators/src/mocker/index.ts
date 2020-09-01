@@ -3,10 +3,25 @@ import yeoman from 'yeoman-environment';
 
 const yeomanEnv = yeoman.createEnv();
 
+export interface InitMockerOpts {
+  parentPath: string;
+  config: MockerConfig;
+  isDev?: boolean;
+  force?: boolean;
+  isInitReadme?: boolean;
+  debugMockModuleJsonData?: Record<string, unknown>;
+}
+
+export interface MockerConfig {
+  name: string;
+  route: string;
+  method: string;
+}
+
 /**
  * 初始化一个 mocker
  */
-export default function initMocker(opts = {}) {
+export default function initMocker(opts: InitMockerOpts) {
   // generator 的名字
   const name = 'mocker';
 

@@ -34,7 +34,7 @@ export default class extends Generator {
     }
 
     if (
-      !this.businessProject.isDev &&
+      !(this.businessProject.isDev || this.businessProject.force) &&
       fs.pathExistsSync(path.join(this.businessProject.parentPath, this.businessProject.name))
     ) {
       // 如果当前路径下已经存在了，则需要进行提示，避免覆盖
@@ -86,10 +86,10 @@ export default class extends Generator {
 
       return initMocker({
         isDev: this.businessProject.isDev,
+        force: this.businessProject.force,
         parentPath: path.join(this.destinationPath(), './mock_server'),
         isInitReadme: true,
         config: {
-          description: '我是' + demoMockerName,
           name: demoMockerName,
           route: '/cgi-bin/a/b/' + demoMockerName,
           method: 'GET',
@@ -117,8 +117,8 @@ export default class extends Generator {
     if (this.businessProject.autoInstall) {
       console.log(
         '正在安装 npm 包，如果安装缓慢，亦可手动执行 ' +
-          this.businessProject.cmder +
-          ' install 命令...',
+        this.businessProject.cmder +
+        ' install 命令...',
       );
 
       shell.exec(this.businessProject.cmder + ' install', { silent: true });

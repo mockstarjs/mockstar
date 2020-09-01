@@ -32,7 +32,7 @@ export default class extends Generator {
     }
 
     if (
-      !this.businessMocker.isDev &&
+      !(this.businessMocker.isDev || this.businessMocker.force) &&
       fs.pathExistsSync(
         path.join(this.businessMocker.parentPath, this.businessMocker.config.name as string),
       )

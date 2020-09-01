@@ -7,6 +7,7 @@ fse.removeSync(path.join(__dirname, '../test/tmp'));
 (async () => {
   await initMocker({
     isDev: false,
+    // force: true,
     parentPath: path.join(__dirname, '../test/tmp'),
     isInitReadme: true,
     config: {
