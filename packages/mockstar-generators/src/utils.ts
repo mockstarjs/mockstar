@@ -7,6 +7,8 @@ import { execSync } from 'child_process';
  */
 function checkForLatestVersion(packageName: string): Promise<string> {
   return new Promise((resolve, reject) => {
+    let isReturn = false;
+
     https
       .get(
         'https://registry.npmjs.org/-/package/' + packageName + '/dist-tags',
@@ -20,11 +22,21 @@ function checkForLatestVersion(packageName: string): Promise<string> {
           } else {
             reject();
           }
-        },
+
+          isReturn = true;
+        }
       )
       .on('error', () => {
+        isReturn = true;
         reject();
       });
+
+    setTimeout(() => {
+      if (!isReturn) {
+        isReturn = true;
+        reject('Timeout!!');
+      }
+    }, 2000);
   });
 }
 
