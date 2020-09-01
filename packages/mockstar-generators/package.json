@@ -35,25 +35,25 @@
   },
   "homepage": "https://github.com/mockstarjs/mockstar#readme",
   "dependencies": {
+    "@types/fs-extra": "^9.0.1",
+    "@types/shelljs": "^0.8.8",
+    "@types/yeoman-environment": "^2.10.1",
+    "@types/yeoman-generator": "^3.1.4",
     "fs-extra": "^7.0.1",
     "shelljs": "^0.8.3",
+    "walk-sync": "^2.2.0",
     "yeoman-environment": "^2.3.4",
     "yeoman-generator": "^3.2.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/expect": "^24.3.0",
-    "@types/fs-extra": "^9.0.1",
     "@types/mocha": "^7.0.2",
-    "@types/shelljs": "^0.8.8",
-    "@types/yeoman-environment": "^2.10.1",
-    "@types/yeoman-generator": "^3.1.4",
     "chai": "^4.2.0",
     "eslint": "^5.7.0",
     "mocha": "^8.1.2",
     "nyc": "^15.1.0",
     "ts-node": "^8.10.2",
-    "typescript": "^3.9.6",
-    "walk-sync": "^2.2.0"
+    "typescript": "^3.9.6"
   }
 }
