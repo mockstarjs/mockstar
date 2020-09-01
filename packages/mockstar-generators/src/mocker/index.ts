@@ -38,6 +38,7 @@ export default function initMocker(opts: InitMockerOpts) {
       name,
       {
         mockerOpts: opts,
+        force: opts.force
       },
       err => {
         // console.log('=====end===', err);

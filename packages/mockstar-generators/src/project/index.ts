@@ -59,6 +59,7 @@ export default async function initProject(opts: InitProjectOpts) {
       name,
       {
         projectOpts: opts,
+        force: opts.force
       },
       err => {
         // console.log('=====end===', err);
