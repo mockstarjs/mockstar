@@ -9,6 +9,7 @@ export default class BusinessProject {
   name: string;
   port: number;
   cmder: string;
+  readmeDesc: string;
 
   constructor(opts: InitProjectOpts) {
     this.parentPath = opts.parentPath;
@@ -19,5 +20,6 @@ export default class BusinessProject {
     this.name = opts.name || 'mockstar-app';
     this.port = opts.port || 9527;
     this.cmder = opts.cmder || 'npm';
+    this.readmeDesc = opts.readmeDesc || '';
   }
 }

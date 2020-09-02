@@ -17,6 +17,7 @@ export interface InitProjectOpts {
   name?: string;
   port?: number;
   cmder?: string;
+  readmeDesc?: string
 }
 
 /**
