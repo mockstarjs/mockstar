@@ -55,7 +55,7 @@ export default {
       return 'mockstar.js';
     },
     description() {
-      return '桩数据模拟与管理平台';
+      return '轻量级框架，快速搭建本地 Mock Server 服务';
     },
     introductionLink() {
       return '/wiki';
@@ -243,13 +243,13 @@ h2 {
 .left {
   width: 100%;
   min-width: 375px;
-  max-width: 600px;
+  max-width: 650px;
 }
 
 .right {
   width: 100%;
   min-width: 500px;
-  max-width: 600px;
+  max-width: 540px;
   text-align: center;
 
   img {

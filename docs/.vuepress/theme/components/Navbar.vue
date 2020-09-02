@@ -1,26 +1,27 @@
 <template>
   <header :style="styles.navbar">
     <nav>
-      <router-link :to="localePath">
+      <router-link :to="localePath" class="logo-wrapper">
         <img :src="styles.logo" :style="styles.logoStyle" alt="logo" />
+        <span :class="styles.logoDescClass">Design for Mock Server</span>
       </router-link>
       <ul class="navs">
         <li class="nav" v-for="(nav, index) in navs" :key="index">
           <router-link
-            :class="getNavClass(nav.link, styles.navClass)"
-            v-if="!isExternal(nav.link)"
-            :to="nav.link"
-            :style="styles.word"
-            >{{ nav.text }}
+              :class="getNavClass(nav.link, styles.navClass)"
+              v-if="!isExternal(nav.link)"
+              :to="nav.link"
+              :style="styles.word"
+          >{{ nav.text }}
           </router-link>
           <a
-            v-else
-            :href="nav.link"
-            :class="getNavClass(nav.link, styles.navClass)"
-            target="_blank"
-            rel="noopener noreferrer"
-            :style="styles.word"
-            >{{ nav.text }}</a
+              v-else
+              :href="nav.link"
+              :class="getNavClass(nav.link, styles.navClass)"
+              target="_blank"
+              rel="noopener noreferrer"
+              :style="styles.word"
+          >{{ nav.text }}</a
           >
           <OutboundLink v-if="isExternal(nav.link)" />
         </li>
@@ -30,7 +31,7 @@
 </template>
 
 <script>
-import {isExternal} from '../util/util.js';
+import { isExternal } from '../util/util.js';
 import logo from '../images/logo_white_100.png';
 import logoGreen from '../images/logo_100.png';
 
@@ -63,9 +64,9 @@ export default {
         langClass: 'nav__link',
         logo,
         logoStyle: {
-          width: '220px',
           height: '50px',
         },
+        logoDescClass: 'logo-desc-white',
       };
 
       if (alpha >= 1) {
@@ -76,6 +77,7 @@ export default {
         styles.word.color = `rgba(102, 102, 102, ${alpha})`;
         styles.navClass = 'nav__link--white';
         styles.langClass = 'nav__lang--white';
+        styles.logoDescClass = 'logo-desc';
       }
 
       return styles;
@@ -92,8 +94,8 @@ export default {
     getNavClass(link, className) {
       const currentPath = this.$route.path;
       return currentPath === link && className === 'nav__link--white'
-        ? 'nav__link--active'
-        : className;
+          ? 'nav__link--active'
+          : className;
     },
     onScroll() {
       const scrollTop = window.scrollY;
@@ -138,6 +140,25 @@ nav {
 .tools {
   display: flex;
 }
+
+.logo-wrapper {
+  display: flex;
+
+  .logo-desc {
+    color: #4d4d4d;
+    line-height: 50px;
+    padding-left: 20px;
+    font-size: 32px;
+  }
+
+  .logo-desc-white {
+    color: #fff;
+    line-height: 50px;
+    padding-left: 20px;
+    font-size: 32px;
+  }
+}
+
 
 .nav {
   position: relative;
