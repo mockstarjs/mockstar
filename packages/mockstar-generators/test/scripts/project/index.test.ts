@@ -26,6 +26,8 @@ describe('./project/index.ts', () => {
     const tmpSaveDir = path.join(TMP_PATH, name);
 
     before(async () => {
+      fse.removeSync(tmpSaveDir);
+
       await initProject({
         isDev: false,
         parentPath: TMP_PATH,
@@ -69,6 +71,8 @@ describe('./project/index.ts', () => {
     const tmpSaveDir = path.join(TMP_PATH, name);
 
     before(async () => {
+      fse.removeSync(tmpSaveDir);
+
       await initProject({
         isDev: false,
         parentPath: TMP_PATH,

@@ -26,6 +26,8 @@ describe('./mocker/index.ts', () => {
     const tmpSaveDir = path.join(TMP_PATH, name);
 
     before(async () => {
+      fse.removeSync(tmpSaveDir);
+
       await initMocker({
         isDev: false,
         parentPath: TMP_PATH,
@@ -82,6 +84,8 @@ describe('./mocker/index.ts', () => {
     const tmpSaveDir = path.join(TMP_PATH, name);
 
     before(async () => {
+      fse.removeSync(tmpSaveDir);
+
       await initMocker({
         isDev: false,
         parentPath: TMP_PATH,
