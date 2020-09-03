@@ -10,6 +10,6 @@
     "mockstar": "^1.3.7"
   },
   "devDependencies": {
-    "mockstar-cli": "^1.3.18"
+    "mockstar-cli": "^1.3.19"
   }
 }
