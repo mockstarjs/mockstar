@@ -5,7 +5,7 @@ import fse from 'fs-extra';
 import walkSync from 'walk-sync';
 
 import BusinessMocker from './BusinessMocker';
-import pkgInfo from "../../pkg";
+import { mockstarGeneratorsPackage } from "../../pkg";
 
 export default class extends Generator {
   businessMocker: BusinessMocker;
@@ -26,7 +26,7 @@ export default class extends Generator {
     }
 
     console.log();
-    console.log(`${pkgInfo.name} v${pkgInfo.version} init mocker...`);
+    console.log(`${mockstarGeneratorsPackage.name} v${mockstarGeneratorsPackage.version} init mocker...`);
     console.log();
   }
 

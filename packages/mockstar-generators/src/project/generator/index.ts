@@ -7,7 +7,7 @@ import walkSync from 'walk-sync';
 import BusinessProject from './BusinessProject';
 
 import initMocker from '../../mocker';
-import pkgInfo from "../../pkg";
+import { mockstarGeneratorsPackage } from "../../pkg";
 
 export default class extends Generator {
   businessProject: BusinessProject;
@@ -28,7 +28,7 @@ export default class extends Generator {
     }
 
     console.log();
-    console.log(`${pkgInfo.name} v${pkgInfo.version} init project...`);
+    console.log(`${mockstarGeneratorsPackage.name} v${mockstarGeneratorsPackage.version} init project...`);
     console.log();
   }
 
