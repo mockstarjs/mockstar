@@ -16,12 +16,10 @@ const defaultData = {
  * @returns {Promise}
  */
 function getSuccessData(data) {
-  return Promise.resolve(data).then(function (resultData) {
-    return {
-      retcode: 0,
-      result: Object.assign({}, defaultData, resultData),
-    };
-  });
+  return Promise.resolve(data).then(resultData => ({
+    retcode: 0,
+    result: Object.assign({}, defaultData, resultData),
+  }));
 }
 
 /**
@@ -32,8 +30,8 @@ function getSuccessData(data) {
  * @returns {Promise}
  */
 function getErrorData(errCode, errMsg) {
-  return Promise.resolve(errCode).then(function (resultCode) {
-    let obj = {
+  return Promise.resolve(errCode).then((resultCode) => {
+    const obj = {
       retcode: resultCode,
     };
 
@@ -46,6 +44,6 @@ function getErrorData(errCode, errMsg) {
 }
 
 module.exports = {
-  getSuccessData: getSuccessData,
-  getErrorData: getErrorData,
+  getSuccessData,
+  getErrorData,
 };
