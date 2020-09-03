@@ -6,12 +6,10 @@
  * @returns {Promise}
  */
 function getSuccessData(data, defaultData) {
-  return Promise.resolve(data).then(function (resultData) {
-    return {
-      retcode: 0,
-      result: Object.assign({}, defaultData, resultData),
-    };
-  });
+  return Promise.resolve(data).then(resultData => ({
+    retcode: 0,
+    result: Object.assign({}, defaultData, resultData),
+  }));
 }
 
 /**
@@ -22,8 +20,8 @@ function getSuccessData(data, defaultData) {
  * @returns {Promise}
  */
 function getErrorData(errCode, errMsg) {
-  return Promise.resolve(errCode).then(function (resultCode) {
-    let obj = {
+  return Promise.resolve(errCode).then((resultCode) => {
+    const obj = {
       retcode: resultCode,
     };
 
