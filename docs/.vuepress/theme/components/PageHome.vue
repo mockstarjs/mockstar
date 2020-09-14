@@ -6,6 +6,7 @@
       <Banner />
       <Feature />
       <AdvantageOne />
+      <AdvantageTwo />
       <Community />
     </div>
 
@@ -18,6 +19,7 @@ import Navbar from './Navbar';
 import Banner from './page-home/Banner';
 import Feature from './page-home/Feature';
 import AdvantageOne from './page-home/AdvantageOne';
+import AdvantageTwo from './page-home/AdvantageTwo';
 import Community from './Community';
 import Links from './Links';
 import Copyright from './Copyright';
@@ -37,7 +39,8 @@ export default {
     Links,
     Copyright,
     Footer,
-    AdvantageOne
+    AdvantageOne,
+    AdvantageTwo
   },
 };
 </script>
