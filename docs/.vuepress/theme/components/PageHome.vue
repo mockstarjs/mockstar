@@ -5,6 +5,7 @@
     <div class="main-wrapper">
       <Banner />
       <Feature />
+      <AdvantageOne />
       <Community />
     </div>
 
@@ -16,6 +17,7 @@
 import Navbar from './Navbar';
 import Banner from './page-home/Banner';
 import Feature from './page-home/Feature';
+import AdvantageOne from './page-home/AdvantageOne';
 import Community from './Community';
 import Links from './Links';
 import Copyright from './Copyright';
@@ -34,7 +36,8 @@ export default {
     Community,
     Links,
     Copyright,
-    Footer
+    Footer,
+    AdvantageOne
   },
 };
 </script>
