@@ -55,10 +55,10 @@ export default {
       return 'mockstar.js';
     },
     description() {
-      return '轻量级框架，快速搭建本地 Mock Server 服务';
+      return '轻量级前端Mock工具';
     },
     introductionLink() {
-      return '/wiki';
+      return '/docs';
     },
     introduction() {
       return '快速开始 →';
@@ -106,6 +106,10 @@ h2 {
   font-size: 30px;
   font-weight: normal;
   border: none;
+}
+
+.slogan{
+
 }
 
 .banner-inner {

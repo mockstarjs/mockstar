@@ -9,33 +9,33 @@ module.exports = {
   repo: 'https://github.com/mockstarjs/mockstar',
 
   title: 'mockstar.js',
-  description: '专注数据 mock 的工具，可以更容易编写、管理和使用 mock 数据',
+  description: '轻量级前端Mock工具',
   head: [['link', {rel: 'icon', href: `/logo.png`}]],
   themeConfig: {
     locales: {
       '/': {
         navs: [
-          {text: '指南', link: '/wiki/'},
+          {text: '文档', link: '/docs/'},
           {text: 'API手册', link: '/api/'},
           {text: '工具', link: '/tool/'},
           {text: '发布日志', link: '/release/'},
           {text: 'Issues', link: 'https://github.com/mockstarjs/mockstar/issues'},
         ],
         sidebar: {
-          '/wiki/': [
+          '/docs/': [
             {
               title: '关于 mockstar',
-              path: '/wiki/',
+              path: '/docs/',
               collapsable: false,
             },
             {
               title: '安装和升级',
-              path: '/wiki/install',
+              path: '/docs/install',
               collapsable: false,
             },
             {
               title: '快速入门',
-              path: '/wiki/getting-started/',
+              path: '/docs/getting-started/',
               collapsable: false,
               children: ['getting-started/default', 'getting-started/new-mocker'],
             },

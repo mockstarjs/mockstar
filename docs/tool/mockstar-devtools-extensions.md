@@ -5,7 +5,7 @@ mockstar-devtools-extensions（以下简称插件）是一个使mockstar的使�
 
 项目中如果使用mockstar框架做mock层，那么该插件可以为你提升开发速度，减少页面切换频率。
 
-如果还不熟悉mockstar框架，请参考： [mockstar指南](https://mockstarjs.github.io/mockstar/wiki/ )
+如果还不熟悉mockstar框架，请参考： [mockstar指南](https://mockstarjs.github.io/mockstar/docs/ )
 
 ## 安装
 

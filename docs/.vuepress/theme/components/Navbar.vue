@@ -52,7 +52,7 @@ export default {
       return config.navs || [];
     },
     styles() {
-      const alpha = this.$page.frontmatter.home ? this.alpha : 1;
+      const alpha =  1;
       let styles = {
         navbar: {
           backgroundColor: `rgba(255, 255, 255, ${alpha})`,
