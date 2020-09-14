@@ -5,7 +5,7 @@
       <h1 class="title">mockstar.js</h1>
       <p class="subtitle">轻量级前端Mock工具，Design for Mock Server</p>
       <div class="get-started">
-        <a class="button" href="/docs/getting-started">快速开始</a>
+        <a class="button" href="/docs/getting-started">快速开始 →</a>
       </div>
       <ul class="github">
         <li class="star">
@@ -33,42 +33,13 @@
 
 <script>
 
-export default {
-  computed: {
-    title() {
-      return 'mockstar.js';
-    },
-    description() {
-      return '轻量级前端Mock工具';
-    },
-    introductionLink() {
-      return '/docs';
-    },
-    introduction() {
-      return '快速开始 →';
-    },
-    toWorkbenchLink() {
-      return 'https://github.com/mockstarjs/mockstar';
-    },
-    getStarted() {
-      return '管理平台';
-    },
-    starLink() {
-      return 'https://github.com/mockstarjs/mockstar';
-    },
-    fockLink() {
-      return 'https://github.com/mockstarjs/mockstar';
-    },
-    issuesLink() {
-      return 'https://github.com/mockstarjs/mockstar/issues';
-    },
-  },
-};
+export default {};
 </script>
 
 <style lang="less" scoped>
 @import '../../styles/icon.less';
 @import '../../styles/content.less';
+
 
 .banner {
   align-items: center;
@@ -79,15 +50,6 @@ export default {
   overflow: hidden;
   background-color: #303846;
   color: #444950;
-}
-
-.container {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1140px;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  width: 100%;
 }
 
 .logo {

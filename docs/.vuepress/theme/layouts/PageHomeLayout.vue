@@ -104,6 +104,8 @@ export default {
 </script>
 
 <style lang="less">
+@import '../styles/page-home.less';
+
 .particles {
   position: fixed;
   top: 0;

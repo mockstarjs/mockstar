@@ -4,21 +4,22 @@
 
     <div class="main-wrapper">
       <Banner />
-    </div>
-
-    <div class="layout__community">
+      <Feature />
       <Community />
     </div>
+
+    <Footer/>
   </div>
 </template>
 
 <script>
 import Navbar from './Navbar';
 import Banner from './page-home/Banner';
-import Feature from './Feature';
+import Feature from './page-home/Feature';
 import Community from './Community';
 import Links from './Links';
 import Copyright from './Copyright';
+import Footer from './Footer';
 
 import Vue from 'vue';
 import VueParticles from 'vue-particles';
@@ -33,6 +34,7 @@ export default {
     Community,
     Links,
     Copyright,
+    Footer
   },
 };
 </script>
