@@ -1,4 +1,4 @@
 module.exports = Promise.resolve({
-    name: 'return-promise',
-    age: 16
+  name: 'return-promise',
+  age: 16,
 });

@@ -1,6 +1,6 @@
 module.exports = () => {
-    return {
-        name: 'no-config',
-        age: 16
-    };
+  return {
+    name: 'no-config',
+    age: 16,
+  };
 };

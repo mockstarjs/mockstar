@@ -1,4 +1,4 @@
 module.exports = {
-    name: 'return-plain-object',
-    age: 16
+  name: 'return-plain-object',
+  age: 16,
 };
