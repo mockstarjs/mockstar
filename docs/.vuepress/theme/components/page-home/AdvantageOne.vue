@@ -3,19 +3,27 @@
     <div class="container">
       <div class="row">
         <div class="col col--4">
-          <h2>Get started in seconds</h2>
-          <p>Whether you’re using React or another library, Create React App lets you <strong>focus on code, not build
-            tools</strong>.<br><br>To create a project called <i>my-app</i>, run this command:</p>
+          <h2>快速开始，只需两步</h2>
+          <p>只需一个命令即可初始化一个 Mock Server 项目，一个命令启动项目。已提供多种场景支持，拿来即用。</p>
+          <p><br></p>
+          <p>初始化一个新项目，例如 <i>my-app</i>, 可以运行如下命令:</p>
           <div class="codeBlockWrapper_2QGZ">
             <pre class="prism-code language-sh codeBlock_19pQ" style="color:#bfc7d5;background-color:#292d3e"><div
                 class="token-line" style="color:#bfc7d5"><span
                 class="token plain">npx create-mockstar-app my-app</span></div></pre>
           </div>
+
+          <p>启动项目, 可以运行如下命令:</p>
+          <div class="codeBlockWrapper_2QGZ">
+            <pre class="prism-code language-sh codeBlock_19pQ" style="color:#bfc7d5;background-color:#292d3e"><div
+                class="token-line" style="color:#bfc7d5"><span
+                class="token plain">npx mockstar start --watch</span></div></pre>
+          </div>
           <br>
         </div>
 
         <div class="col col--4">
-          <img class="featureImage_3Xqx" alt="Easy to get started in seconds" src="https://camo.githubusercontent.com/29765c4a32f03bd01d44edef1cd674225e3c906b/68747470733a2f2f63646e2e7261776769742e636f6d2f66616365626f6f6b2f6372656174652d72656163742d6170702f323762343261632f73637265656e636173742e737667">
+          <img class="featureImage_3Xqx" alt="Easy to get started in seconds" src="../../images/init.gif">
         </div>
       </div>
     </div>

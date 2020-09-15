@@ -1,15 +1,15 @@
 <template>
-  <div class="advantage-two">
+  <div class="advantage-three">
     <div class="container">
       <div class="row">
         <div class="col">
-          <h2>不只是 Mock Server，更是 Mock 数据管理专家</h2>
-          <p>提供配套的 UI 后台，可视化管理你的所有 Mock 数据，并可任意指定返回所需要的 Mock 数据上。</p>
+          <h2>纯 JavaScript，轻松掌握无门槛</h2>
+          <p>无需准备额外的技能，使用 JS 语言来写 mock 数据，只需满足 CommonJS 规范，同步/异步皆支持，<code>pure object</code>、<code>function</code>、<code>json</code> 等形式任君选择。</p>
         </div>
 
         <div class="col">
           <img class="feature-image" alt="Easy to get started in seconds"
-               src="../../images/admin_ui_dashboard.png">
+               src="../../images/module_use_js.png">
         </div>
 
       </div>
@@ -22,8 +22,8 @@ export default {};
 </script>
 
 <style lang="less" scoped>
-.advantage-two {
-  background-color: #fff;
+.advantage-three {
+  background-color: #f7f7f7;
 
   .container {
     text-align: left;

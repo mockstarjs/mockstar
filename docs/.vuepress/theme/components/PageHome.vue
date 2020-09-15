@@ -4,9 +4,9 @@
 
     <div class="main-wrapper">
       <Banner />
-      <Feature />
       <AdvantageOne />
       <AdvantageTwo />
+      <AdvantageThree />
       <Community />
     </div>
 
@@ -20,6 +20,7 @@ import Banner from './page-home/Banner';
 import Feature from './page-home/Feature';
 import AdvantageOne from './page-home/AdvantageOne';
 import AdvantageTwo from './page-home/AdvantageTwo';
+import AdvantageThree from './page-home/AdvantageThree';
 import Community from './Community';
 import Links from './Links';
 import Copyright from './Copyright';
@@ -40,7 +41,8 @@ export default {
     Copyright,
     Footer,
     AdvantageOne,
-    AdvantageTwo
+    AdvantageTwo,
+    AdvantageThree
   },
 };
 </script>

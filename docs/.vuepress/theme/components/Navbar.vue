@@ -3,7 +3,6 @@
     <nav>
       <router-link :to="localePath" class="logo-wrapper">
         <img :src="styles.logo" :style="styles.logoStyle" alt="logo" />
-        <span :class="styles.logoDescClass">Design for Mock Server</span>
       </router-link>
       <ul class="navs">
         <li class="nav" v-for="(nav, index) in navs" :key="index">
