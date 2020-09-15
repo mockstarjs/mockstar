@@ -1,7 +1,7 @@
-module.exports = (a, b) => {
+module.exports = (params, req) => {
   return {
     name: 'return-function-with-param',
-    desc: 'a=' + a + ',b=' + b,
+    desc: 'a=' + params + ',b=' + req,
     age: 16,
   };
 };
