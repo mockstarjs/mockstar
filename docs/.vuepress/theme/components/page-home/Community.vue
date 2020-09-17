@@ -23,11 +23,14 @@ export default {
         {
           logoPath: 'https://11.url.cn/now/app/community-pc/img/IVWEB_flow_869e7914.png',
           href: 'https://www.ivweb.io/',
-        },
-        {
+        }, {
           logoPath:
-            'https://qpic.url.cn/feeds_pic/PiajxSqBRaELREfBGmf12pwe1J0WOY5Fao1Cs8EDdMREia1eV1Micw49g/',
+              'https://qpic.url.cn/feeds_pic/PiajxSqBRaELREfBGmf12pwe1J0WOY5Fao1Cs8EDdMREia1eV1Micw49g/',
           href: 'https://feflowjs.com/',
+        }, {
+          logoPath:
+              'https://nowpic.gtimg.com/feeds_pic/ajNVdqHZLLA4icW5OqJ9ONwHbiaA9sSpl8oXcIAGQ1eGXBThcia0iaeqlQ/',
+          href: 'https://matmanjs.github.io/matman/',
         },
       ];
     },

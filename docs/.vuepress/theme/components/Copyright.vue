@@ -15,14 +15,14 @@
 </template>
 
 <script>
-import footerLogo from '../images/logo_white_100.png';
+import footerLogo from '../images/logo.png';
 
 export default {
   computed: {
     footer() {
       return {
         lisence: 'MIT',
-        copyright: `© ${new Date().getFullYear()} TENCENT IVWEB.All Rights Reserved`,
+        copyright: `© ${new Date().getFullYear()} TENCENT IVWEB. All Rights Reserved`,
         repoLink: 'https://github.com/mockstarjs/mockstar',
       };
     },

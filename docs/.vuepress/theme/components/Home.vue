@@ -36,7 +36,7 @@
 import Navbar from './Navbar';
 import Banner from './Banner';
 import Feature from './Feature';
-import Community from './Community';
+import Community from './page-home/Community';
 import Links from './Links';
 import Copyright from './Copyright';
 

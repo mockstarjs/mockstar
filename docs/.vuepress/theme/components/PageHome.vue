@@ -17,11 +17,10 @@
 <script>
 import Navbar from './Navbar';
 import Banner from './page-home/Banner';
-import Feature from './page-home/Feature';
 import AdvantageOne from './page-home/AdvantageOne';
 import AdvantageTwo from './page-home/AdvantageTwo';
 import AdvantageThree from './page-home/AdvantageThree';
-import Community from './Community';
+import Community from './page-home/Community';
 import Links from './Links';
 import Copyright from './Copyright';
 import Footer from './Footer';
@@ -35,7 +34,6 @@ export default {
   components: {
     Navbar,
     Banner,
-    Feature,
     Community,
     Links,
     Copyright,
