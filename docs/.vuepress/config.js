@@ -15,7 +15,7 @@ module.exports = {
     locales: {
       '/': {
         navs: [
-          {text: '文档', link: '/docs/'},
+          {text: '使用文档', link: '/docs/'},
           {text: 'API手册', link: '/api/'},
           {text: '工具', link: '/tool/'},
           {text: '发布日志', link: '/release/'},

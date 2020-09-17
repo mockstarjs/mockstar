@@ -51,7 +51,7 @@ export default {
       return config.navs || [];
     },
     styles() {
-      const alpha =  1;
+      const alpha = 1;
       let styles = {
         navbar: {
           backgroundColor: `rgba(255, 255, 255, ${alpha})`,
@@ -92,7 +92,9 @@ export default {
   methods: {
     getNavClass(link, className) {
       const currentPath = this.$route.path;
-      return currentPath === link && className === 'nav__link--white'
+
+      // 只要匹配路径即可，不要判断是否相等，否则子目录会无法高亮
+      return currentPath.indexOf(link) === 0 && className === 'nav__link--white'
           ? 'nav__link--active'
           : className;
     },
