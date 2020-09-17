@@ -40,6 +40,11 @@ module.exports = {
               children: ['getting-started/default', 'getting-started/new-mocker'],
             },
             {
+              title: '使用指南',
+              collapsable: false,
+              children: ['develop/folder-structure'],
+            },
+            {
               title: '深入',
               collapsable: false,
               children: ['improve/summary', 'improve/get-start', 'improve/simple', 'improve/how'],
