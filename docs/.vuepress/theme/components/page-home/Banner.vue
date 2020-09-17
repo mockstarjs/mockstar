@@ -5,7 +5,7 @@
       <h1 class="title">mockstar.js</h1>
       <p class="subtitle">轻量级前端Mock工具，Design for Mock Server</p>
       <div class="get-started">
-        <a class="button" href="/docs/getting-started">快速开始 →</a>
+        <a class="button" href="./docs/getting-started">快速开始 →</a>
       </div>
       <ul class="github">
         <li class="star">
