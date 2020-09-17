@@ -77,7 +77,7 @@ export default {};
   .button {
     width: 160px;
     padding: 0.5rem 0;
-    border: 1px solid #09d3ac;
+    border: 1px solid  #1da57a;
     border-radius: .4rem;
 
     cursor: pointer;
@@ -91,13 +91,13 @@ export default {};
     user-select: none;
     vertical-align: middle;
     white-space: nowrap;
-    color: #09d3ac;
+    color: #1da57a;
     outline: 0;
     text-decoration: none;
 
     &:hover {
       color: #fff;
-      background-color: #09d3ac;
+      background-color: #1da57a;
     }
   }
 }

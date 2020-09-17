@@ -160,7 +160,7 @@ h2 {
       width: 100%;
       height: 100%;
       text-decoration: none;
-      color: #5352ed;
+      color: #1da57a;
     }
   }
 }
