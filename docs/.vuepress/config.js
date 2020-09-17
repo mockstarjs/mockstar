@@ -18,7 +18,6 @@ module.exports = {
           {text: '使用文档', link: '/docs/'},
           {text: 'API手册', link: '/api/'},
           {text: '工具', link: '/tool/'},
-          {text: '发布日志', link: '/release/'},
           {text: 'Issues', link: 'https://github.com/mockstarjs/mockstar/issues'},
         ],
         sidebar: {
@@ -37,17 +36,14 @@ module.exports = {
               title: '快速入门',
               path: '/docs/getting-started/',
               collapsable: false,
-              children: ['getting-started/default', 'getting-started/new-mocker'],
             },
             {
               title: '使用指南',
               collapsable: false,
-              children: ['develop/folder-structure'],
-            },
-            {
-              title: '深入',
-              collapsable: false,
-              children: ['improve/summary', 'improve/get-start', 'improve/simple', 'improve/how'],
+              children: [
+                'develop/folder-structure',
+                'develop/introduction',
+              ],
             },
             {
               title: 'FAQ',
@@ -65,11 +61,11 @@ module.exports = {
               path: '/api/mockstar-config',
             },
             {
-              title: 'mocker 的 config.json 配置',
+              title: 'Mocker 的 config.json 配置',
               path: '/api/mockstar',
             },
             {
-              title: 'mock module 的 config.json 配置',
+              title: 'Mock Module 的 config.json 配置',
               path: '/api/mocker-module',
             },
           ],
@@ -95,7 +91,6 @@ module.exports = {
               path: '/tool/mockstar-devtools-extensions',
             },
           ],
-          '/release/': true,
         },
       },
     },

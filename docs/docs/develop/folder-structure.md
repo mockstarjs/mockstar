@@ -1,6 +1,6 @@
 # 文件目录结构
 
-使用 `create-mockstar-app` 创建完项目之后，文件目录大概是这样的：
+使用 `create-mockstar-app` [创建完项目](../getting-started) 之后，文件目录大概是这样的：
 
 ```
 .
