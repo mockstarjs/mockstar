@@ -1,4 +1,4 @@
-# mockstar-devtools-extensions
+# Chrome 插件：MockStar
 
 ## 简介
 mockstar-devtools-extensions（以下简称插件）是一个使mockstar的使用变得简单的浏览器插件。

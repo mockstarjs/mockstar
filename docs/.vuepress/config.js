@@ -71,24 +71,36 @@ module.exports = {
           ],
           '/tool/': [
             {
-              title: '说明',
+              title: '工具首页',
               path: '/tool/',
             },
             {
-              title: 'mockstar-cli',
-              path: '/tool/mockstar-cli',
+              title: '开发者工具',
+              collapsable: false,
+              children: [
+                {
+                  title: '脚手架：create-mockstar-app',
+                  path: 'create-mockstar-app',
+                },
+                {
+                  title: 'Chrome 插件：MockStar',
+                  path: 'mockstar-chrome-devtools-extensions',
+                },
+              ],
             },
             {
-              title: 'Proxy SwitchyOmega',
-              path: '/tool/proxy-switchyomega',
-            },
-            {
-              title: 'Whistle',
-              path: '/tool/whistle',
-            },
-            {
-              title: 'mockstar-devtools-extensions',
-              path: '/tool/mockstar-devtools-extensions',
+              title: '代理',
+              collapsable: false,
+              children: [
+                {
+                  title: 'Whistle',
+                  path: '/tool/whistle',
+                },
+                {
+                  title: 'Chrome 插件：Proxy SwitchyOmega',
+                  path: 'proxy-switchyomega',
+                },
+              ],
             },
           ],
         },
