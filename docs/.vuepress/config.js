@@ -43,6 +43,7 @@ module.exports = {
               children: [
                 'develop/folder-structure',
                 'develop/introduction',
+                'develop/mocker-readme',
               ],
             },
             {
