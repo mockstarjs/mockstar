@@ -21,7 +21,7 @@ MockStar Developer Tools 是一个 Chrome 扩展插件 （Chrome DevTools extens
 你也可以直接克隆仓库代码，在 `release` 目录下找到该文件。
 
 ```bash
-$ git clone https://github.com/mockstarjs/mockstar-devtools-extensions
+$ git clone https://github.com/mockstarjs/mockstar-devtools-extensions.git
 ```
 
 获得 `zip` 包之后，将该文件进行解压，可以看到一个 `chrome-extensions` 文件夹。
@@ -41,7 +41,7 @@ $ git clone https://github.com/mockstarjs/mockstar-devtools-extensions
 
 如图二所示，能够看到 MockStar，表示已成功安装。
 
-## 2. 快速使用
+## 2. 使用指南
 
 ### 2.1 MockStar 请求列表
 
@@ -92,3 +92,8 @@ $ git clone https://github.com/mockstarjs/mockstar-devtools-extensions
 <b>3. 问: </b> 为什么`保存到项目中`按钮为禁用状态？
 
 <b>答: </b>请检查您的mockstar服务是否开启，或者确保您已经侦听mockstar服务成功了。
+
+
+## 4. 反馈
+
+本项目的代码仓库地址： [https://github.com/mockstarjs/mockstar-devtools-extensions](https://github.com/mockstarjs/mockstar-devtools-extensions) ，欢迎给我们 [提 Issue](https://github.com/mockstarjs/mockstar-devtools-extensions/issues/new) 。
