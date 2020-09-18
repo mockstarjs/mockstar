@@ -89,7 +89,7 @@ module.exports = {
               ],
             },
             {
-              title: '代理',
+              title: '代理工具',
               collapsable: false,
               children: [
                 {
