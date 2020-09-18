@@ -41,8 +41,8 @@ export default {
           },{
             href: './mockstar-chrome-devtools-extensions.html',
             img: require('../../images/tools-logo/mockstar-chrome-devtools-extensions.jpg'),
-            name: 'MockStar Chrome Devtools',
-            desc: 'Chrome 扩展，MockStar 辅助工具',
+            name: 'MockStar Developer Tools',
+            desc: 'Chrome Devtools extension，MockStar 辅助工具',
             moreDesc: '一款辅助使用 MockStar 做 Mock Server 的浏览器插件，通过减少开发过程中的页面切换，提升开发效率。',
           }],
         },

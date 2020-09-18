@@ -1,6 +1,6 @@
-# Chrome 插件：MockStar
+# Chrome 插件：MockStar Developer Tools
 
-本 Chrome 插件是为了让 MockStar 的使用变得更简单。配合本插件，可以极大提升开发效率。
+MockStar Developer Tools 是一个 Chrome 扩展插件 （Chrome DevTools extension），是为了让 MockStar 的使用变得更简单。配合本插件，可以极大提升开发效率。
 
 > 如果还不熟悉 MockStar 框架，请参考： [MockStar 官方文档](https://mockstarjs.github.io/mockstar/)
 
@@ -10,7 +10,7 @@
 
 > chrome 应用商店的版本有些问题，暂不建议使用，正在修复中...
 
-您可以选择在 chrome 应用店安装插件，搜索 `MockStar` 或直接点击 [MockStar 扩展程序地址](https://chrome.google.com/webstore/detail/mockstar/ilobmcmmonneghpjpkcjgbbbmccnngfn?utm_source=chrome-ntp-icon) 进入安装。
+您可以选择在 chrome 应用店安装插件，搜索 `MockStar` 或直接点击 [MockStar Developer Tools 扩展程序地址](https://chrome.google.com/webstore/detail/mockstar/ilobmcmmonneghpjpkcjgbbbmccnngfn?utm_source=chrome-ntp-icon) 进入安装。
 
 ### 1.2 源码安装
 
