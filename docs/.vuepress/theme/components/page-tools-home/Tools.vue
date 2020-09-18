@@ -1,7 +1,7 @@
 <template>
   <div class="main-content__tools">
     <div class="describe">
-      <p>工欲善其事必先利其器，合理的利用工具，可以帮助我们完成 web 端对端测试，并大大提升编写测试用例的效率。</p>
+      <p>工欲善其事必先利其器，合理的利用工具，可以帮助我们完成 Mock 的目的，并大大提升开发联调的效率。</p>
     </div>
 
     <div class="tools-container-wrapper">
@@ -47,7 +47,7 @@ export default {
           }],
         },
         {
-          title: '代理',
+          title: '代理工具',
           list: [{
             href: './whistle.html',
             img: require('../../images/tools-logo/whistle.png'),
