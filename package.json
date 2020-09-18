@@ -9,7 +9,6 @@
     "publish": "git pull && lerna publish --cd-version patch",
     "force-publish": "lerna publish --cd-version patch --force-publish=*",
     "check-changed": " lerna changed",
-    "precommit": "lint-staged",
     "commitmsg": "validate-commit-msg",
     "commit": "git-cz",
     "docs:dev": "vuepress dev docs",
@@ -30,17 +29,6 @@
     "url": "https://github.com/mockstarjs/mockstar/issues"
   },
   "homepage": "https://github.com/mockstarjs/mockstar#readme",
-  "lint-staged": {
-    "src/*.{js,jsx}": [
-      "eslint --fix",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",

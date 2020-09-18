@@ -7,3 +7,5 @@ packages/*/test/fixtures
 packages/*/coverage
 packages/*/demo
 gulpfile.js
+/docs
+/demo
