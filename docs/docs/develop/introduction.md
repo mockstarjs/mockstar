@@ -8,11 +8,13 @@ sidebarDepth: 0
 
 我们一般说的"模拟数据"或者"假数据"，都是指为了某种目的而构造的数据。构造"假数据"来辅助开发的行为，我们称之为"数据打桩"，参考了 [桩 (计算机)](https://zh.wikipedia.org/wiki/桩_(计算机)) 的概念。因此"假数据"也可称为"桩数据"。
 
-为了更好的表述，在 MockStar 中，我们有两个概念需要说明下：
+为了更好的表述，在 MockStar 中，我们有三个概念需要说明下：
 
 - `Mocker`，即桩对象，例如一条接口我们称之为一个 `Mocker`
 - `Mock Module`，即"桩数据"或"假数据"，例如接口包含的不同的结果，就有多个 `Mock Module`
+- `Active Mock Module`，对于某个 `Mocker` 而言当前处于 `激活` 状态的 `Mock Module`
 
+通常，一个 H5 项目里面可能会有多条接口（`Mocker`），而每条接口（`Mocker`）又可能会有返回多种结果（`Mock Module`），且接口每次只能够返回一种数据结果（`Active Mock Module`）。
 
 ## 2. 一个命令启动 Mock Server
 
