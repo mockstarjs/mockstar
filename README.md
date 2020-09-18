@@ -1,41 +1,14 @@
 # MockStar
 
-[MockStar](https://github.com/mockstarjs/mockstar) 是一个专注数据模拟的工具，可以更容易编写、管理和使用模拟数据。
+[MockStar](https://github.com/mockstarjs/mockstar) 是一款**轻量级前端 Mock 工具**，可以快速在本地搭建 Mock Server，更提供了一套管理 Mock 数据的方案，十分方便在开发和测试阶段使用。基于 Node.js ，无额外学习成本。
 
-> 更多使用文档请访问 https://mockstarjs.github.io/mockstar/ 。
 
-## 特性
+- 基于 Node.js ，无额外学习成本，使用 JS 语言来写 Mock 数据，无额外学习成本
+- 简单易用，依赖 npm 生态，快速搭建本地 Mock Server
+- 提供可视化管理后台，方便管理 Mock 数据和切换数据
+- 支持传统的 `XHR`、`Fetch` 请求，也支持 `WebSocket` 或者 `JSBridge` 回调等异步数据
+- 完全在本地提供同源服务，不需要借助任何第三方平台
 
-- 支持传统的 `xhr` 和 `fetch` 类型请求
-- 支持对 `websocket` 或者 `jsbridge` 回调等异步数据
 
-## 安装
+您可以通过 [快速入门](https://mockstarjs.github.io/mockstar/docs/getting-started/) 来快速了解，亦可从 [https://mockstarjs.github.io/mockstar/](https://mockstarjs.github.io/mockstar/) 获得更多资料。
 
-```bash
-$ npm install mockstar-cli -g
-```
-
-## 使用
-
-### 命令行
-
-```bash
-# 初始化一个项目
-$ mockstar init project
-
-# 初始化一个 mocker
-$ mockstar init mocker
-
-# 启动 mockstar 服务（后台运行）
-$ mockstar start --watch
-
-# 启动 mockstar 服务（前台运行）
-$ mockstar run
-
-# 停止 mockstar 服务
-$ mockstar stop
-```
-
-### 管理后台
-
-启动 MockServer 服务之后，会自动生成一个管理后台页面，默认地址为 http://127.0.0.1:9527 。在管理后台，可以非常方便地切换所需要的不同桩数据。
