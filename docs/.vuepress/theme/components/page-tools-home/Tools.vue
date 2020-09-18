@@ -33,11 +33,17 @@ export default {
         {
           title: '开发者工具',
           list: [{
+            href: './create-mockstar-app.html',
+            img: require('../../images/tools-logo/create-mockstar-app.jpg'),
+            name: 'create-mockstar-app',
+            desc: 'MockStar 脚手架工具',
+            moreDesc: '脚手架工具，快速生成 MockStar 项目',
+          },{
             href: './mockstar-chrome-devtools-extensions.html',
-            img: require('../../images/tools-logo/mockstar-devtools-extensions.png'),
+            img: require('../../images/tools-logo/mockstar-chrome-devtools-extensions.jpg'),
             name: 'MockStar Chrome Devtools',
             desc: 'Chrome 扩展，MockStar 辅助工具',
-            moreDesc: '一款辅助使用 MockStar 做mock服务的浏览器插件，通过减少开发过程中的页面切换，提升开发效率。',
+            moreDesc: '一款辅助使用 MockStar 做 Mock Server 的浏览器插件，通过减少开发过程中的页面切换，提升开发效率。',
           }],
         },
         {
