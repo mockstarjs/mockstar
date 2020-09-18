@@ -26,7 +26,7 @@ $ git clone https://github.com/mockstarjs/mockstar-devtools-extensions
 
 获得 `zip` 包之后，将该文件进行解压，可以看到一个 `chrome-extensions` 文件夹。
 
-打开浏览器扩展程序，开启右上角 `开发者模式`，既可以看到 `加载已解压的扩展程序` 按钮，点击它之后，，选中刚刚解压得到的`chrome-extensions` 文件夹。
+打开 Chrome 浏览器，在地址栏输入 [chrome://extensions/](chrome://extensions/)，开启右上角 `开发者模式`，既可以看到 `加载已解压的扩展程序` 按钮，点击它之后，，选中刚刚解压得到的`chrome-extensions` 文件夹。
 
 <img src="./mockstar-devtools-extensions-images/添加插件.png" alt="image-添加插件" style="zoom:100%;" />
 <center>图一</center>

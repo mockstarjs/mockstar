@@ -38,7 +38,7 @@ export default {
             name: 'create-mockstar-app',
             desc: 'MockStar 脚手架工具',
             moreDesc: '脚手架工具，快速生成 MockStar 项目',
-          },{
+          }, {
             href: './mockstar-chrome-devtools-extensions.html',
             img: require('../../images/tools-logo/mockstar-chrome-devtools-extensions.jpg'),
             name: 'MockStar Developer Tools',
