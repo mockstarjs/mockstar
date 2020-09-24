@@ -1,4 +1,4 @@
-# 快速入门
+# 快速开始
 
 使用 [create-mockstar-app](https://www.npmjs.com/package/create-mockstar-app) 可以快速生成项目。
 
