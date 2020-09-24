@@ -33,7 +33,7 @@ module.exports = {
               collapsable: false,
             },
             {
-              title: '快速入门',
+              title: '快速开始',
               path: '/docs/getting-started/',
               collapsable: false,
             },
